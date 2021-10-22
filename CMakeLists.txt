@@ -16,7 +16,7 @@ endif(WIN32)
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
 
 # add execs
-add_executable(ProgramowanieGier src/main.cpp)
+add_executable(ProgramowanieGier src/main.cpp src/board.cpp src/board.hpp src/player.cpp src/player.hpp)
 
 # compile options
 target_compile_options(ProgramowanieGier PRIVATE -Wall)
