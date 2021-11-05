@@ -16,10 +16,14 @@ endif(WIN32)
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
 
 # add execs
-add_executable(ProgramowanieGier src/main.cpp src/board.cpp src/board.hpp src/player.cpp src/player.hpp src/origin_example.cpp)
+add_executable(ProgramowanieGier src/main.cpp src/board.cpp src/board.hpp src/player.cpp src/player.hpp)
+add_executable(SFML_basics src/sfml_basic.cpp)
+add_executable(Origin_example src/origin_example.cpp)
 
 # compile options
 target_compile_options(ProgramowanieGier PRIVATE -Wall)
 
 # link libraries
 target_link_libraries(ProgramowanieGier sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
+target_link_libraries(SFML_basics sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
+target_link_libraries(Origin_example sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
