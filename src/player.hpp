@@ -1,15 +1,20 @@
 #pragma once
 
+#include <SFML/Graphics/CircleShape.hpp>
 #include "board.hpp"
 
-class Player{
+class Player : public sf::Drawable{
 	private:
-		int posX;
-		int posY;
+		sf::Vector2i pos;
 		int points;
+		sf::CircleShape circle;
+		Board& board;
+	protected:
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
-		void move(Board& board, int deltaX, int deltaY);
+		void handleEvent(const sf::Event& event);
 		
-		Player();
-		Player(int x, int y);
+		sf::Vector2f getCenter() const;
+		
+		Player(Board& b, int x, int y);
 };

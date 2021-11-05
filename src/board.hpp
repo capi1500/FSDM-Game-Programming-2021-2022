@@ -1,16 +1,19 @@
 #pragma once
 
 #include <vector>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
-class Board{
+class Board : public sf::Drawable{
 	private:
-		int sizeX;
-		int sizeY;
-		std::vector<std::vector<char>> fields;
+		sf::Vector2i size;
+		sf::RectangleShape tile;
+		sf::RectangleShape tileRed;
+	protected:
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
-		void draw();
-		void setField(int x, int y, char c);
-		bool isCoordinateOk(int x, int y);
+		bool isCoordinateOk(sf::Vector2i y) const;
+		float getTileSize() const;
 		
 		Board(int sizeX, int sizeY);
 };
