@@ -6,6 +6,21 @@
 
 class Player : public sf::Drawable{
 	private:
+		enum Direction{
+			Up,
+			Right,
+			Down,
+			Left
+		};
+		
+		static int dx[4];
+		static int dy[4];
+		static float v;
+		
+		Direction dir;
+		sf::Time t;
+		sf::Time t2;
+		
 		sf::Vector2i pos;
 		int points;
 		sf::CircleShape circle;

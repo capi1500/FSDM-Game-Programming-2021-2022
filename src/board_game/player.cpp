@@ -1,6 +1,10 @@
 #include "player.hpp"
 #include <SFML/Window/Event.hpp>
 
+int Player::dx[4] = {0, 1, 0, -1};
+int Player::dy[4] = {-1, 0, 1, 0};
+float Player::v = 100;
+
 Player::Player(Board& b, int x, int y) : board(b){
 	pos.x = x;
 	pos.y = y;
@@ -17,6 +21,9 @@ Player::Player(Board& b, int x, int y) : board(b){
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+	float d = (t2 - t).asSeconds() * v;
+	states.transform.translate(d * dx[dir], d * dy[dir]);
+	
 	sf::Vector2f center = getCenter();
 	states.transform.translate(center.x - circle.getRadius(), center.y - circle.getRadius());
 	target.draw(circle, states);
