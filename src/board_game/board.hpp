@@ -14,6 +14,6 @@ class Board : public sf::Drawable{
 	public:
 		bool isCoordinateOk(sf::Vector2i y) const;
 		float getTileSize() const;
-		
+		const sf::Vector2i& getSize() const;
 		Board(int sizeX, int sizeY);
 };

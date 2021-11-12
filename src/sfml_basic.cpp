@@ -1,6 +1,3 @@
-#include <iostream>
-#include "board.hpp"
-#include "player.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
