@@ -15,11 +15,10 @@ class Player : public sf::Drawable{
 		
 		static int dx[4];
 		static int dy[4];
-		static float v;
 		
-		Direction dir;
-		sf::Time t;
-		sf::Time t2;
+		Direction dir = Right;
+		sf::Time timeFromLastMove = sf::Time::Zero;
+		sf::Time timeToNextChange = sf::milliseconds(1000);
 		
 		sf::Vector2i pos;
 		int points;
@@ -33,7 +32,7 @@ class Player : public sf::Drawable{
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		void handleEvent(const sf::Event& event);
-		void update();
+		bool update(const sf::Time& time);
 		
 		sf::Vector2f getCenter() const;
 		const sf::Vector2i& getPos() const;

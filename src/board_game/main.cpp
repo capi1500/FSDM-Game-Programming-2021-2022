@@ -9,14 +9,19 @@ int main(){
 	
 	sf::RenderWindow window(sf::VideoMode(800, 500), "board game");
 	sf::View view = window.getDefaultView();
+	sf::Clock clock;
+	sf::Time frame;
 	
 	Point::init();
 	
 	Board board(15, 20);
 	Player player(board, 3, 3);
 	Point point(board, player);
+	bool lost = false;
 	
-	while(window.isOpen()){
+	while(!lost && window.isOpen()){
+		frame = clock.restart();
+		
 		sf::Event event;
 		while(window.pollEvent(event)){
 			if(event.type == sf::Event::Closed)
@@ -30,9 +35,10 @@ int main(){
 			player.pointGet();
 			point.randomPlace(player);
 		}
-		player.update();
-		if(player.isOnTail(player.getPos()))
-			window.close();
+		
+		if(!player.update(frame)){
+			lost = true;
+		}
 		
 		view.setCenter(player.getCenter());
 		window.setView(view);
@@ -45,4 +51,27 @@ int main(){
 	}
 	
 	Point::clear();
+	
+	sf::Font font;
+	font.loadFromFile("../assets/fonts/Pixeled.ttf");
+	sf::Text text;
+	text.setFont(font);
+	text.setCharacterSize(30);
+	text.setFillColor(sf::Color::White);
+	text.setString("Game Over!");
+	text.setPosition((window.getSize().x - text.getLocalBounds().width) / 2,
+					 (window.getSize().y - text.getLocalBounds().height) / 2);
+	
+	window.setView(window.getDefaultView());
+	while(window.isOpen()){
+		sf::Event event;
+		while(window.pollEvent(event)){
+			if(event.type == sf::Event::Closed)
+				window.close();
+		}
+		
+		window.clear();
+		window.draw(text);
+		window.display();
+	}
 }

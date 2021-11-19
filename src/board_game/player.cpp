@@ -3,7 +3,6 @@
 
 int Player::dx[4] = {0, 1, 0, -1};
 int Player::dy[4] = {-1, 0, 1, 0};
-float Player::v = 100;
 
 Player::Player(Board& b, int x, int y) : board(b){
 	pos.x = x;
@@ -21,9 +20,6 @@ Player::Player(Board& b, int x, int y) : board(b){
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	float d = (t2 - t).asSeconds() * v;
-	states.transform.translate(d * dx[dir], d * dy[dir]);
-	
 	sf::Vector2f center = getCenter();
 	states.transform.translate(center.x - circle.getRadius(), center.y - circle.getRadius());
 	target.draw(circle, states);
@@ -46,34 +42,57 @@ sf::Vector2f Player::getCenter() const{
 
 void Player::handleEvent(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed){
-		sf::Vector2i delta(0, 0);
 		switch(event.key.code){
 			case sf::Keyboard::W:
-				delta.y = -1;
+				dir = Up;
 				break;
 			case sf::Keyboard::A:
-				delta.x = -1;
+				dir = Left;
 				break;
 			case sf::Keyboard::S:
-				delta.y = 1;
+				dir = Down;
 				break;
 			case sf::Keyboard::D:
-				delta.x = 1;
+				dir = Right;
 				break;
 			default:
 				break;
 		}
-		if(board.isCoordinateOk(pos + delta)){
-			tailPos.push_front(pos);
-			pos += delta;
-		}
 	}
 }
 
-void Player::update(){
-	while(tailPos.size() > points + 2){
-		tailPos.pop_back();
+bool Player::update(const sf::Time& time){
+	timeFromLastMove += time;
+	while(timeToNextChange <= timeFromLastMove){
+		timeFromLastMove -= timeToNextChange;
+		
+		sf::Vector2i delta(0, 0);
+		
+		switch(dir){
+			case Up:
+				delta.y = -1;
+				break;
+			case Down:
+				delta.y = 1;
+				break;
+			case Left:
+				delta.x = -1;
+				break;
+			case Right:
+				delta.x = 1;
+				break;
+		}
+		
+		tailPos.push_front(pos);
+		while(tailPos.size() > points + 2){
+			tailPos.pop_back();
+		}
+		pos += delta;
+		
+		if(isOnTail(getPos()) || !board.isCoordinateOk(pos))
+			return false;
 	}
+	return true;
 }
 
 const sf::Vector2i& Player::getPos() const{
