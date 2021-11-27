@@ -17,9 +17,10 @@ find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
 
 # add execs
 add_executable(ProgramowanieGier src/board_game/main.cpp src/board_game/board.cpp src/board_game/board.hpp src/board_game/player.cpp src/board_game/player.hpp src/board_game/point.cpp src/board_game/point.hpp)
-add_executable(SFML_basics src/sfml_basic.cpp)
-add_executable(Origin_example src/origin_example.cpp)
-add_executable(Pointers_example src/pointers.cpp)
+add_executable(SFML_basics src/other/sfml_basic.cpp)
+add_executable(Origin_example src/other/origin_example.cpp)
+add_executable(Pointers_example src/other/pointers.cpp)
+add_executable(Platformer src/platformer/main.cpp src/platformer/game.cpp src/platformer/game.hpp src/platformer/scene.cpp src/platformer/scene.hpp src/platformer/utils/stateMachine.cpp src/platformer/utils/stateMachine.hpp src/platformer/utils/state.cpp src/platformer/utils/state.hpp src/platformer/framework.cpp src/platformer/framework.hpp src/platformer/systems/soundboard.cpp src/platformer/systems/soundboard.hpp src/platformer/systems/assetStorage.cpp src/platformer/systems/assetStorage.hpp src/platformer/systems/inputHandler.cpp src/platformer/systems/inputHandler.hpp src/platformer/utils/listener.hpp src/platformer/utils/emitter.cpp src/platformer/utils/emitter.hpp src/platformer/level.cpp src/platformer/level.hpp)
 
 # compile options
 target_compile_options(ProgramowanieGier PRIVATE -Wall)
@@ -28,3 +29,4 @@ target_compile_options(ProgramowanieGier PRIVATE -Wall)
 target_link_libraries(ProgramowanieGier sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
 target_link_libraries(SFML_basics sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
 target_link_libraries(Origin_example sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
+target_link_libraries(Platformer sfml-graphics sfml-window sfml-system sfml-audio sfml-network)

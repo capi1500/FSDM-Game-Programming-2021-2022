@@ -75,3 +75,12 @@ int main(){
 		window.display();
 	}
 }
+
+/*
+ * Wyścigi    3
+ * Uproszcozna platformówka   11
+ * Saper         8
+ * Pasjans       6
+ * Rewolwerowiec  8
+ *
+ */
