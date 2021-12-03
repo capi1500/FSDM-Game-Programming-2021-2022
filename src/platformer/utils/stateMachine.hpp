@@ -18,6 +18,11 @@ class StateMachine : Listener<Runnable>{
 		void pop();
 		void replace(State* state);
 		void clear();
+	
+	private:
+		void onNotify(const Runnable& t) override;
+	public:
+		
 		StateMachine();
 		virtual ~StateMachine();
 };

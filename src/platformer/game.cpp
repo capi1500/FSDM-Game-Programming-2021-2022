@@ -1,3 +1,4 @@
+#include <platformer/scenes/mainMenu.hpp>
 #include "game.hpp"
 #include "framework.hpp"
 
@@ -5,6 +6,10 @@ void Game::run(){
 	active = true;
 	Framework::getRenderer().create(sf::VideoMode(900, 600), "Platformer");
 	Framework::getRenderer().setFramerateLimit(60);
+	
+	Framework::getInputHandler().subscribe(this);
+	
+	scenes.add(new MainMenu(scenes));
 	
 	sf::Time time;
 	while(active){
@@ -14,8 +19,10 @@ void Game::run(){
 		Framework::getInputHandler().handleEvents();
 		scene.update(time);
 		
-		rendering[Framework::getRenderer().isOpen()]; // Może true != 1, ale powinno być ok
+		rendering[Framework::getRenderer().isOpen()](scene); // Może true != 1, ale powinno być ok
 	}
+	
+	Framework::getInputHandler().unsubscribe(this);
 	
 	Framework::getRenderer().close();
 }

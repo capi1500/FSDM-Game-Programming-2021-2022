@@ -9,6 +9,7 @@
 #include "scene.hpp"
 #include <platformer/utils/stateMachine.hpp>
 #include <platformer/utils/listener.hpp>
+#include <platformer/utils/stateMachine.hpp>
 
 class Game : public Listener<sf::Event>{
 	private:

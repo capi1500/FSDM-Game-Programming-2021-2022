@@ -12,6 +12,10 @@ bool State::isActive() const{
 	return active;
 }
 
-void State::setActive(bool active){
-	State::active = active;
+void State::activate(){
+	active = true;
+}
+
+void State::deactivate(){
+	active = false;
 }

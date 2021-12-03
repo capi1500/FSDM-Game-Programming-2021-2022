@@ -11,7 +11,8 @@ class State{
 		StateMachine& getStateMachine() const;
 		
 		bool isActive() const;
-		void setActive(bool active);
+		virtual void activate();
+		virtual void deactivate();
 		
 		virtual ~State() = default;
 };

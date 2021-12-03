@@ -18,9 +18,9 @@ State& StateMachine::getState(){
 void StateMachine::add(State* state){
 	emitter.send([this, state]{
 		if(!states.empty())
-			states.top()->setActive(false);
+			states.top()->deactivate();
 		states.push(state);
-		states.top()->setActive(true);
+		states.top()->activate();
 	});
 }
 
@@ -29,7 +29,7 @@ void StateMachine::pop(){
 		delete states.top();
 		states.pop();
 		if(!states.empty())
-			states.top()->setActive(true);
+			states.top()->activate();
 	});
 }
 
@@ -45,4 +45,8 @@ void StateMachine::clear(){
 			states.pop();
 		}
 	});
+}
+
+void StateMachine::onNotify(const Runnable& t){
+	t();
 }
