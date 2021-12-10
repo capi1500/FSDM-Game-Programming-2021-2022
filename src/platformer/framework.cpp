@@ -3,7 +3,7 @@
 AssetStorage Framework::assetStorage;
 InputHandler Framework::inputHandler;
 Soundboard Framework::soundboard;
-std::shared_ptr<sf::RenderWindow> Framework::renderer = nullptr;
+std::shared_ptr<Renderer> Framework::renderer = nullptr;
 
 AssetStorage& Framework::getAssetStorage(){
 	return assetStorage;
@@ -17,8 +17,8 @@ Soundboard& Framework::getSoundboard(){
 	return soundboard;
 }
 
-sf::RenderWindow& Framework::getRenderer(){
+Renderer& Framework::getRenderer(){
 	if(renderer == nullptr)
-		renderer = std::make_shared<sf::RenderWindow>();
+		renderer = std::make_shared<Renderer>();
 	return *renderer;
 }

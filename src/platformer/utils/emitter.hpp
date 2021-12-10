@@ -35,10 +35,3 @@ class Emitter{
 			listeners.erase(listener);
 		}
 };
-
-/*
-Scene a; wyślij event, zamień scenę na nową (b)
-	usuwa scenę a i dodaje scenę b
- 
- 
-*/
