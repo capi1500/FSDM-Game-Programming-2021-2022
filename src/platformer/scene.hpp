@@ -9,12 +9,12 @@
 #include "level.hpp"
 
 class Scene : public State, public Listener<sf::Event>{
-	private:
+	protected:
 		std::vector<Entity*> entities;
 		Level level;
 	public:
 		Scene(StateMachine& stateMachine);
-		virtual ~Scene() = default;
+		virtual ~Scene();
 		
 		void update(const sf::Time& time);
 		void draw();

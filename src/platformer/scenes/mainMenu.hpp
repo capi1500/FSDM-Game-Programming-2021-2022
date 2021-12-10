@@ -1,5 +1,6 @@
 #pragma once
 
+#include <platformer/gui/button.hpp>
 #include "../scene.hpp"
 
 class MainMenu : public Scene{

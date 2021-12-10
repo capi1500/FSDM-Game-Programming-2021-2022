@@ -24,3 +24,10 @@ void Scene::deactivate(){
 	State::deactivate();
 	Framework::getInputHandler().unsubscribe(this);
 }
+
+Scene::~Scene(){
+	for(auto& e : entities){
+		delete e;
+		e = nullptr;
+	}
+}
