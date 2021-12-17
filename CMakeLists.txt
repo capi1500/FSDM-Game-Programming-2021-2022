@@ -6,11 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 # includes
 include_directories(src)
 
+set(LIB_DIR libraries)
 if(WIN32)
-    set(LIB_DIR libraries/win)
     set(SHRD_EXT dll)
 else()
-    set(LIB_DIR libraries/unix)
     set(SHRD_EXT so)
 endif(WIN32)
 
