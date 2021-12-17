@@ -3,9 +3,9 @@
 #include <functional>
 #include <SFML/Window/Event.hpp>
 #include <platformer/utils/listener.hpp>
-#include "image.hpp"
+#include "widget.hpp"
 
-class Button : public Image, public Listener<sf::Event>{
+class Button : public Widget, public Listener<sf::Event>{
 	private:
 		std::function<void()> onHoverStart;
 		std::function<void()> onHoverEnd;

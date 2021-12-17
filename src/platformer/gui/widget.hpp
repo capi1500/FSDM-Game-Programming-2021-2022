@@ -2,16 +2,25 @@
 
 #include <platformer/entity.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
 
-class Image : public Entity{
+class Widget : public Entity{
 	private:
 		sf::Sprite sprite;
+		sf::Text text;
+		bool centeredText = true;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		void update(const sf::Time& time) override;
 		
-		void setTexture(const sf::Texture& texture);
+		sf::Sprite& getSprite();
+		sf::Text& getText();
+		const sf::Sprite& getSprite() const;
+		const sf::Text& getText() const;
+		
+		bool isCenteredText() const;
+		void setCenteredText(bool centeredText);
 		
 		sf::FloatRect getGlobalBounds() const;
 };
