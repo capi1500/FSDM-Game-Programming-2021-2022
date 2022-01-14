@@ -1,6 +1,8 @@
 #include <iostream>
 #include <platformer/framework.hpp>
 #include "mainMenu.hpp"
+#include "../utils/stateMachine.hpp"
+#include "play.hpp"
 
 MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 	Framework::getAssetStorage().loadTexture("red", "../assets/textures/rgb/red.png");
@@ -27,9 +29,10 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 		std::cout << "Button pressed\n";
 		button->getSprite().setTexture(Framework::getAssetStorage().getTexture("blue"));
 	});
-	button->setOnButtonReleased([button]{
+	button->setOnButtonReleased([button, this]{
 		std::cout << "Button released\n";
 		button->getSprite().setTexture(Framework::getAssetStorage().getTexture("red"));
+        getStateMachine().replace(new Play(getStateMachine()));
 	});
 	
 	entities.push_back(button);

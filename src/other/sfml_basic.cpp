@@ -1,15 +1,30 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <box2d/box2d.h>
+
+sf::Vector2f metersToPixel(const b2Vec2 vec){
+    return {vec.x * 10, vec.y * 10};
+}
 
 int main(){
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(500, 700), "Hello world");
 	//window.setFramerateLimit(60);
 	
-	sf::CircleShape circle;
-	circle.setRadius(50);
-	circle.setPosition(200, 200);
+	sf::RectangleShape circle;
+	circle.setSize({40, 40});
 	circle.setFillColor(sf::Color::Red);
+    circle.setOrigin(20, 20);
+
+    sf::RectangleShape boxes[20];
+    for(int i = 0; i < 20; i++){
+        boxes[i].setSize({40, 40});
+        boxes[i].setFillColor(sf::Color::Green);
+        boxes[i].setOrigin(20, 20);
+    }
+    sf::RectangleShape groundGraphics;
+    groundGraphics.setSize({400, 50});
+    groundGraphics.setOrigin(200, 25);
 	
 	sf::Texture texW, texA, texS, texD, texWl, texAl, texSl, texDl;
 	texW.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/W_Key_Dark.png");
@@ -30,7 +45,65 @@ int main(){
 	sprA.setPosition(0, texA.getSize().y);
 	sprS.setPosition(texA.getSize().x, texA.getSize().y);
 	sprD.setPosition(2 * texA.getSize().x, texA.getSize().y);
-	
+
+    // fizyka:
+
+    b2World world(b2Vec2(0, 10));
+
+    b2Body* bodyBoxes[20];
+    for(int i = 0; i < 20; i++) {
+        b2BodyDef bodyDef;
+        bodyDef.position = b2Vec2(10, -5 * i);
+        bodyDef.type = b2_dynamicBody;
+
+        bodyBoxes[i] = world.CreateBody(&bodyDef);
+
+        b2PolygonShape polygonShape;
+        polygonShape.SetAsBox(2, 2); // Tak na prawdę to jest 4x4m
+
+        b2FixtureDef fixture;
+        fixture.shape = &polygonShape;
+        fixture.density = 1.0;
+        fixture.friction = 0.3;
+
+        bodyBoxes[i]->CreateFixture(&fixture);
+    }
+    b2BodyDef bodyDef;
+    bodyDef.position = b2Vec2(30, 5);
+    bodyDef.type = b2_dynamicBody;
+
+    b2Body* body = world.CreateBody(&bodyDef);
+
+    b2PolygonShape polygonShape;
+    polygonShape.SetAsBox(2, 2); // Tak na prawdę to jest 4x4m
+
+    b2FixtureDef fixture;
+    fixture.shape = &polygonShape;
+    fixture.density = 1.0;
+    fixture.friction = 0.3;
+
+    body->CreateFixture(&fixture);
+
+
+    b2BodyDef groundDef;
+    groundDef.position = b2Vec2(25, 60);
+    groundDef.type = b2_staticBody;
+
+    b2Body* ground = world.CreateBody(&groundDef);
+
+    b2PolygonShape polygonShape2;
+    polygonShape2.SetAsBox(20, 2.5); // Tak na prawdę to jest 400x5m
+
+    b2FixtureDef fixture2;
+    fixture2.shape = &polygonShape2;
+    fixture2.density = 1.0;
+    fixture2.friction = 0.3;
+
+    ground->CreateFixture(&fixture2);
+    groundGraphics.setPosition(metersToPixel(ground->GetPosition()));
+
+    // coś dalej
+
 	sf::SoundBuffer soundDef;
 	soundDef.loadFromFile("../assets/sounds/jump.ogg");
 	
@@ -70,14 +143,25 @@ int main(){
 			}
 		}
 		// update
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			circle.move(0, -100 * frame.asSeconds());
+		b2Vec2 v = body->GetLinearVelocity();
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			circle.move(-100 * frame.asSeconds(), 0);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			circle.move(0, 100 * frame.asSeconds());
+            v.x = -1;
+		//if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+       //     v.y = 1;
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			circle.move(100 * frame.asSeconds(), 0);
+            v.x = 1;
+        body->SetLinearVelocity(v);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            body->ApplyLinearImpulseToCenter({0, -1}, true);
+
+        world.Step(frame.asSeconds(), 8, 3);
+
+        for(int i = 0; i < 20; i++){
+            boxes[i].setPosition(metersToPixel(bodyBoxes[i]->GetPosition()));
+            boxes[i].setRotation(180 * bodyBoxes[i]->GetAngle() / b2_pi);
+        }
+        circle.setPosition(metersToPixel(body->GetPosition()));
+        circle.setRotation(180 * body->GetAngle() / b2_pi);
 		// draw
 		window.clear();
 		window.draw(circle);
@@ -85,6 +169,10 @@ int main(){
 		window.draw(sprA);
 		window.draw(sprS);
 		window.draw(sprD);
+        window.draw(groundGraphics);
+        for(int i = 0; i < 20; i++){
+            window.draw(boxes[i]);
+        }
 		window.display();
 	}
 	
