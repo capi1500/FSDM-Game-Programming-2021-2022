@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "entity.hpp"
+#include "platformer/entities/entity.hpp"
 
 class Level{
 	private:

@@ -26,6 +26,7 @@ void StateMachine::add(State* state){
 
 void StateMachine::pop(){
 	emitter.send([this]{
+        states.top()->deactivate();
 		delete states.top();
 		states.pop();
 		if(!states.empty())

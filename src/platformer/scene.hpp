@@ -5,7 +5,7 @@
 #include <SFML/Window/Event.hpp>
 #include <platformer/utils/state.hpp>
 #include <platformer/utils/listener.hpp>
-#include <platformer/entity.hpp>
+#include "platformer/entities/entity.hpp"
 #include "level.hpp"
 
 class Scene : public State, public Listener<sf::Event>{
@@ -15,8 +15,8 @@ class Scene : public State, public Listener<sf::Event>{
 	public:
 		Scene(StateMachine& stateMachine);
 		virtual ~Scene();
-		
-		void update(const sf::Time& time);
+
+        virtual void update(const sf::Time& time);
 		void draw();
 		
 		void activate() override;
