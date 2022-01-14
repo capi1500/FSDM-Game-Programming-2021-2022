@@ -6,14 +6,13 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 	Framework::getAssetStorage().loadTexture("red", "../assets/textures/rgb/red.png");
 	Framework::getAssetStorage().loadTexture("green", "../assets/textures/rgb/green.png");
 	Framework::getAssetStorage().loadTexture("blue", "../assets/textures/rgb/blue.png");
-	Framework::getAssetStorage().loadFont("font", "../assets/fonts/Pixeled.ttf");
 	Framework::getAssetStorage().loadSound("click", "../assets/sounds/ClickSound.wav");
 	Framework::getSoundboard().setSize(10);
 	
 	Button* button = new Button;
 	button->move(200, 200);
 	button->getSprite().setTexture(Framework::getAssetStorage().getTexture("red"));
-	button->getText().setFont(Framework::getAssetStorage().getFont("font"));
+	button->getText().setFont(Framework::getAssetStorage().getFont("pixeled"));
 	button->getText().setCharacterSize(20);
 	button->getText().setString("Hello world");
 	

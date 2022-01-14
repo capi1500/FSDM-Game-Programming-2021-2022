@@ -15,6 +15,7 @@ class AssetStorage{
 		void loadTexture(const std::string& path);
 		void loadTexture(const std::string& name, const std::string& path);
 		const sf::Texture& getTexture(const std::string& name) const;
+		sf::Texture& getTexture(const std::string& name);
 		
 		void loadSound(const std::string& path);
 		void loadSound(const std::string& name, const std::string& path);

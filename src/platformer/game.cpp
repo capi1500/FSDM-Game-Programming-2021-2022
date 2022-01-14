@@ -9,6 +9,20 @@ void Game::run(){
 	
 	Framework::getInputHandler().subscribe(this);
 	
+	Framework::getAssetStorage().loadTexture("tiles", "../assets/textures/pixelplatformer/Tilemap/tiles.png");
+	Framework::getAssetStorage().loadTexture("characters", "../assets/textures/pixelplatformer/Tilemap/characters.png");
+	Framework::getAssetStorage().loadTexture("background", "../assets/textures/pixelplatformer/Background/tilemap.png");
+	Framework::getAssetStorage().loadTexture("blue ui", "../assets/textures/ui/Spritesheet/blueSheet.png");
+	Framework::getAssetStorage().loadTexture("green ui", "../assets/textures/ui/Spritesheet/greenSheet.png");
+	Framework::getAssetStorage().loadTexture("grey ui", "../assets/textures/ui/Spritesheet/greySheet.png");
+	Framework::getAssetStorage().loadTexture("red ui", "../assets/textures/ui/Spritesheet/redSheet.png");
+	Framework::getAssetStorage().loadTexture("yellow ui", "../assets/textures/ui/Spritesheet/yellowSheet.png");
+	Framework::getAssetStorage().loadTexture("rpg ui", "../assets/textures/ui/Spritesheet/uipack_rpg_sheet.png");
+	
+	Framework::getAssetStorage().loadFont("pixeled", "../assets/fonts/Pixeled.ttf");
+	Framework::getAssetStorage().loadFont("kenvector", "../assets/fonts/kenvector_future.ttf");
+	Framework::getAssetStorage().loadFont("kenvector thin", "../assets/fonts/kenvector_future_thin.ttf");
+	
 	scenes.add(new MainMenu(scenes));
 	
 	sf::Time time;

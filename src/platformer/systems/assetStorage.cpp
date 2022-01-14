@@ -12,6 +12,10 @@ const sf::Texture& AssetStorage::getTexture(const std::string& name) const{
 	return textures.at(name);
 }
 
+sf::Texture& AssetStorage::getTexture(const std::string& name){
+	return textures[name];
+}
+
 void AssetStorage::loadSound(const std::string& path){
 	loadSound(path, path);
 }
