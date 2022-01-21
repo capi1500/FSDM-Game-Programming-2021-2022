@@ -1,6 +1,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <platformer/framework.hpp>
 #include <platformer/entities/PhysicalEntity.hpp>
+#include <platformer/entities/world.hpp>
 #include "play.hpp"
 
 Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework::getPhysicConfig().gravity) {
@@ -20,39 +21,12 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 	ui.setTextureSize({18, 18});
 	ui.setOffset({2, 2});
 	
-	b2BodyDef groundDef;
-    groundDef.position = b2Vec2(25, 60);
-
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox(20, 2.5);
-
-    b2FixtureDef groundFix;
-    groundFix.shape = &groundBox;
-
-    PhysicalEntity* ground = new PhysicalEntity(b2World);
-    ground->create(groundDef);
-    ground->addFixture(groundFix, new sf::RectangleShape({400, 50}));
-    ground->setOrigin(200, 25);
-
-    b2BodyDef movingDef;
-    movingDef.position = b2Vec2(25, 5);
-    movingDef.type = b2_dynamicBody;
-
-    b2PolygonShape movingBox;
-    movingBox.SetAsBox(2, 2);
-
-    b2FixtureDef movingFix;
-    movingFix.shape = &movingBox;
-    movingFix.density = 1;
-    movingFix.friction = 0.3;
-
-    PhysicalEntity* moving = new PhysicalEntity(b2World);
-    moving->create(movingDef);
-    moving->addFixture(movingFix, new sf::RectangleShape({40, 40}));
-    moving->setOrigin(20, 20);
-
-    entities.push_back(ground);
-    entities.push_back(moving);
+	entities.push_back(
+			WorldBuilder(b2World, {5, 5})
+					.setTile({0, 0}, names.golden_brick, true)
+					.setTile({3, 3}, names.grass_left, true)
+					.create_ptr()
+	);
 }
 
 void Play::onNotify(const sf::Event &event) {
