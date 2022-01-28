@@ -45,16 +45,16 @@ World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
 	texture.display();
 	
 	sprite.setTexture(texture.getTexture());
+	//sprite.setOrigin(9 * size.x, 9 * size.y);
 	
 	b2BodyDef bodyDef;
-	bodyDef.position = Framework::getPhysicConfig().pixelToMeters({200, 200});
 	create(bodyDef);
 	
-	auto createBox = [this](unsigned x, unsigned y, int beg){
+	auto createBox = [this](int x, int y, int beg){
 		b2PolygonShape shape;
-		shape.SetAsBox(x - beg / 2,
+		shape.SetAsBox((x - beg) / 2.f,
 		               0.5,
-		               Framework::getPhysicConfig().pixelToMeters(sf::Vector2f(18 * (x - beg), 18 * y)),
+		               Framework::getPhysicConfig().pixelToMeters(sf::Vector2f(9 * (x + beg), 18 * (y + 0.5))),
 		               0);
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
@@ -63,9 +63,9 @@ World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
 		addFixture(fixtureDef);
 	};
 	
-	for(unsigned y = 0; y < size.y; y++){
+	for(int y = 0; y < size.y; y++){
 		int beg = -1;
-		for(unsigned x = 0; x < size.x; x++){
+		for(int x = 0; x < size.x; x++){
 			if(!solid[x][y] && beg != -1){
 				createBox(x, y, beg);
 				beg = -1;

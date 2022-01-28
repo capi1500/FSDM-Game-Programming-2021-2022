@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "PhysicalEntity.hpp"
+#include "physicalEntity.hpp"
 
 class World;
 

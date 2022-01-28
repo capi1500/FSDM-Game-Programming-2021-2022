@@ -1,5 +1,5 @@
 #include <SFML/System/Vector2.hpp>
-#include "Tiles.hpp"
+#include "tiles.hpp"
 
 const sf::Vector2u Tiles::grass_flat_standalone = {0, 0};
 const sf::Vector2u Tiles::grass_flat_left = {1, 0};

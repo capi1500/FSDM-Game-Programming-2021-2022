@@ -1,4 +1,4 @@
-#include "PhysicalEntity.hpp"
+#include "physicalEntity.hpp"
 #include "platformer/framework.hpp"
 
 PhysicalEntity::PhysicalEntity(b2World& world) : world(world){}
