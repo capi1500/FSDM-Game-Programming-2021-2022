@@ -2,6 +2,7 @@
 #include <platformer/framework.hpp>
 #include <platformer/entities/PhysicalEntity.hpp>
 #include <platformer/entities/world.hpp>
+#include <platformer/entities/world/Tiles.hpp>
 #include "play.hpp"
 
 Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework::getPhysicConfig().gravity) {
@@ -23,8 +24,8 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 	
 	entities.push_back(
 			WorldBuilder(b2World, {5, 5})
-					.setTile({0, 0}, names.golden_brick, true)
-					.setTile({3, 3}, names.grass_left, true)
+					.setTile({0, 0}, Tiles::golden_brick, true)
+					.setTile({3, 3}, Tiles::grass_left, true)
 					.create_ptr()
 	);
 }

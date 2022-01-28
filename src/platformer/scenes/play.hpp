@@ -3,11 +3,9 @@
 #include <platformer/scene.hpp>
 #include <platformer/utils/tileset.hpp>
 #include <box2d/b2_world.h>
-#include <platformer/entities/world/Tiles.hpp>
 
 class Play : public Scene{
 	private:
-		Tiles names;
 		Tileset tiles;
 		Tileset background;
 		Tileset characters;
