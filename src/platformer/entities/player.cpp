@@ -5,16 +5,12 @@
 
 void Player::update(const sf::Time& time){
 	PhysicalEntity::update(time);
-	b2Vec2 vec = body->GetLinearVelocity();
-	vec.x = 0;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		vec.x -= 5;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		vec.x += 5;
-	body->SetLinearVelocity(vec);
 	
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		body->ApplyLinearImpulseToCenter({0, -0.5}, true);
+	stop();
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		moveLeft();
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		moveRight();
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -37,6 +33,22 @@ Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(wo
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
 	fixtureDef.density = 1.0;
-	fixtureDef.friction = 0.3;
+	fixtureDef.friction = 0;
 	addFixture(fixtureDef);
+	
+	properties.jumpFlag = true;
+	properties.jump.height = 5;
+	properties.doubleJumpFlag = true;
+	properties.doubleJump.height = 5;
+	properties.movementFlag = true;
+	properties.movement.speed = 5;
+	
+	collisionPrecedence = 5;
+	properties.solidFlag = true;
+}
+
+void Player::onNotify(const sf::Event& event){
+	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::W){
+		jump();
+	}
 }

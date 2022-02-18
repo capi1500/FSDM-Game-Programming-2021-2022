@@ -43,13 +43,16 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 	
 	entities.push_back(builder.create_ptr());
 	
-	entities.push_back(new Player(b2World, {0, 1}));
+	p = new Player(b2World, {0, 1});
+	entities.push_back(p);
 	
 	Framework::getRenderer().setView(sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize())));
+	
+	b2World.SetContactListener(&contactListener);
 }
 
 void Play::onNotify(const sf::Event &event){
-
+	p->onNotify(event);
 }
 
 void Play::update(const sf::Time &time){

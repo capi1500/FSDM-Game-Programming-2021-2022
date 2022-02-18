@@ -1,5 +1,6 @@
 #include "player.hpp"
 #include <SFML/Window/Event.hpp>
+#include <platformer/entities/physicalEntity.hpp>
 
 int Player::dx[4] = {0, 1, 0, -1};
 int Player::dy[4] = {-1, 0, 1, 0};

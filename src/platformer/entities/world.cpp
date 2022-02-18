@@ -78,6 +78,8 @@ World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
 			createBox(size.x, y, beg);
 		}
 	}
+	
+	properties.solidFlag = true;
 }
 
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const{
