@@ -7,10 +7,10 @@
 
 class Button : public Widget, public Listener<sf::Event>{
 	private:
-		std::function<void()> onHoverStart;
-		std::function<void()> onHoverEnd;
-		std::function<void()> onButtonPressed;
-		std::function<void()> onButtonReleased;
+		std::function<void()> onHoverStart = []{};
+		std::function<void()> onHoverEnd = []{};
+		std::function<void()> onButtonPressed = []{};
+		std::function<void()> onButtonReleased = []{};
 		
 		bool pressed = false;
 		bool hover = false;

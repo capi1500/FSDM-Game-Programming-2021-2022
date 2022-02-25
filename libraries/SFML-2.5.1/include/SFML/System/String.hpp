@@ -326,7 +326,7 @@ public:
     ///
     /// \param index Index of the character to get
     ///
-    /// \return Character at position \a index
+    /// \return Npc at position \a index
     ///
     ////////////////////////////////////////////////////////////
     Uint32 operator [](std::size_t index) const;

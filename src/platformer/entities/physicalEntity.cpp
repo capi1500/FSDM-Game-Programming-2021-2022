@@ -1,7 +1,39 @@
 #include "physicalEntity.hpp"
 #include "platformer/framework.hpp"
 
-PhysicalEntity::PhysicalEntity(b2World& world) : world(world){}
+PhysicalEntity::PhysicalEntity(b2World& world,
+		const sf::Vector2i& position,
+		const sf::Vector2u& textureCoord,
+		const b2Vec2& hitboxCenter,
+		const b2Vec2& hitboxSize,
+		const EntityProperties& properties,
+		int collisionPrecedence) : world(world){
+	sprite.setTexture(Framework::getAssetStorage().getTexture("characters"));
+	sprite.setTextureRect({static_cast<int>(textureCoord.x * 26), static_cast<int>(textureCoord.y * 25), 24, 24});
+	
+	b2BodyDef bodyDef;
+	bodyDef.position = Framework::getPhysicConfig().pixelToMeters(sf::Vector2f(position.x * 18, position.y * 18));
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.fixedRotation = true;
+	create(bodyDef);
+	
+	b2PolygonShape shape;
+	shape.SetAsBox(hitboxSize.x / 2, hitboxSize.y / 2, hitboxCenter,0);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 1.0;
+	fixtureDef.friction = 0;
+	addFixture(fixtureDef);
+	
+	this->properties = properties;
+	
+	this->collisionPrecedence = collisionPrecedence;
+}
+
+PhysicalEntity::PhysicalEntity(b2World& world, const EntityProperties& properties, int collisionPrecedence) : world(world){
+	this->properties = properties;
+	this->collisionPrecedence = collisionPrecedence;
+}
 
 void PhysicalEntity::update(const sf::Time& time){
 	setPosition(Framework::getPhysicConfig().metersToPixel(body->GetPosition()));
@@ -74,4 +106,9 @@ int PhysicalEntity::getCollisionPrecedence() const{
 
 const EntityProperties& PhysicalEntity::getProperties() const{
 	return properties;
+}
+
+void PhysicalEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+	states.transform.combine(getTransform());
+	target.draw(sprite, states);
 }

@@ -3,6 +3,7 @@
 #include "mainMenu.hpp"
 #include "../utils/stateMachine.hpp"
 #include "play.hpp"
+#include "options.h"
 
 MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 	Framework::getAssetStorage().loadTexture("red", "../assets/textures/rgb/red.png");
@@ -35,6 +36,31 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 	});
 	
 	entities.push_back(button);
+	/*
+	Button* button2 = new Button;
+	button2->move(200, 200);
+	button2->getSprite().setTexture(Framework::getAssetStorage().getTexture("red"));
+	button2->getText().setFont(Framework::getAssetStorage().getFont("pixeled"));
+	button2->getText().setCharacterSize(20);
+	button2->getText().setString("Hello world");
+	
+	button2->setOnHoverStart([button2]{
+		button2->getSprite().setTexture(Framework::getAssetStorage().getTexture("green"));
+	});
+	button2->setOnHoverEnd([button2]{
+		button2->getSprite().setTexture(Framework::getAssetStorage().getTexture("red"));
+	});
+	button2->setOnButtonPressed([button2]{
+		std::cout << "Button pressed\n";
+		button2->getSprite().setTexture(Framework::getAssetStorage().getTexture("blue"));
+	});
+	button2->setOnButtonReleased([button2, this]{
+		std::cout << "Button released\n";
+		button2->getSprite().setTexture(Framework::getAssetStorage().getTexture("red"));
+		getStateMachine().replace(new Options(getStateMachine()));
+	});
+	
+	entities.push_back(button2);*/
 }
 
 void MainMenu::onNotify(const sf::Event& event){

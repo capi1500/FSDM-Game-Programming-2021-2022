@@ -1,4 +1,5 @@
 #include <platformer/framework.hpp>
+#include <iostream>
 #include "button.hpp"
 
 void Button::setOnHoverStart(const std::function<void()>& onHoverStart){
@@ -20,11 +21,11 @@ void Button::setOnButtonReleased(const std::function<void()>& onButtonReleased){
 void Button::onNotify(const sf::Event& event){
 	if(!pressed){
 		if(event.type == sf::Event::MouseMoved){
-			if(!hover && getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y)){
+			if(!hover && getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}))){
 				hover = true;
 				onHoverStart();
 			}
-			else if(hover && !getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y)){
+			else if(hover && !getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}))){
 				hover = false;
 				onHoverEnd();
 			}
@@ -37,7 +38,7 @@ void Button::onNotify(const sf::Event& event){
 	else{
 		if(event.type == sf::Event::MouseButtonReleased){
 			pressed = false;
-			if(getGlobalBounds().contains(event.mouseButton.x, event.mouseMove.y)){
+			if(getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseButton.x, event.mouseButton.y}))){
 				onButtonReleased();
 				onHoverStart();
 			}

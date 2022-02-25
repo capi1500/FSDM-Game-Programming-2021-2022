@@ -13,28 +13,21 @@ void Player::update(const sf::Time& time){
 		moveRight();
 }
 
-void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	states.transform.combine(getTransform());
-	target.draw(sprite, states);
-}
-
-Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(world){
-	sprite.setTexture(Framework::getAssetStorage().getTexture("tiles"));
-	sprite.setTextureRect({static_cast<int>(Tiles::snowman.x * 20), static_cast<int>(Tiles::snowman.y * 20), 18, 18});
-	
-	b2BodyDef bodyDef;
-	bodyDef.position = Framework::getPhysicConfig().pixelToMeters(sf::Vector2f(position.x * 18, position.y * 18));
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.fixedRotation = true;
-	create(bodyDef);
-	
-	b2PolygonShape shape;
-	shape.SetAsBox(0.5,0.5,{0.5, 0.5},0);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &shape;
-	fixtureDef.density = 1.0;
-	fixtureDef.friction = 0;
-	addFixture(fixtureDef);
+Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(world,
+																			  position,
+																			  {0, 0},
+																			  {0.5, 0.5},
+																			  {1, 1},
+																			  {
+																					true,
+																					{5},
+																			        true,
+																					{5},
+																			        true,
+																					{5},
+																					true
+																			   },
+																			  5){
 	
 	properties.jumpFlag = true;
 	properties.jump.height = 5;

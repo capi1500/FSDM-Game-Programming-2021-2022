@@ -21,7 +21,7 @@ WorldBuilder& WorldBuilder::setTile(const sf::Vector2u& position, const sf::Vect
 	return *this;
 }
 
-World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
+World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world, {}){
 	std::swap(size, worldBuilder.size);
 	std::swap(solid, worldBuilder.solid);
 	std::swap(type, worldBuilder.type);
@@ -52,8 +52,8 @@ World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
 	
 	auto createBox = [this](int x, int y, int beg){
 		b2PolygonShape shape;
-		shape.SetAsBox((x - beg) / 2.f,
-		               0.5,
+		shape.SetAsBox(0.75 * (x - beg) / 2.f,
+		               0.75 * 0.5,
 		               Framework::getPhysicConfig().pixelToMeters(sf::Vector2f(9 * (x + beg), 18 * (y + 0.5))),
 		               0);
 		b2FixtureDef fixtureDef;

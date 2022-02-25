@@ -4,7 +4,7 @@ AssetStorage Framework::assetStorage;
 InputHandler Framework::inputHandler;
 Soundboard Framework::soundboard;
 std::shared_ptr<Renderer> Framework::renderer = nullptr;
-PhysicsConfig Framework::physicsConfig = PhysicsConfig({0, 9.81}, 18, 8, 3);
+PhysicsConfig Framework::physicsConfig = PhysicsConfig({0, 9.81}, 24, 8, 3);
 
 AssetStorage& Framework::getAssetStorage(){
 	return assetStorage;
