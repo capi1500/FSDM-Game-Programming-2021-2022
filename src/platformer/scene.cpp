@@ -1,7 +1,9 @@
 #include "scene.hpp"
 #include "framework.hpp"
 
-Scene::Scene(StateMachine& stateMachine) : State(stateMachine){}
+Scene::Scene(StateMachine& stateMachine) : State(stateMachine){
+	view = Framework::getRenderer().getDefaultView();
+}
 
 void Scene::update(const sf::Time& time){
 	for(auto& e : entities)
@@ -17,12 +19,20 @@ void Scene::draw(){
 
 void Scene::activate(){
 	State::activate();
+	Framework::getRenderer().setView(view);
 	Framework::getInputHandler().subscribe(this);
+	for(auto& e : entities){
+		e->activate();
+	}
 }
 
 void Scene::deactivate(){
 	State::deactivate();
+	view = Framework::getRenderer().getView();
 	Framework::getInputHandler().unsubscribe(this);
+	for(auto& e : entities){
+		e->deactivate();
+	}
 }
 
 Scene::~Scene(){

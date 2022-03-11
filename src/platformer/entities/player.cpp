@@ -1,6 +1,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <platformer/framework.hpp>
 #include <platformer/entities/world/tiles.hpp>
+#include <iostream>
 #include "player.hpp"
 
 void Player::update(const sf::Time& time){

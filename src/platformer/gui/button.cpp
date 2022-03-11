@@ -50,12 +50,20 @@ void Button::onNotify(const sf::Event& event){
 	}
 }
 
-Button::Button(){
+void Button::activate(){
 	Framework::getInputHandler().subscribe(this);
 }
 
-Button::~Button(){
+void Button::deactivate(){
 	Framework::getInputHandler().unsubscribe(this);
+}
+
+Button::Button(){
+	activate();
+}
+
+Button::~Button(){
+	deactivate();
 }
 
 ButtonBuilder& ButtonBuilder::setOnHoverStart(const std::function<void()>& onHoverStart){

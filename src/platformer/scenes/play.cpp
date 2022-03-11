@@ -7,7 +7,7 @@
 #include <platformer/utils/stateMachine.hpp>
 #include <platformer/entities/npc/mine.hpp>
 #include "play.hpp"
-#include "options.h"
+#include "pause.h"
 
 Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework::getPhysicConfig().gravity) {
 	tiles.setTexture(Framework::getAssetStorage().getTexture("tiles"));
@@ -50,7 +50,7 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 	entities.push_back(p);
 	entities.push_back(new Mine(b2World, {5, -5}));
 	
-	Framework::getRenderer().setView(sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize())));
+	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize()));
 	
 	b2World.SetContactListener(&contactListener);
 }

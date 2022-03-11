@@ -60,3 +60,11 @@ bool Widget::isCenteredText() const{
 void Widget::setCenteredText(bool centeredText){
 	Widget::centeredText = centeredText;
 }
+
+void Widget::setCenter(const sf::Vector2f& center){
+	setPosition(center.x - getGlobalBounds().width / 2, center.y - getGlobalBounds().height / 2);
+}
+
+Widget::Widget(){
+	//setOrigin(getGlobalBounds().width / 2, getGlobalBounds().height / 2);
+}

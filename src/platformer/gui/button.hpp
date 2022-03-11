@@ -22,6 +22,8 @@ class Button : public Widget, public Listener<sf::Event>{
 		void setOnButtonPressed(const std::function<void()>& onButtonPressed);
 		void setOnButtonReleased(const std::function<void()>& onButtonReleased);
 		void onNotify(const sf::Event& event) override;
+		void activate() override;
+		void deactivate() override;
 };
 
 class ButtonBuilder{

@@ -12,12 +12,15 @@ class Widget : public Entity{
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
+		Widget();
 		void update(const sf::Time& time) override;
 		
 		sf::Sprite& getSprite();
 		sf::Text& getText();
 		const sf::Sprite& getSprite() const;
 		const sf::Text& getText() const;
+		
+		void setCenter(const sf::Vector2f& center);
 		
 		bool isCenteredText() const;
 		void setCenteredText(bool centeredText);

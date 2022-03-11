@@ -24,7 +24,7 @@ void Game::run(){
 	Framework::getAssetStorage().loadFont("kenvector", "../assets/fonts/kenvector_future.ttf");
 	Framework::getAssetStorage().loadFont("kenvector thin", "../assets/fonts/kenvector_future_thin.ttf");
 	
-	scenes.add(new Play(scenes));
+	scenes.add(new MainMenu(scenes));
 	
 	sf::Time time;
 	while(active){

@@ -16,13 +16,13 @@ class PhysicalEntity : public Entity{
 		
 		EntityProperties properties;
 		
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	public:
 		void jump();
 		void stop();
 		void moveLeft();
 		void moveRight();
 		
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	public:
 		const EntityProperties& getProperties() const;
 		
 		void update(const sf::Time& time) override;

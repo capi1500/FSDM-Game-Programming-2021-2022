@@ -8,6 +8,9 @@ class Entity : public sf::Drawable, public sf::Transformable{
 	public:
 		virtual void update(const sf::Time& time) = 0;
 		virtual ~Entity() = default;
+		
+		virtual void activate();
+		virtual void deactivate();
 };
 
 
