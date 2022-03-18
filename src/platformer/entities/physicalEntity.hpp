@@ -24,6 +24,7 @@ class PhysicalEntity : public Entity{
 		void moveRight();
 		
 		const EntityProperties& getProperties() const;
+		EntityProperties& getProperties();
 		
 		void update(const sf::Time& time) override;
 		

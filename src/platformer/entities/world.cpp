@@ -80,6 +80,7 @@ World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world, {}
 	}
 	
 	properties.solidFlag = true;
+	properties.type = EntityProperties::Ground;
 }
 
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const{

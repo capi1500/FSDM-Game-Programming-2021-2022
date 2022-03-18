@@ -39,6 +39,7 @@ Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(wo
 	
 	collisionPrecedence = 5;
 	properties.solidFlag = true;
+	properties.type = EntityProperties::Player;
 }
 
 void Player::onNotify(const sf::Event& event){

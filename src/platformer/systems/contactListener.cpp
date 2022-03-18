@@ -1,28 +1,16 @@
 #include <platformer/entities/physicalEntity.hpp>
+#include <platformer/framework.hpp>
+#include <platformer/scenes/play/collisionEvent.hpp>
 #include "contactListener.hpp"
 
 void ContactListener::BeginContact(b2Contact* contact){
-	PhysicalEntity* a = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-	PhysicalEntity* b = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
-	if(a->getCollisionPrecedence() > b->getCollisionPrecedence())
-		a->contactBegin(*b, contact);
-	else if (a->getCollisionPrecedence() < b->getCollisionPrecedence())
-		b->contactBegin(*a, contact);
-	else{
-		a->contactBegin(*b, contact);
-		b->contactBegin(*a, contact);
-	}
+	auto* a = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+	auto* b = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+	Framework::getEventHandler().send(std::make_shared<CollisionEvent>(a, b, contact, true));
 }
 
 void ContactListener::EndContact(b2Contact* contact){
-	PhysicalEntity* a = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-	PhysicalEntity* b = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
-	if(a->getCollisionPrecedence() > b->getCollisionPrecedence())
-		a->contactEnd(*b, contact);
-	else if (a->getCollisionPrecedence() < b->getCollisionPrecedence())
-		b->contactEnd(*a, contact);
-	else{
-		a->contactEnd(*b, contact);
-		b->contactEnd(*a, contact);
-	}
+	auto* a = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+	auto* b = reinterpret_cast<PhysicalEntity*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+	Framework::getEventHandler().send(std::make_shared<CollisionEvent>(a, b, contact, false));
 }

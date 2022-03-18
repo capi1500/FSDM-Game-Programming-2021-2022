@@ -112,3 +112,7 @@ void PhysicalEntity::draw(sf::RenderTarget& target, sf::RenderStates states) con
 	states.transform.combine(getTransform());
 	target.draw(sprite, states);
 }
+
+EntityProperties& PhysicalEntity::getProperties(){
+	return properties;
+}

@@ -5,7 +5,9 @@
 #include <platformer/entities/world/tiles.hpp>
 #include <platformer/entities/player.hpp>
 #include <platformer/utils/stateMachine.hpp>
-#include <platformer/entities/npc/mine.hpp>
+#include <platformer/utils/emitter.hpp>
+#include <platformer/entities/entities/mine.hpp>
+#include <platformer/entities/entities/diamond.hpp>
 #include "play.hpp"
 #include "pause.h"
 
@@ -49,6 +51,7 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 	p = new Player(b2World, {0, 1});
 	entities.push_back(p);
 	entities.push_back(new Mine(b2World, {5, -5}));
+	entities.push_back(new Diamond(b2World, {10, -5}));
 	
 	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize()));
 	
@@ -64,4 +67,16 @@ void Play::onNotify(const sf::Event &event){
 void Play::update(const sf::Time &time){
     Scene::update(time);
     b2World.Step(time.asSeconds(), Framework::getPhysicConfig().velocityIterations, Framework::getPhysicConfig().positionIterations);
+}
+
+void Play::activate(){
+	Scene::activate();
+	subscribe(&playerMonsterCollision);
+	subscribe(&groundCollision);
+}
+
+void Play::deactivate(){
+	Scene::deactivate();
+	unsubscribe(&playerMonsterCollision);
+	unsubscribe(&groundCollision);
 }

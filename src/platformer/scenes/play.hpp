@@ -5,6 +5,8 @@
 #include <box2d/b2_world.h>
 #include <platformer/entities/player.hpp>
 #include <platformer/systems/contactListener.hpp>
+#include <platformer/scenes/play/playerMonsterCollision.hpp>
+#include <platformer/scenes/play/groundCollision.hpp>
 
 class Play : public Scene{
 	private:
@@ -17,11 +19,19 @@ class Play : public Scene{
 		ContactListener contactListener;
 		
 		Player* p;
+		
+		PlayerMonsterCollision playerMonsterCollision;
+		GroundCollision groundCollision;
 	public:
 		void onNotify(const sf::Event &event) override;
 		void update(const sf::Time &time) override;
 		
 		Play(StateMachine& stateMachine);
+		void activate() override;
+		void deactivate() override;
+		enum SceneEventID{
+			CollisionEvent
+		};
 };
 
 

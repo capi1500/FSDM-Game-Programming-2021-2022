@@ -5,6 +5,7 @@ InputHandler Framework::inputHandler;
 Soundboard Framework::soundboard;
 std::shared_ptr<Renderer> Framework::renderer = nullptr;
 PhysicsConfig Framework::physicsConfig = PhysicsConfig({0, 9.81}, 24, 8, 3);
+Emitter<std::shared_ptr<SceneEvent>> Framework::eventHandler;
 
 AssetStorage& Framework::getAssetStorage(){
 	return assetStorage;
@@ -26,4 +27,8 @@ Renderer& Framework::getRenderer(){
 
 PhysicsConfig& Framework::getPhysicConfig(){
     return physicsConfig;
+}
+
+Emitter<std::shared_ptr<SceneEvent>>& Framework::getEventHandler(){
+	return eventHandler;
 }

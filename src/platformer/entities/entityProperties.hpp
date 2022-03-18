@@ -19,4 +19,12 @@ struct EntityProperties{
 	MovementProperty movement;
 	
 	bool solidFlag = false;
+	
+	enum EntityType{
+		Ground = 1,
+		NPC = 2,
+		Player = 4,
+		Collectible = 8
+	};
+	EntityType type;
 };
