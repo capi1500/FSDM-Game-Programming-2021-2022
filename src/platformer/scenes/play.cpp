@@ -12,30 +12,6 @@
 #include "pause.h"
 
 Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework::getPhysicConfig().gravity) {
-	Framework::getAssetStorage().addTextureInfo(TextureInfo(
-			"tiles",
-			{18, 18},
-			{2, 2})
-	);
-	
-	Framework::getAssetStorage().addTextureInfo(TextureInfo(
-			"background",
-			{24, 24},
-			{2, 2})
-	);
-	
-	Framework::getAssetStorage().addTextureInfo(TextureInfo(
-			"characters",
-			{24, 24},
-			{2, 2})
-	);
-	
-	Framework::getAssetStorage().addTextureInfo(TextureInfo(
-			"rpg ui",
-			{18, 18},
-			{2, 2})
-	);
-	
 	sf::Vector2u size = {25, 3};
 	WorldBuilder builder(b2World, size);
 	

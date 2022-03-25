@@ -24,6 +24,27 @@ void Game::run(){
 	Framework::getAssetStorage().loadFont("kenvector", "../assets/fonts/kenvector_future.ttf");
 	Framework::getAssetStorage().loadFont("kenvector thin", "../assets/fonts/kenvector_future_thin.ttf");
 	
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"tiles",
+			{18, 18},
+			{2, 2})
+	);
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"background",
+			{24, 24},
+			{2, 2})
+	);
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"characters",
+			{24, 24},
+			{2, 2})
+	);
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"rpg ui",
+			{18, 18},
+			{2, 2})
+	);
+	
 	scenes.add(new MainMenu(scenes));
 	
 	sf::Time time;
