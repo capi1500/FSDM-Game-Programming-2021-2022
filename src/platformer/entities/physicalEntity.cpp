@@ -1,10 +1,13 @@
 #include "physicalEntity.hpp"
 #include "platformer/framework.hpp"
 
-PhysicalEntity::PhysicalEntity(b2World& world, const sf::Vector2i& position, const sf::Vector2u& textureCoord, const b2Vec2& hitboxCenter, const b2Vec2& hitboxSize, const EntityProperties& properties) : world(world){
-	sprite.setTexture(Framework::getAssetStorage().getTexture("characters"));
-	sprite.setTextureRect({static_cast<int>(textureCoord.x * 26), static_cast<int>(textureCoord.y * 25), 24, 24});
-	
+PhysicalEntity::PhysicalEntity(b2World& world,
+		const sf::Vector2i& position,
+		const TextureInfo& textureInfo,
+		const sf::Vector2u& textureCoord,
+		const b2Vec2& hitboxCenter,
+		const b2Vec2& hitboxSize,
+		const EntityProperties& properties) : Entity(textureInfo, textureCoord), world(world){
 	b2BodyDef bodyDef;
 	bodyDef.position = Framework::getPhysicConfig().pixelToMeters(sf::Vector2f(position.x * 18, position.y * 18));
 	bodyDef.type = b2_dynamicBody;
@@ -17,13 +20,15 @@ PhysicalEntity::PhysicalEntity(b2World& world, const sf::Vector2i& position, con
 	fixtureDef.shape = &shape;
 	fixtureDef.density = 1.0;
 	fixtureDef.friction = 0;
+	fixtureDef.filter.categoryBits = properties.type;
+	fixtureDef.filter.maskBits = properties.mask;
 	addFixture(fixtureDef);
 	
 	this->properties = properties;
 }
 
-PhysicalEntity::PhysicalEntity(b2World& world, const EntityProperties& properties, int collisionPrecedence) : world(world){
-	this->properties = properties;
+PhysicalEntity::PhysicalEntity(b2World& world) : world(world){
+
 }
 
 void PhysicalEntity::update(const sf::Time& time){
@@ -75,6 +80,22 @@ void PhysicalEntity::moveRight(){
 	}
 }
 
+void PhysicalEntity::setMovingLeft(){
+	if(properties.movementFlag){
+		b2Vec2 vec = body->GetLinearVelocity();
+		vec.x = -properties.movement.speed;
+		body->SetLinearVelocity(vec);
+	}
+}
+
+void PhysicalEntity::setMovingRight(){
+	if(properties.movementFlag){
+		b2Vec2 vec = body->GetLinearVelocity();
+		vec.x = properties.movement.speed;
+		body->SetLinearVelocity(vec);
+	}
+}
+
 void PhysicalEntity::contactBegin(PhysicalEntity& entity, b2Contact* contact){
 	if(entity.getProperties().solidFlag){
 		if(properties.jumpFlag)
@@ -93,11 +114,6 @@ void PhysicalEntity::contactEnd(PhysicalEntity& entity, b2Contact* contact){
 
 const EntityProperties& PhysicalEntity::getProperties() const{
 	return properties;
-}
-
-void PhysicalEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	states.transform.combine(getTransform());
-	target.draw(sprite, states);
 }
 
 EntityProperties& PhysicalEntity::getProperties(){

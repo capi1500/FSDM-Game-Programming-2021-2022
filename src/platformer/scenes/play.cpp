@@ -12,21 +12,29 @@
 #include "pause.h"
 
 Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework::getPhysicConfig().gravity) {
-	tiles.setTexture(Framework::getAssetStorage().getTexture("tiles"));
-	tiles.setTextureSize({18, 18});
-	tiles.setOffset({2, 2});
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"tiles",
+			{18, 18},
+			{2, 2})
+	);
 	
-	background.setTexture(Framework::getAssetStorage().getTexture("background"));
-	background.setTextureSize({24, 24});
-	background.setOffset({2, 2});
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"background",
+			{24, 24},
+			{2, 2})
+	);
 	
-	characters.setTexture(Framework::getAssetStorage().getTexture("characters"));
-	characters.setTextureSize({24, 24});
-	characters.setOffset({2, 2});
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"characters",
+			{24, 24},
+			{2, 2})
+	);
 	
-	ui.setTexture(Framework::getAssetStorage().getTexture("rpg ui"));
-	ui.setTextureSize({18, 18});
-	ui.setOffset({2, 2});
+	Framework::getAssetStorage().addTextureInfo(TextureInfo(
+			"rpg ui",
+			{18, 18},
+			{2, 2})
+	);
 	
 	sf::Vector2u size = {25, 3};
 	WorldBuilder builder(b2World, size);
@@ -51,7 +59,7 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 	p = new Player(b2World, {0, 1});
 	entities.push_back(p);
 	entities.push_back(new Mine(b2World, {5, -5}));
-	entities.push_back(new Diamond(b2World, {10, -5}));
+	entities.push_back(new Diamond(b2World, {6, -5}));
 	
 	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize()));
 	
@@ -73,10 +81,12 @@ void Play::activate(){
 	Scene::activate();
 	subscribe(&playerMonsterCollision);
 	subscribe(&groundCollision);
+	subscribe(&collectibleCollision);
 }
 
 void Play::deactivate(){
 	Scene::deactivate();
 	unsubscribe(&playerMonsterCollision);
 	unsubscribe(&groundCollision);
+	unsubscribe(&collectibleCollision);
 }

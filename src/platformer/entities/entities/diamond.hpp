@@ -1,10 +1,11 @@
 #pragma once
 
-#include <platformer/entities/physicalEntity.hpp>
+#include "collectible.hpp"
 
-class Diamond : public PhysicalEntity{
+class Diamond : public Collectible{
 	public:
 		Diamond(b2World& world, const sf::Vector2i& position);
+		void collect(PhysicalEntity& physicalEntity) override;
 };
 
 

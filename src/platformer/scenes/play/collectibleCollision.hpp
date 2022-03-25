@@ -2,8 +2,9 @@
 
 #include <platformer/scenes/events/sceneEventListener.hpp>
 #include <memory>
+#include "collisionEvent.hpp"
 
-class GroundCollision : public SceneEventListener{
+class CollectibleCollision : public SceneEventListener{
 	protected:
 		void onNotifyImpl(const std::shared_ptr<SceneEvent>& event) override;
 		bool isApplicable(const std::shared_ptr<SceneEvent>& event) override;

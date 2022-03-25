@@ -21,7 +21,7 @@ WorldBuilder& WorldBuilder::setTile(const sf::Vector2u& position, const sf::Vect
 	return *this;
 }
 
-World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world, {}){
+World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
 	std::swap(size, worldBuilder.size);
 	std::swap(solid, worldBuilder.solid);
 	std::swap(type, worldBuilder.type);
@@ -60,6 +60,8 @@ World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world, {}
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 1.0;
 		fixtureDef.friction = 0.3;
+		fixtureDef.filter.categoryBits = EntityProperties::EntityType::Ground;
+		fixtureDef.filter.maskBits = EntityTypeBuilder().collectible(true).player(true).npc(true).build();
 		addFixture(fixtureDef);
 	};
 	

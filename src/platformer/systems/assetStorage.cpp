@@ -39,3 +39,11 @@ void AssetStorage::loadFont(const std::string& name, const std::string& path){
 const sf::Font& AssetStorage::getFont(const std::string& name) const{
 	return fonts.at(name);
 }
+
+void AssetStorage::addTextureInfo(const TextureInfo& textureInfo){
+	this->textureInfo.emplace(textureInfo.getName(), textureInfo);
+}
+
+const TextureInfo& AssetStorage::getTextureInfo(const std::string& name) const{
+	return textureInfo.at(name);
+}

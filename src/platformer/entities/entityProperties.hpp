@@ -1,5 +1,7 @@
 #pragma once
 
+#include <bitset>
+
 struct EntityProperties{
 	struct JumpProperty{
 		float height = 1;
@@ -27,4 +29,29 @@ struct EntityProperties{
 		Collectible = 8
 	};
 	EntityType type;
+	EntityType mask;
+};
+
+class EntityTypeBuilder{
+	private:
+		std::bitset<32> mask;
+	public:
+		EntityTypeBuilder& ground(bool isGround);
+		EntityTypeBuilder& npc(bool isNPC);
+		EntityTypeBuilder& player(bool isPlayer);
+		EntityTypeBuilder& collectible(bool isCollectible);
+		EntityProperties::EntityType build();
+};
+
+class EntityPropertiesBuilder{
+	private:
+		EntityProperties properties;
+	public:
+		EntityPropertiesBuilder& setJump(const EntityProperties::JumpProperty& jumpProperty);
+		EntityPropertiesBuilder& setDoubleJump(const EntityProperties::JumpProperty& jumpProperty);
+		EntityPropertiesBuilder& setMovement(const EntityProperties::MovementProperty& movementProperty);
+		EntityPropertiesBuilder& setSolid();
+		EntityPropertiesBuilder& setEntityType(const EntityProperties::EntityType& entityType);
+		EntityPropertiesBuilder& setMask(const EntityProperties::EntityType& entityType);
+		EntityProperties build();
 };

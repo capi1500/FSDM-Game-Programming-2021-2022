@@ -11,16 +11,15 @@ class PhysicalEntity : public Entity{
 		b2World& world;
 	protected:
 		b2Body* body;
-		sf::Sprite sprite;
 		
 		EntityProperties properties;
-		
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		void jump();
 		void stop();
 		void moveLeft();
 		void moveRight();
+		void setMovingLeft();
+		void setMovingRight();
 		
 		const EntityProperties& getProperties() const;
 		EntityProperties& getProperties();
@@ -33,9 +32,6 @@ class PhysicalEntity : public Entity{
 		virtual void contactBegin(PhysicalEntity& entity, b2Contact* contact);
 		virtual void contactEnd(PhysicalEntity& entity, b2Contact* contact);
 		
-		PhysicalEntity(b2World& world, const sf::Vector2i& position, const sf::Vector2u& textureCoord, const b2Vec2& hitboxCenter, const b2Vec2& hitboxSize, const EntityProperties& properties);
-		
-		PhysicalEntity(b2World& world,
-				const EntityProperties& properties,
-				int collisionPrecedence = 0);
+		PhysicalEntity(b2World& world, const sf::Vector2i& position, const TextureInfo& textureInfo, const sf::Vector2u& textureCoord, const b2Vec2& hitboxCenter, const b2Vec2& hitboxSize, const EntityProperties& properties);
+		PhysicalEntity(b2World& world);
 };

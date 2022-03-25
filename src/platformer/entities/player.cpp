@@ -2,6 +2,7 @@
 #include <platformer/framework.hpp>
 #include <platformer/entities/world/tiles.hpp>
 #include <iostream>
+#include <platformer/entities/world/characters.h>
 #include "player.hpp"
 
 void Player::update(const sf::Time& time){
@@ -17,18 +18,21 @@ void Player::update(const sf::Time& time){
 Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(
 		world,
 		position,
-		{0, 0},
+		Framework::getAssetStorage().getTextureInfo("characters"),
+		Characters::ghost_green_down,
 		{0.5, 0.5},
 		{1, 1},
-		{
-				true,
-				{5},
-				true,
-				{5},
-				true,
-				{5},
-				true
-		}
+		EntityPropertiesBuilder()
+				.setJump({5})
+				.setDoubleJump({5})
+				.setMovement({5})
+				.setEntityType(EntityTypeBuilder().player(true).build())
+				.setMask(EntityTypeBuilder()
+						.npc(true)
+						.collectible(true)
+						.ground(true)
+						.build())
+				.build()
 ){
 	
 	properties.jumpFlag = true;
