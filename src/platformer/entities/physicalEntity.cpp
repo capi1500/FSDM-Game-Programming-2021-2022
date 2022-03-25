@@ -1,13 +1,7 @@
 #include "physicalEntity.hpp"
 #include "platformer/framework.hpp"
 
-PhysicalEntity::PhysicalEntity(b2World& world,
-		const sf::Vector2i& position,
-		const sf::Vector2u& textureCoord,
-		const b2Vec2& hitboxCenter,
-		const b2Vec2& hitboxSize,
-		const EntityProperties& properties,
-		int collisionPrecedence) : world(world){
+PhysicalEntity::PhysicalEntity(b2World& world, const sf::Vector2i& position, const sf::Vector2u& textureCoord, const b2Vec2& hitboxCenter, const b2Vec2& hitboxSize, const EntityProperties& properties) : world(world){
 	sprite.setTexture(Framework::getAssetStorage().getTexture("characters"));
 	sprite.setTextureRect({static_cast<int>(textureCoord.x * 26), static_cast<int>(textureCoord.y * 25), 24, 24});
 	
@@ -26,13 +20,10 @@ PhysicalEntity::PhysicalEntity(b2World& world,
 	addFixture(fixtureDef);
 	
 	this->properties = properties;
-	
-	this->collisionPrecedence = collisionPrecedence;
 }
 
 PhysicalEntity::PhysicalEntity(b2World& world, const EntityProperties& properties, int collisionPrecedence) : world(world){
 	this->properties = properties;
-	this->collisionPrecedence = collisionPrecedence;
 }
 
 void PhysicalEntity::update(const sf::Time& time){
@@ -98,10 +89,6 @@ void PhysicalEntity::contactEnd(PhysicalEntity& entity, b2Contact* contact){
 		if(properties.doubleJumpFlag)
 			properties.doubleJump.midAir = false;
 	}
-}
-
-int PhysicalEntity::getCollisionPrecedence() const{
-	return collisionPrecedence;
 }
 
 const EntityProperties& PhysicalEntity::getProperties() const{

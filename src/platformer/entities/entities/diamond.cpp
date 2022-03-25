@@ -8,7 +8,7 @@ Diamond::Diamond(b2World& world, const sf::Vector2i& position) :
 				Tiles::diamond,
 				{0.5, 0.5},
 				{0.5, 0.5},
-				{},
-				1){
+				{}
+		){
 	
 }

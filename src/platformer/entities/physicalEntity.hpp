@@ -12,7 +12,6 @@ class PhysicalEntity : public Entity{
 	protected:
 		b2Body* body;
 		sf::Sprite sprite;
-		int collisionPrecedence = 0;
 		
 		EntityProperties properties;
 		
@@ -34,15 +33,7 @@ class PhysicalEntity : public Entity{
 		virtual void contactBegin(PhysicalEntity& entity, b2Contact* contact);
 		virtual void contactEnd(PhysicalEntity& entity, b2Contact* contact);
 		
-		int getCollisionPrecedence() const;
-		
-		PhysicalEntity(b2World& world,
-					   const sf::Vector2i& position,
-					   const sf::Vector2u& textureCoord,
-					   const b2Vec2& hitboxCenter,
-					   const b2Vec2& hitboxSize,
-					   const EntityProperties& properties,
-					   int collisionPrecedence = 0);
+		PhysicalEntity(b2World& world, const sf::Vector2i& position, const sf::Vector2u& textureCoord, const b2Vec2& hitboxCenter, const b2Vec2& hitboxSize, const EntityProperties& properties);
 		
 		PhysicalEntity(b2World& world,
 				const EntityProperties& properties,

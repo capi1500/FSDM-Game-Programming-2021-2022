@@ -14,21 +14,22 @@ void Player::update(const sf::Time& time){
 		moveRight();
 }
 
-Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(world,
-																			  position,
-																			  {0, 0},
-																			  {0.5, 0.5},
-																			  {1, 1},
-																			  {
-																					true,
-																					{5},
-																			        true,
-																					{5},
-																			        true,
-																					{5},
-																					true
-																			   },
-																			  5){
+Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(
+		world,
+		position,
+		{0, 0},
+		{0.5, 0.5},
+		{1, 1},
+		{
+				true,
+				{5},
+				true,
+				{5},
+				true,
+				{5},
+				true
+		}
+){
 	
 	properties.jumpFlag = true;
 	properties.jump.height = 5;
@@ -37,7 +38,6 @@ Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(wo
 	properties.movementFlag = true;
 	properties.movement.speed = 5;
 	
-	collisionPrecedence = 5;
 	properties.solidFlag = true;
 	properties.type = EntityProperties::Player;
 }

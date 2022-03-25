@@ -9,8 +9,8 @@ Mine::Mine(b2World& world,
 				Characters::mine,
 				{0.5, 0.5},
 				{1, 1},
-				{},
-				1) {}
+				{}
+		){}
 
 void Mine::update(const sf::Time& time){
 	PhysicalEntity::update(time);
