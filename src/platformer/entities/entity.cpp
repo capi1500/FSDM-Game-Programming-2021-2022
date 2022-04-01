@@ -11,8 +11,10 @@ void Entity::deactivate(){
 }
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	states.transform.combine(getTransform());
-	target.draw(sprite, states);
+	if(visible){
+		states.transform.combine(getTransform());
+		target.draw(sprite, states);
+	}
 }
 
 Entity::Entity(const TextureInfo& textureInfo, const sf::Vector2u& textureCoord){
@@ -25,3 +27,11 @@ Entity::Entity(const TextureInfo& textureInfo, const sf::Vector2u& textureCoord)
 }
 
 Entity::Entity(){}
+
+void Entity::hide(){
+	visible = false;
+}
+
+void Entity::show(){
+	visible = true;
+}

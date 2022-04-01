@@ -6,6 +6,7 @@
 #include "play.hpp"
 #include "pause.h"
 #include "settings.hpp"
+#include "editor.hpp"
 
 MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 	Framework::getAssetStorage().loadTexture("red", "../assets/textures/rgb/red.png");
@@ -22,14 +23,20 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 			[this]{
 				getStateMachine().replace(new Play(getStateMachine()));
 			});
-	LongButton* settingsButton = new LongButton(
+	LongButton* editorButton = new LongButton(
 			{centerX, centerY},
+			"Editor",
+			[this]{
+				getStateMachine().add(new Editor(getStateMachine()));
+			});
+	LongButton* settingsButton = new LongButton(
+			{centerX, centerY + 92},
 			"Settings",
 			[this]{
 				getStateMachine().add(new Settings(getStateMachine()));
 			});
 	LongButton* quitButton = new LongButton(
-			{centerX, centerY + 92},
+			{centerX, centerY + 184},
 			"Quit",
 			[this]{
 				sf::Event event;
@@ -38,6 +45,7 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 			});
 	
 	entities.push_back(playButton);
+	entities.push_back(editorButton);
 	entities.push_back(settingsButton);
 	entities.push_back(quitButton);
 }

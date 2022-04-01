@@ -8,6 +8,8 @@
 
 class Entity : public sf::Drawable, public sf::Transformable{
 	protected:
+		bool visible = true;
+		
 		sf::Sprite sprite;
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
@@ -15,6 +17,9 @@ class Entity : public sf::Drawable, public sf::Transformable{
 		Entity();
 		virtual void update(const sf::Time& time) = 0;
 		virtual ~Entity() = default;
+		
+		void hide();
+		void show();
 		
 		virtual void activate();
 		virtual void deactivate();

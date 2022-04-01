@@ -50,8 +50,8 @@ struct B2_API b2Filter
 	/// shape would accept for collision.
 	uint16 maskBits;
 
-	/// Collision groups allow a certain group of objects to never collide (negative)
-	/// or always collide (positive). Zero means no collision group. Non-zero group
+	/// Collision groups allow a certain brushSizeRadioButtonGroup of objects to never collide (negative)
+	/// or always collide (positive). Zero means no collision brushSizeRadioButtonGroup. Non-zero brushSizeRadioButtonGroup
 	/// filtering always wins against the mask bits.
 	int16 groupIndex;
 };
