@@ -1,11 +1,10 @@
-#include <iostream>
 #include <platformer/gui/longButton.hpp>
-#include "pause.h"
-#include "../framework.hpp"
-#include "play.hpp"
-#include "settings.hpp"
+#include <platformer/framework.hpp>
+#include <platformer/scenes/editor.hpp>
+#include <platformer/scenes/settings.hpp>
+#include "editorPause.hpp"
 
-Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
+EditorPause::EditorPause(StateMachine& stateMachine) : Scene(stateMachine){
 	float centerX = Framework::getRenderer().getSize().x / 2, centerY = Framework::getRenderer().getSize().y / 2;
 	
 	LongButton* playButton = new LongButton(
@@ -19,7 +18,7 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 			"Restart",
 			[this]{
 				getStateMachine().pop();
-				getStateMachine().replace(new Play(getStateMachine()));
+				getStateMachine().replace(new Editor(getStateMachine()));
 			});
 	LongButton* settingsButton = new LongButton(
 			{centerX, centerY + 92},
@@ -43,11 +42,11 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 	entities.push_back(quitButton);
 }
 
-void Pause::onNotify(const sf::Event& event){
+void EditorPause::onNotify(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		getStateMachine().pop();
 }
 
-void Pause::update(const sf::Time& time){
+void EditorPause::update(const sf::Time& time){
 	Scene::update(time);
 }

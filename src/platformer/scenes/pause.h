@@ -7,9 +7,9 @@
 #include "../utils/stateMachine.hpp"
 #include "play.hpp"
 
-class Options : public Scene{
+class Pause : public Scene{
 	public:
-		Options(StateMachine& stateMachine);
+		Pause(StateMachine& stateMachine);
 		
 		void onNotify(const sf::Event& event) override;
 		void update(const sf::Time& time) override;

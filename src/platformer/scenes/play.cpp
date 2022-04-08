@@ -45,7 +45,7 @@ Play::Play(StateMachine &stateMachine) : Scene(stateMachine), b2World(Framework:
 void Play::onNotify(const sf::Event &event){
 	p->onNotify(event);
 	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-		getStateMachine().add(new Options(getStateMachine()));
+		getStateMachine().add(new Pause(getStateMachine()));
 }
 
 void Play::update(const sf::Time &time){

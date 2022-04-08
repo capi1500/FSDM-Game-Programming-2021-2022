@@ -1,5 +1,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <iostream>
+#include <platformer/framework.hpp>
 #include "widget.hpp"
 
 /*
@@ -66,5 +67,13 @@ void Widget::setCenter(const sf::Vector2f& center){
 }
 
 Widget::Widget(){
-	//setOrigin(getGlobalBounds().width / 2, getGlobalBounds().height / 2);
+	view = Framework::getRenderer().getDefaultView();
+}
+
+const sf::View& Widget::getView() const{
+	return view;
+}
+
+void Widget::setView(const sf::View& view){
+	Widget::view = view;
 }

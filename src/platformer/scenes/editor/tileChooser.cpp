@@ -8,8 +8,10 @@ TileChooser::TileChooser(){
 	
 	sprite.setTexture(Framework::getAssetStorage().getTexture("tiles"));
 	
-	setPosition(0, 400);
+	setOrigin(sprite.getTexture()->getSize().x / 2, sprite.getTexture()->getSize().y / 2);
+	scale(2, 2);
+	setScaleFactor(2);
 	
-	setRect(sf::FloatRect(getPosition().x, getPosition().y, sprite.getTexture()->getSize().x, sprite.getTexture()->getSize().y));
+	setRect(sf::FloatRect(0, 0, sprite.getTexture()->getSize().x, sprite.getTexture()->getSize().y));
 	setTileSize(sf::Vector2f(textureInfo.getSize().x + textureInfo.getMargin().x, textureInfo.getSize().y + textureInfo.getMargin().y));
 }

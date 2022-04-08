@@ -44,7 +44,7 @@
 
 // Tunable Constants
 
-/// You can use this to change the length scale used by your game.
+/// You can use this to change the length scaleFactor used by your game.
 /// For example for inches you could use 39.4.
 #define b2_lengthUnitsPerMeter 1.0f
 

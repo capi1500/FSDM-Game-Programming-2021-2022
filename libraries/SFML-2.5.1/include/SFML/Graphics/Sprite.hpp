@@ -166,7 +166,7 @@ public:
     ///
     /// The returned rectangle is in local coordinates, which means
     /// that it ignores the transformations (translation, rotation,
-    /// scale, ...) that are applied to the entity.
+    /// scaleFactor, ...) that are applied to the entity.
     /// In other words, this function returns the bounds of the
     /// entity in the entity's coordinate system.
     ///
@@ -180,7 +180,7 @@ public:
     ///
     /// The returned rectangle is in global coordinates, which means
     /// that it takes into account the transformations (translation,
-    /// rotation, scale, ...) that are applied to the entity.
+    /// rotation, scaleFactor, ...) that are applied to the entity.
     /// In other words, this function returns the bounds of the
     /// sprite in the global 2D world's coordinate system.
     ///
@@ -234,7 +234,7 @@ private:
 /// a texture (or a part of it) on a render target.
 ///
 /// It inherits all the functions from sf::Transformable:
-/// position, rotation, scale, origin. It also adds sprite-specific
+/// position, rotation, scaleFactor, origin. It also adds sprite-specific
 /// properties such as the texture to use, the part of it to display,
 /// and some convenience functions to change the overall color of the
 /// sprite, or to get its bounding rectangle.

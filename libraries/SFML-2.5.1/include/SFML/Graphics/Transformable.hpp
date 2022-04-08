@@ -35,7 +35,7 @@
 namespace sf
 {
 ////////////////////////////////////////////////////////////
-/// \brief Decomposed transform defined by a position, a rotation and a scale
+/// \brief Decomposed transform defined by a position, a rotation and a scaleFactor
 ///
 ////////////////////////////////////////////////////////////
 class SFML_GRAPHICS_API Transformable
@@ -98,30 +98,30 @@ public:
     void setRotation(float angle);
 
     ////////////////////////////////////////////////////////////
-    /// \brief set the scale factors of the object
+    /// \brief set the scaleFactor factors of the object
     ///
-    /// This function completely overwrites the previous scale.
-    /// See the scale function to add a factor based on the previous scale instead.
-    /// The default scale of a transformable object is (1, 1).
+    /// This function completely overwrites the previous scaleFactor.
+    /// See the scaleFactor function to add a factor based on the previous scaleFactor instead.
+    /// The default scaleFactor of a transformable object is (1, 1).
     ///
-    /// \param factorX New horizontal scale factor
-    /// \param factorY New vertical scale factor
+    /// \param factorX New horizontal scaleFactor factor
+    /// \param factorY New vertical scaleFactor factor
     ///
-    /// \see scale, getScale
+    /// \see scaleFactor, getScaleFactor
     ///
     ////////////////////////////////////////////////////////////
     void setScale(float factorX, float factorY);
 
     ////////////////////////////////////////////////////////////
-    /// \brief set the scale factors of the object
+    /// \brief set the scaleFactor factors of the object
     ///
-    /// This function completely overwrites the previous scale.
-    /// See the scale function to add a factor based on the previous scale instead.
-    /// The default scale of a transformable object is (1, 1).
+    /// This function completely overwrites the previous scaleFactor.
+    /// See the scaleFactor function to add a factor based on the previous scaleFactor instead.
+    /// The default scaleFactor of a transformable object is (1, 1).
     ///
-    /// \param factors New scale factors
+    /// \param factors New scaleFactor factors
     ///
-    /// \see scale, getScale
+    /// \see scaleFactor, getScaleFactor
     ///
     ////////////////////////////////////////////////////////////
     void setScale(const Vector2f& factors);
@@ -130,10 +130,10 @@ public:
     /// \brief set the local origin of the object
     ///
     /// The origin of an object defines the center point for
-    /// all transformations (position, scale, rotation).
+    /// all transformations (position, scaleFactor, rotation).
     /// The coordinates of this point must be relative to the
     /// top-left corner of the object, and ignore all
-    /// transformations (position, scale, rotation).
+    /// transformations (position, scaleFactor, rotation).
     /// The default origin of a transformable object is (0, 0).
     ///
     /// \param x X coordinate of the new origin
@@ -148,10 +148,10 @@ public:
     /// \brief set the local origin of the object
     ///
     /// The origin of an object defines the center point for
-    /// all transformations (position, scale, rotation).
+    /// all transformations (position, scaleFactor, rotation).
     /// The coordinates of this point must be relative to the
     /// top-left corner of the object, and ignore all
-    /// transformations (position, scale, rotation).
+    /// transformations (position, scaleFactor, rotation).
     /// The default origin of a transformable object is (0, 0).
     ///
     /// \param origin New origin
@@ -184,11 +184,11 @@ public:
     float getRotation() const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief get the current scale of the object
+    /// \brief get the current scaleFactor of the object
     ///
-    /// \return Current scale factors
+    /// \return Current scaleFactor factors
     ///
-    /// \see setScale
+    /// \see setScaleFactor
     ///
     ////////////////////////////////////////////////////////////
     const Vector2f& getScale() const;
@@ -257,18 +257,18 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Scale the object
     ///
-    /// This function multiplies the current scale of the object,
-    /// unlike setScale which overwrites it.
+    /// This function multiplies the current scaleFactor of the object,
+    /// unlike setScaleFactor which overwrites it.
     /// Thus, it is equivalent to the following code:
     /// \code
-    /// sf::Vector2f scale = object.getScale();
-    /// object.setScale(scale.x * factorX, scale.y * factorY);
+    /// sf::Vector2f scaleFactor = object.getScaleFactor();
+    /// object.setScaleFactor(scaleFactor.x * factorX, scaleFactor.y * factorY);
     /// \endcode
     ///
-    /// \param factorX Horizontal scale factor
-    /// \param factorY Vertical scale factor
+    /// \param factorX Horizontal scaleFactor factor
+    /// \param factorY Vertical scaleFactor factor
     ///
-    /// \see setScale
+    /// \see setScaleFactor
     ///
     ////////////////////////////////////////////////////////////
     void scale(float factorX, float factorY);
@@ -276,17 +276,17 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Scale the object
     ///
-    /// This function multiplies the current scale of the object,
-    /// unlike setScale which overwrites it.
+    /// This function multiplies the current scaleFactor of the object,
+    /// unlike setScaleFactor which overwrites it.
     /// Thus, it is equivalent to the following code:
     /// \code
-    /// sf::Vector2f scale = object.getScale();
-    /// object.setScale(scale.x * factor.x, scale.y * factor.y);
+    /// sf::Vector2f scaleFactor = object.getScaleFactor();
+    /// object.setScaleFactor(scaleFactor.x * factor.x, scaleFactor.y * factor.y);
     /// \endcode
     ///
     /// \param factor Scale factors
     ///
-    /// \see setScale
+    /// \see setScaleFactor
     ///
     ////////////////////////////////////////////////////////////
     void scale(const Vector2f& factor);
@@ -294,7 +294,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief get the combined transform of the object
     ///
-    /// \return Transform combining the position/rotation/scale/origin of the object
+    /// \return Transform combining the position/rotation/scaleFactor/origin of the object
     ///
     /// \see getInverseTransform
     ///
@@ -345,7 +345,7 @@ private:
 /// transform is built, there's no way to go backward and, let's say,
 /// change only the rotation without modifying the translation and scaling.
 /// The entire transform must be recomputed, which means that you
-/// need to retrieve the initial translation and scale factors as
+/// need to retrieve the initial translation and scaleFactor factors as
 /// well, and combine them the same way you did before updating the
 /// rotation. This is a tedious operation, and it requires to store
 /// all the individual components of the final transform.
@@ -356,7 +356,7 @@ private:
 /// without worrying about the others. It also provides the composed
 /// transform (as a sf::Transform), and keeps it up-to-date.
 ///
-/// In addition to the position, rotation and scale, sf::Transformable
+/// In addition to the position, rotation and scaleFactor, sf::Transformable
 /// provides an "origin" component, which represents the local origin
 /// of the three other components. Let's take an example with a 10x10
 /// pixels sprite. By default, the sprite is positioned/rotated/scaled
@@ -420,7 +420,7 @@ private:
 /// In order to render a sf::Drawable object pixel-perfectly, make sure
 /// the involved coordinates allow a 1:1 mapping of pixels in the window
 /// to texels (pixels in the texture). More specifically, this means:
-/// * The object's position, origin and scale have no fractional part
+/// * The object's position, origin and scaleFactor have no fractional part
 /// * The object's and the view's rotation are a multiple of 90 degrees
 /// * The view's center and size have no fractional part
 ///

@@ -22,6 +22,12 @@ class CoordChooser : public Listener<sf::Event>{
 		void setOnHoverUpdate(const std::function<void(const sf::Vector2i&)>& onHoverUpdate);
 		
 		sf::Vector2i getCoord(const sf::Vector2f& pixel);
+		
+		sf::View& getView();
+		const sf::View& getView() const;
+		void setView(const sf::View& view);
+		float getScaleFactor() const;
+		void setScaleFactor(float scale);
 	private:
 		sf::FloatRect rect;
 		sf::Vector2f tile_size;
@@ -30,8 +36,14 @@ class CoordChooser : public Listener<sf::Event>{
 		bool is_pressed = false;
 		sf::Vector2i hover = {-1, -1};
 		
+		sf::View view;
+		
+		float scaleFactor;
+
 		std::function<void(const sf::Vector2i&)> onChosenUpdate = [](const sf::Vector2i& coord){};
 		std::function<void(const sf::Vector2i&)> onHoverUpdate = [](const sf::Vector2i& coord){};
+		
+		bool coordInView(const sf::Vector2f& coord);
 };
 
 

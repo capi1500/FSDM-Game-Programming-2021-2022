@@ -5,7 +5,7 @@
 
 void Game::run(){
 	active = true;
-	Framework::getRenderer().create(sf::VideoMode(900, 600), "Platformer");
+	Framework::getRenderer().create(sf::VideoMode(900, 600), "Platformer", sf::Style::Fullscreen);
 	Framework::getRenderer().setFramerateLimit(60);
 	
 	Framework::getInputHandler().subscribe(this);

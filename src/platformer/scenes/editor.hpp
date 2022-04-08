@@ -3,12 +3,20 @@
 #include <platformer/scene.hpp>
 #include <platformer/scenes/editor/tileChooser.hpp>
 #include <platformer/gui/radioButtonGroup.hpp>
+#include <platformer/scenes/editor/frame.hpp>
 #include "editor/worldEditor.hpp"
 
 class Editor : public Scene{
 	private:
 		WorldEditor* editor;
 		TileChooser* tileChooser;
+		
+		RadioButton* size1;
+		RadioButton* size3;
+		RadioButton* size5;
+		
+		Frame* tileChosen;
+		Frame* editorChosen;
 		
 		RadioButtonGroup brushSizeRadioButtonGroup;
 		int brushSize;
@@ -18,6 +26,8 @@ class Editor : public Scene{
 		void onNotify(const std::shared_ptr<SceneEvent>& event) override;
 		void activate() override;
 		void deactivate() override;
+		void draw() override;
+		void update(const sf::Time& time) override;
 };
 
 

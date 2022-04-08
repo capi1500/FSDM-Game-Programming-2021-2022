@@ -163,7 +163,7 @@ public:
     ///
     /// \return Reference to *this
     ///
-    /// \see rotate, scale
+    /// \see rotate, scaleFactor
     ///
     ////////////////////////////////////////////////////////////
     Transform& translate(float x, float y);
@@ -182,7 +182,7 @@ public:
     ///
     /// \return Reference to *this
     ///
-    /// \see rotate, scale
+    /// \see rotate, scaleFactor
     ///
     ////////////////////////////////////////////////////////////
     Transform& translate(const Vector2f& offset);
@@ -201,7 +201,7 @@ public:
     ///
     /// \return Reference to *this
     ///
-    /// \see translate, scale
+    /// \see translate, scaleFactor
     ///
     ////////////////////////////////////////////////////////////
     Transform& rotate(float angle);
@@ -227,7 +227,7 @@ public:
     ///
     /// \return Reference to *this
     ///
-    /// \see translate, scale
+    /// \see translate, scaleFactor
     ///
     ////////////////////////////////////////////////////////////
     Transform& rotate(float angle, float centerX, float centerY);
@@ -252,7 +252,7 @@ public:
     ///
     /// \return Reference to *this
     ///
-    /// \see translate, scale
+    /// \see translate, scaleFactor
     ///
     ////////////////////////////////////////////////////////////
     Transform& rotate(float angle, const Vector2f& center);
@@ -264,7 +264,7 @@ public:
     /// can be chained.
     /// \code
     /// sf::Transform transform;
-    /// transform.scale(2, 1).rotate(45);
+    /// transform.scaleFactor(2, 1).rotate(45);
     /// \endcode
     ///
     /// \param scaleX Scaling factor on the X axis
@@ -283,13 +283,13 @@ public:
     /// The center of scaling is provided for convenience as a second
     /// argument, so that you can build scaling around arbitrary points
     /// more easily (and efficiently) than the usual
-    /// translate(-center).scale(factors).translate(center).
+    /// translate(-center).scaleFactor(factors).translate(center).
     ///
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
     /// sf::Transform transform;
-    /// transform.scale(2, 1, 8, 3).rotate(45);
+    /// transform.scaleFactor(2, 1, 8, 3).rotate(45);
     /// \endcode
     ///
     /// \param scaleX Scaling factor on X axis
@@ -311,7 +311,7 @@ public:
     /// can be chained.
     /// \code
     /// sf::Transform transform;
-    /// transform.scale(sf::Vector2f(2, 1)).rotate(45);
+    /// transform.scaleFactor(sf::Vector2f(2, 1)).rotate(45);
     /// \endcode
     ///
     /// \param factors Scaling factors
@@ -329,13 +329,13 @@ public:
     /// The center of scaling is provided for convenience as a second
     /// argument, so that you can build scaling around arbitrary points
     /// more easily (and efficiently) than the usual
-    /// translate(-center).scale(factors).translate(center).
+    /// translate(-center).scaleFactor(factors).translate(center).
     ///
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
     /// sf::Transform transform;
-    /// transform.scale(sf::Vector2f(2, 1), sf::Vector2f(8, 3)).rotate(45);
+    /// transform.scaleFactor(sf::Vector2f(2, 1), sf::Vector2f(8, 3)).rotate(45);
     /// \endcode
     ///
     /// \param factors Scaling factors
@@ -442,7 +442,7 @@ SFML_GRAPHICS_API bool operator !=(const Transform& left, const Transform& right
 /// \class sf::Transform
 /// \ingroup graphics
 ///
-/// A sf::Transform specifies how to translate, rotate, scale,
+/// A sf::Transform specifies how to translate, rotate, scaleFactor,
 /// shear, project, whatever things. In mathematical terms, it defines
 /// how to transform a coordinate system into another.
 ///

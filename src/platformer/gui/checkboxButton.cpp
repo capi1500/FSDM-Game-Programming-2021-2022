@@ -30,10 +30,10 @@ CheckboxButton::CheckboxButton(const sf::Vector2f& position, const std::function
 void CheckboxButton::onNotify(const sf::Event& event){
 	if(!pressed){
 		if(event.type == sf::Event::MouseMoved){
-			if(!hover && getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}))){
+			if(!hover && getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}, getView()))){
 				hover = true;
 			}
-			else if(hover && !getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}))){
+			else if(hover && !getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}, getView()))){
 				hover = false;
 			}
 		}
@@ -44,7 +44,7 @@ void CheckboxButton::onNotify(const sf::Event& event){
 	else{
 		if(event.type == sf::Event::MouseButtonReleased){
 			pressed = false;
-			if(getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseButton.x, event.mouseButton.y}))){
+			if(getGlobalBounds().contains(Framework::getRenderer().mapPixelToCoords({event.mouseButton.x, event.mouseButton.y}, getView()))){
 				state = !state;
 				if(state)
 					onButtonPressed();
