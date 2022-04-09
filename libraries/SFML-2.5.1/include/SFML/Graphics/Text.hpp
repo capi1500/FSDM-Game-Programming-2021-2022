@@ -372,7 +372,7 @@ public:
     ///
     /// This function computes the visual position of a character
     /// from its index in the string. The returned position is
-    /// in global coordinates (translation, rotation, scaleFactor and
+    /// in global coordinates (translation, rotation, scale and
     /// origin are applied).
     /// If \a index is out of range, the position of the end of
     /// the string is returned.
@@ -389,7 +389,7 @@ public:
     ///
     /// The returned rectangle is in local coordinates, which means
     /// that it ignores the transformations (translation, rotation,
-    /// scaleFactor, ...) that are applied to the entity.
+    /// scale, ...) that are applied to the entity.
     /// In other words, this function returns the bounds of the
     /// entity in the entity's coordinate system.
     ///
@@ -403,7 +403,7 @@ public:
     ///
     /// The returned rectangle is in global coordinates, which means
     /// that it takes into account the transformations (translation,
-    /// rotation, scaleFactor, ...) that are applied to the entity.
+    /// rotation, scale, ...) that are applied to the entity.
     /// In other words, this function returns the bounds of the
     /// text in the global 2D world's coordinate system.
     ///
@@ -465,7 +465,7 @@ private:
 /// some text with custom style and color on a render target.
 ///
 /// It inherits all the functions from sf::Transformable:
-/// position, rotation, scaleFactor, origin. It also adds text-specific
+/// position, rotation, scale, origin. It also adds text-specific
 /// properties such as the font to use, the character size,
 /// the font style (bold, italic, underlined and strike through), the
 /// text color, the outline thickness, the outline color, the character

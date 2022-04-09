@@ -100,7 +100,7 @@
 #define b2_maxRotation				(0.5f * b2_pi)
 #define b2_maxRotationSquared		(b2_maxRotation * b2_maxRotation)
 
-/// This scaleFactor factor controls how fast overlap is resolved. Ideally this would be 1 so
+/// This scale factor controls how fast overlap is resolved. Ideally this would be 1 so
 /// that overlap is removed in one time step. However using values close to 1 often lead
 /// to overshoot.
 #define b2_baumgarte				0.2f

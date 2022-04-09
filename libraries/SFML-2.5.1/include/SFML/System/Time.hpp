@@ -281,7 +281,7 @@ SFML_SYSTEM_API Time& operator -=(Time& left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scaleFactor a time value
+/// \brief Overload of binary * operator to scale a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -293,7 +293,7 @@ SFML_SYSTEM_API Time operator *(Time left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scaleFactor a time value
+/// \brief Overload of binary * operator to scale a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -305,7 +305,7 @@ SFML_SYSTEM_API Time operator *(Time left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scaleFactor a time value
+/// \brief Overload of binary * operator to scale a time value
 ///
 /// \param left  Left operand (a number)
 /// \param right Right operand (a time)
@@ -317,7 +317,7 @@ SFML_SYSTEM_API Time operator *(float left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scaleFactor a time value
+/// \brief Overload of binary * operator to scale a time value
 ///
 /// \param left  Left operand (a number)
 /// \param right Right operand (a time)
@@ -329,7 +329,7 @@ SFML_SYSTEM_API Time operator *(Int64 left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary *= operator to scaleFactor/assign a time value
+/// \brief Overload of binary *= operator to scale/assign a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -341,7 +341,7 @@ SFML_SYSTEM_API Time& operator *=(Time& left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary *= operator to scaleFactor/assign a time value
+/// \brief Overload of binary *= operator to scale/assign a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -353,7 +353,7 @@ SFML_SYSTEM_API Time& operator *=(Time& left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary / operator to scaleFactor a time value
+/// \brief Overload of binary / operator to scale a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -365,7 +365,7 @@ SFML_SYSTEM_API Time operator /(Time left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary / operator to scaleFactor a time value
+/// \brief Overload of binary / operator to scale a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -377,7 +377,7 @@ SFML_SYSTEM_API Time operator /(Time left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary /= operator to scaleFactor/assign a time value
+/// \brief Overload of binary /= operator to scale/assign a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)
@@ -389,7 +389,7 @@ SFML_SYSTEM_API Time& operator /=(Time& left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary /= operator to scaleFactor/assign a time value
+/// \brief Overload of binary /= operator to scale/assign a time value
 ///
 /// \param left  Left operand (a time)
 /// \param right Right operand (a number)

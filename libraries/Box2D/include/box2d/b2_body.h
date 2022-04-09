@@ -299,10 +299,10 @@ public:
 	/// Set the angular damping of the body.
 	void SetAngularDamping(float angularDamping);
 
-	/// Get the gravity scaleFactor of the body.
+	/// Get the gravity scale of the body.
 	float GetGravityScale() const;
 
-	/// Set the gravity scaleFactor of the body.
+	/// Set the gravity scale of the body.
 	void SetGravityScale(float scale);
 
 	/// Set the type of this body. This may alter the mass and velocity.

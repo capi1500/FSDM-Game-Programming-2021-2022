@@ -199,7 +199,7 @@ public:
     /// \brief Get a point of the shape
     ///
     /// The returned point is in local coordinates, that is,
-    /// the shape's transforms (position, rotation, scaleFactor) are
+    /// the shape's transforms (position, rotation, scale) are
     /// not taken into account.
     /// The result is undefined if \a index is out of the valid range.
     ///
@@ -217,7 +217,7 @@ public:
     ///
     /// The returned rectangle is in local coordinates, which means
     /// that it ignores the transformations (translation, rotation,
-    /// scaleFactor, ...) that are applied to the entity.
+    /// scale, ...) that are applied to the entity.
     /// In other words, this function returns the bounds of the
     /// entity in the entity's coordinate system.
     ///
@@ -231,7 +231,7 @@ public:
     ///
     /// The returned rectangle is in global coordinates, which means
     /// that it takes into account the transformations (translation,
-    /// rotation, scaleFactor, ...) that are applied to the entity.
+    /// rotation, scale, ...) that are applied to the entity.
     /// In other words, this function returns the bounds of the
     /// shape in the global 2D world's coordinate system.
     ///

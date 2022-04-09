@@ -94,7 +94,7 @@ public:
     /// \brief Get the position of a point
     ///
     /// The returned point is in local coordinates, that is,
-    /// the shape's transforms (position, rotation, scaleFactor) are
+    /// the shape's transforms (position, rotation, scale) are
     /// not taken into account.
     /// The result is undefined if \a index is out of the valid range.
     ///
@@ -126,7 +126,7 @@ private:
 /// \ingroup graphics
 ///
 /// This class inherits all the functions of sf::Transformable
-/// (position, rotation, scaleFactor, bounds, ...) as well as the
+/// (position, rotation, scale, bounds, ...) as well as the
 /// functions of sf::Shape (outline, color, texture, ...).
 ///
 /// It is important to keep in mind that a convex shape must
