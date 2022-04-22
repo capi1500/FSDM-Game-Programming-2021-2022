@@ -8,6 +8,10 @@ const sf::FloatRect& CoordChooser::getRect() const{
 
 void CoordChooser::setRect(const sf::FloatRect& rect){
 	CoordChooser::rect = rect;
+	CoordChooser::rect.top *= getScaleFactor();
+	CoordChooser::rect.left *= getScaleFactor();
+	CoordChooser::rect.width *= getScaleFactor();
+	CoordChooser::rect.height *= getScaleFactor();
 }
 
 const sf::Vector2f& CoordChooser::getTileSize() const{
@@ -23,7 +27,7 @@ const sf::Vector2i& CoordChooser::getChosen() const{
 }
 
 sf::Vector2i CoordChooser::getCoord(const sf::Vector2f& pixel){
-	return sf::Vector2i((pixel.x - rect.left) / tile_size.x, (pixel.y - rect.top) / tile_size.y);
+	return sf::Vector2i((pixel.x - rect.left) / (tile_size.x * getScaleFactor()), (pixel.y - rect.top) / (tile_size.y * getScaleFactor()));
 }
 
 void CoordChooser::onNotify(const sf::Event& event){
@@ -89,4 +93,8 @@ float CoordChooser::getScaleFactor() const{
 
 void CoordChooser::setScaleFactor(float scale){
 	CoordChooser::scaleFactor = scale;
+}
+
+void CoordChooser::setChosen(const sf::Vector2i& chosen){
+	CoordChooser::chosen = chosen;
 }

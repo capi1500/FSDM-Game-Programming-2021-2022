@@ -65,23 +65,25 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	
 	tileChooser = new TileChooser();
 	
-	tileChosen = new Frame();
-	tileChosen->setBaseSize(editor->getTileSize());
-	tileChosen->setSize({editor->getTileSize().x * 2, editor->getTileSize().y * 2});
-	tileChosen->hide();
-	
 	tileChooser->setView(sf::View());
 	tileChooser->getView().setViewport({0, 0.6, 1, 0.4});
 	tileChooser->getView().setSize(sf::Vector2f(Framework::getRenderer().getSize().x, Framework::getRenderer().getSize().y * 4 / 10.0));
 	tileChooser->getView().setCenter(0, 0);
+	
+	tileChosen = new Frame();
+	tileChosen->setBaseSize(editor->getTileSize() * tileChooser->getScaleFactor());
+	tileChosen->setSize({editor->getTileSize().x * tileChooser->getScaleFactor(), editor->getTileSize().y * tileChooser->getScaleFactor()});
 	
 	tileChooser->setOnChosenUpdate([this](const sf::Vector2i& coord){
 		if(coord == sf::Vector2i(-1, -1))
 			tileChosen->hide();
 		else
 			tileChosen->show();
-		tileChosen->setPosition({2 * coord.x * tileChooser->getTileSize().x - 2 * tileChooser->getOrigin().x, 2 * coord.y * tileChooser->getTileSize().y - 2 * tileChooser->getOrigin().y});
+		tileChosen->setPosition({tileChooser->getScaleFactor() * coord.x * tileChooser->getTileSize().x - tileChooser->getScaleFactor() * tileChooser->getOrigin().x,
+									 tileChooser->getScaleFactor() * coord.y * tileChooser->getTileSize().y - tileChooser->getScaleFactor() * tileChooser->getOrigin().y});
 	});
+	
+	tileChooser->setChosen({0, 0});
 	
 	entities.push_back(tileChooser);
 	entities.push_back(tileChosen);
