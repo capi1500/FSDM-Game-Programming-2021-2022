@@ -2,17 +2,17 @@
 #include <iostream>
 #include "world.hpp"
 
-WorldBuilder::WorldBuilder(b2World& world, const sf::Vector2u& size) : world(world), size(size){
+WorldBuilder::WorldBuilder(const sf::Vector2u& size) : size(size){
 	solid.resize(size.x, std::vector<bool>(size.y, false));
 	type.resize(size.x, std::vector<sf::Vector2u>(size.y, sf::Vector2u(-1, -1)));
 }
 
-World WorldBuilder::create(){
-	return World(*this);
+World WorldBuilder::create(b2World& world){
+	return World(world, *this);
 }
 
-World* WorldBuilder::create_ptr(){
-	return new World(*this);
+World* WorldBuilder::create_ptr(b2World& world){
+	return new World(world, *this);
 }
 
 WorldBuilder& WorldBuilder::setTile(const sf::Vector2u& position, const sf::Vector2u& tile, bool solid){
@@ -21,7 +21,7 @@ WorldBuilder& WorldBuilder::setTile(const sf::Vector2u& position, const sf::Vect
 	return *this;
 }
 
-World::World(WorldBuilder& worldBuilder) : PhysicalEntity(worldBuilder.world){
+World::World(b2World& world, WorldBuilder& worldBuilder) : PhysicalEntity(world){
 	std::swap(size, worldBuilder.size);
 	std::swap(solid, worldBuilder.solid);
 	std::swap(type, worldBuilder.type);

@@ -14,6 +14,7 @@ class Editor : public Scene{
 		RadioButton* size1;
 		RadioButton* size3;
 		RadioButton* size5;
+		CheckboxButton* erase;
 		
 		Frame* tileChosen;
 		Frame* editorChosen;
@@ -21,6 +22,8 @@ class Editor : public Scene{
 		RadioButtonGroup brushSizeRadioButtonGroup;
 		int brushSize;
 	public:
+		Level* save();
+		
 		Editor(StateMachine& stateMachine);
 		void onNotify(const sf::Event& event) override;
 		void onNotify(const std::shared_ptr<SceneEvent>& event) override;
@@ -28,6 +31,10 @@ class Editor : public Scene{
 		void deactivate() override;
 		void draw() override;
 		void update(const sf::Time& time) override;
+		
+		enum SceneEventID{
+			PlaytestEvent
+		};
 };
 
 

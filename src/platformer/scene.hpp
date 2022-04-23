@@ -15,7 +15,6 @@
 class Scene : public State, public Listener<sf::Event>, public Listener<std::shared_ptr<SceneEvent>>, public Emitter<std::shared_ptr<SceneEvent>>{
 	protected:
 		std::vector<Entity*> entities;
-		Level level;
 		sf::View view;
 	public:
 		Scene(StateMachine& stateMachine);

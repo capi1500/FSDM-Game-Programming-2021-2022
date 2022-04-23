@@ -2,6 +2,11 @@
 
 #include <SFML/System/Vector2.hpp>
 
+struct TileConfig{
+	const sf::Vector2u texture_coord;
+	const bool solid;
+};
+
 struct Tiles{
 	static const sf::Vector2u grass_flat_standalone;
 	static const sf::Vector2u grass_flat_left;

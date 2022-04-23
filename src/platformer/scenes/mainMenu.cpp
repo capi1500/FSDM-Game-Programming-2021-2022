@@ -21,7 +21,7 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 			{centerX, centerY - 92},
 			"Play",
 			[this]{
-				getStateMachine().replace(new Play(getStateMachine()));
+				getStateMachine().add(new Play(getStateMachine(), new Level())); // TODO: fix level
 			});
 	LongButton* editorButton = new LongButton(
 			{centerX, centerY},

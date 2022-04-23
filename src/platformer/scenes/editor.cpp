@@ -9,7 +9,7 @@
 void Editor::onNotify(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed){
 		if(event.key.code == sf::Keyboard::Escape)
-			getStateMachine().add(new EditorPause(getStateMachine()));
+			getStateMachine().add(new EditorPause(getStateMachine(), *this));
 	}
 }
 
@@ -77,13 +77,13 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	tileChooser->setOnChosenUpdate([this](const sf::Vector2i& coord){
 		if(coord == sf::Vector2i(-1, -1))
 			tileChosen->hide();
-		else
+		else{
 			tileChosen->show();
+			erase->release();
+		}
 		tileChosen->setPosition({tileChooser->getScaleFactor() * coord.x * tileChooser->getTileSize().x - tileChooser->getScaleFactor() * tileChooser->getOrigin().x,
 									 tileChooser->getScaleFactor() * coord.y * tileChooser->getTileSize().y - tileChooser->getScaleFactor() * tileChooser->getOrigin().y});
 	});
-	
-	tileChooser->setChosen({0, 0});
 	
 	entities.push_back(tileChooser);
 	entities.push_back(tileChosen);
@@ -110,6 +110,17 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	entities.push_back(size1);
 	entities.push_back(size3);
 	entities.push_back(size5);
+	
+	erase = new CheckboxButton(sf::Vector2f(-static_cast<float>(Framework::getRenderer().getSize().x) / 2 + 52, 36),
+	                           [this]{
+										tileChooser->setChosen({-1, -1});
+										tileChosen->hide();
+								},
+	                           []{},
+	                           false);
+	erase->setView(tileChooser->getView());
+	
+	entities.push_back(erase);
 }
 
 void Editor::activate(){
@@ -137,6 +148,26 @@ void Editor::draw(){
 	Framework::getRenderer().draw(*size1);
 	Framework::getRenderer().draw(*size3);
 	Framework::getRenderer().draw(*size5);
+	Framework::getRenderer().draw(*erase);
 	
 	Framework::getRenderer().setView(prev);
+}
+
+Level* Editor::save(){
+	const WorldEditor& world = (*editor);
+	
+	Level* level = new Level();
+	
+	WorldBuilder builder(world.getSize());
+	
+	for(unsigned x = 0; x < world.getSize().x; x++){
+		for(unsigned y = 0; y < world.getSize().y; y++){
+			builder.setTile({x, y}, world[x][y], world[x][y] != sf::Vector2u(-1, -1)); // TODO: change solid for some kind of a map
+		}
+	}
+	
+	level->world = builder.create_ptr(level->b2World);
+	level->player = new Player(level->b2World, {0, 0});
+	
+	return level;
 }

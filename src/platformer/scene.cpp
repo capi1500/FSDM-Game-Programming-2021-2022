@@ -1,3 +1,4 @@
+#include <iostream>
 #include "scene.hpp"
 #include "framework.hpp"
 #include "scenes/events/sceneEvent.hpp"
@@ -9,14 +10,12 @@ Scene::Scene(StateMachine& stateMachine) : State(stateMachine){
 void Scene::update(const sf::Time& time){
 	for(auto& e : entities)
 		e->update(time);
-	level.update(time);
 	Framework::getEventHandler().processEvents();
 }
 
 void Scene::draw(){
 	for(auto& e : entities)
 		Framework::getRenderer().draw(*e);
-	level.draw();
 }
 
 void Scene::activate(){

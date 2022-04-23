@@ -1,4 +1,5 @@
 #include <platformer/framework.hpp>
+#include <iostream>
 #include "checkboxButton.hpp"
 
 CheckboxButton::CheckboxButton(const sf::Vector2f& position, const std::function<void()>& actionOnPressed, const std::function<void()>& actionOnReleased, bool defaultState){
@@ -68,4 +69,14 @@ void CheckboxButton::deactivate(){
 
 CheckboxButton::~CheckboxButton(){
 	deactivate();
+}
+
+void CheckboxButton::press(){
+	state = true;
+	onButtonPressed();
+}
+
+void CheckboxButton::release(){
+	state = false;
+	onButtonReleased();
 }

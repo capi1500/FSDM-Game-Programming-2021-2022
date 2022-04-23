@@ -16,6 +16,9 @@ class CheckboxButton : public Widget, public Listener<sf::Event>{
 		void onNotify(const sf::Event& event) override;
 		void activate() override;
 		void deactivate() override;
+		
+		void press();
+		void release();
 };
 
 

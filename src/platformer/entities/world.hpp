@@ -8,15 +8,14 @@ class World;
 
 class WorldBuilder{
 	private:
-		b2World& world;
 		sf::Vector2u size;
 		std::vector<std::vector<bool>> solid;
 		std::vector<std::vector<sf::Vector2u>> type; // references struct Tiles
 	public:
-		WorldBuilder(b2World& world, const sf::Vector2u& size);
+		explicit WorldBuilder(const sf::Vector2u& size);
 		
-		World create();
-		World* create_ptr();
+		World create(b2World& world);
+		World* create_ptr(b2World& world);
 		
 		WorldBuilder& setTile(const sf::Vector2u& position, const sf::Vector2u& tile, bool solid);
 		
@@ -34,7 +33,7 @@ class World : public PhysicalEntity{
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
-		World(WorldBuilder& worldBuilder);
+		World(b2World& b2World, WorldBuilder& worldBuilder);
 };
 
 

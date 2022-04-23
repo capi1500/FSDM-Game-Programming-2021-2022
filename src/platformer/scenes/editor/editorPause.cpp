@@ -2,9 +2,10 @@
 #include <platformer/framework.hpp>
 #include <platformer/scenes/editor.hpp>
 #include <platformer/scenes/settings.hpp>
+#include <platformer/scenes/play.hpp>
 #include "editorPause.hpp"
 
-EditorPause::EditorPause(StateMachine& stateMachine) : Scene(stateMachine){
+EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(stateMachine){
 	float centerX = Framework::getRenderer().getSize().x / 2, centerY = Framework::getRenderer().getSize().y / 2;
 	
 	LongButton* playButton = new LongButton(
@@ -20,14 +21,20 @@ EditorPause::EditorPause(StateMachine& stateMachine) : Scene(stateMachine){
 				getStateMachine().pop();
 				getStateMachine().replace(new Editor(getStateMachine()));
 			});
-	LongButton* settingsButton = new LongButton(
+	LongButton* playtestButton = new LongButton(
 			{centerX, centerY + 92},
+			"Test",
+			[this, &editor]{
+				getStateMachine().replace(new Play(getStateMachine(), editor.save()));
+			});
+	LongButton* settingsButton = new LongButton(
+			{centerX, centerY + 184},
 			"Settings",
 			[this]{
 				getStateMachine().add(new Settings(getStateMachine()));
 			});
 	LongButton* quitButton = new LongButton(
-			{centerX, centerY + 184},
+			{centerX, centerY + 184 + 92},
 			"Quit",
 			[this]{
 				getStateMachine().pop();
@@ -38,6 +45,7 @@ EditorPause::EditorPause(StateMachine& stateMachine) : Scene(stateMachine){
 	
 	entities.push_back(playButton);
 	entities.push_back(restartButton);
+	entities.push_back(playtestButton);
 	entities.push_back(settingsButton);
 	entities.push_back(quitButton);
 }

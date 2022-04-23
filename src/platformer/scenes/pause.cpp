@@ -19,7 +19,7 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 			"Restart",
 			[this]{
 				getStateMachine().pop();
-				getStateMachine().replace(new Play(getStateMachine()));
+				getStateMachine().replace(new Play(getStateMachine(), new Level())); // TODO: fix level
 			});
 	LongButton* settingsButton = new LongButton(
 			{centerX, centerY + 92},
@@ -27,8 +27,15 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 			[this]{
 				getStateMachine().add(new Settings(getStateMachine()));
 			});
-	LongButton* quitButton = new LongButton(
+	LongButton* returnButton = new LongButton(
 			{centerX, centerY + 184},
+			"End game",
+			[this]{
+				getStateMachine().pop();
+				getStateMachine().pop();
+			});
+	LongButton* quitButton = new LongButton(
+			{centerX, centerY + 184 + 92},
 			"Quit",
 			[this]{
 				getStateMachine().pop();
@@ -40,6 +47,7 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 	entities.push_back(playButton);
 	entities.push_back(restartButton);
 	entities.push_back(settingsButton);
+	entities.push_back(returnButton);
 	entities.push_back(quitButton);
 }
 

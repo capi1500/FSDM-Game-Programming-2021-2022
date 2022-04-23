@@ -5,7 +5,7 @@
 
 class EditorPause : public Scene{
 	public:
-		EditorPause(StateMachine& stateMachine);
+		EditorPause(StateMachine& stateMachine, Editor& editor);
 		
 		void onNotify(const sf::Event& event) override;
 		void update(const sf::Time& time) override;

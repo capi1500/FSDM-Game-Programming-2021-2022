@@ -43,3 +43,15 @@ void WorldEditor::updateTile(const sf::Vector2u& type, const sf::Vector2i& tile)
 	if(0 <= tile.x && tile.x < size.x && 0 <= tile.y && tile.y < size.y)
 		tiles[tile.x][tile.y] = type;
 }
+
+const sf::Vector2u& WorldEditor::getSize() const{
+	return size;
+}
+
+std::vector<sf::Vector2u>& WorldEditor::operator [](std::size_t i){
+	return tiles[i];
+}
+
+const std::vector<sf::Vector2u>& WorldEditor::operator [](std::size_t i) const{
+	return tiles[i];
+}

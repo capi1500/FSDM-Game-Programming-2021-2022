@@ -1,6 +1,8 @@
 #pragma once
 
 #include "physicalEntity.hpp"
+#include "platformer/utils/listener.hpp"
+#include <SFML/Window/Event.hpp>
 
 class Player : public PhysicalEntity, public Listener<sf::Event>{
 	public:
