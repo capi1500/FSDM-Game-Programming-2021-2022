@@ -21,6 +21,9 @@ find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
 # add Box2D
 include_directories(${LIB_DIR}/Box2D/include)
 
+# add json
+include_directories(${LIB_DIR}/json)
+
 # add execs
 add_executable(ProgramowanieGier src/board_game/main.cpp src/board_game/board.cpp src/board_game/board.hpp src/board_game/player.cpp src/board_game/player.hpp src/board_game/point.cpp src/board_game/point.hpp)
 add_executable(SFML_basics src/other/sfml_basic.cpp)

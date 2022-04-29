@@ -5,10 +5,17 @@
 #include "box2d/box2d.h"
 #include "entity.hpp"
 #include "entityProperties.hpp"
+#include <json.hpp>
+
+using json = nlohmann::json;
 
 class PhysicalEntity : public Entity{
 	private:
-		b2World& world;
+		std::reference_wrapper<b2World> world;
+		
+		b2Vec2 hitboxCenter;
+		b2Vec2 hitboxSize;
+		sf::Vector2i position;
 	protected:
 		b2Body* body;
 		
@@ -32,6 +39,21 @@ class PhysicalEntity : public Entity{
 		virtual void contactBegin(PhysicalEntity& entity, b2Contact* contact);
 		virtual void contactEnd(PhysicalEntity& entity, b2Contact* contact);
 		
-		PhysicalEntity(b2World& world, const sf::Vector2i& position, const TextureInfo& textureInfo, const sf::Vector2u& textureCoord, const b2Vec2& hitboxCenter, const b2Vec2& hitboxSize, const EntityProperties& properties);
-		PhysicalEntity(b2World& world);
+		void build(b2World& world);
+		
+		friend void to_json(json& j, const PhysicalEntity& p);
+		friend void from_json(const json& j, PhysicalEntity& p);
 };
+
+void to_json(json& j, const b2BodyDef& b2);
+void from_json(const json& j, b2BodyDef& b2);
+void to_json(json& j, const b2FixtureDef& b2);
+void from_json(const json& j, b2FixtureDef& b2);
+void to_json(json& j, const b2Shape& b2);
+void from_json(const json& j, b2Shape*& b2);
+void to_json(json& j, const b2Vec2& b2);
+void from_json(const json& j, b2Vec2& b2);
+template<class T>
+void to_json(json& j, const sf::Vector2<T>& vec);
+template<class T>
+void from_json(const json& j, sf::Vector2<T>& vec);

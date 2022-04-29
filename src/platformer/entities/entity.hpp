@@ -7,6 +7,9 @@
 #include <platformer/entities/world/textureInfo.hpp>
 
 class Entity : public sf::Drawable, public sf::Transformable{
+	private:
+		TextureInfo textureInfo;
+		sf::Vector2u textureCoord;
 	protected:
 		bool visible = true;
 		
