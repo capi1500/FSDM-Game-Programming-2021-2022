@@ -95,11 +95,3 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
 	target.draw(sprite, states);
 }
-
-void to_json(json& j, const World& w){
-
-}
-
-void from_json(const json& j, World& w){
-
-}

@@ -60,14 +60,3 @@ void Level::save(const std::string& filename){
 	file << j << "\n";
 	file.close();
 }
-
-void to_json(json& j, const Level& l){
-
-}
-
-void from_json(const json& j, Level& l){
-	WorldBuilder wb = j.at("world").get<WorldBuilder>();
-	l.world = std::make_shared<World>(wb.create(l.b2World));
-	
-	l.player = std::make_shared<Player>(j.at("player").get<Player>());
-}

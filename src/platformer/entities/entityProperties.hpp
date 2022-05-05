@@ -58,12 +58,3 @@ class EntityPropertiesBuilder{
 		EntityPropertiesBuilder& setMask(const EntityProperties::EntityType& entityType);
 		EntityProperties build();
 };
-
-void to_json(json& j, const EntityProperties::JumpProperty& p);
-void from_json(const json& j, EntityProperties::JumpProperty& p);
-void to_json(json& j, const EntityProperties::MovementProperty& p);
-void from_json(const json& j, EntityProperties::MovementProperty& p);
-void to_json(json& j, const EntityProperties& p);
-void from_json(const json& j, EntityProperties& p);
-void to_json(json& j, const EntityProperties::EntityType& p);
-void from_json(const json& j, EntityTypeBuilder& p);

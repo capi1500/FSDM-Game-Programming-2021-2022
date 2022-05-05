@@ -15,7 +15,7 @@ void Player::update(const sf::Time& time){
 		moveRight();
 }
 
-Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(
+Player::Player() : PhysicalEntity(
 		world,
 		position,
 		Framework::getAssetStorage().getTextureInfo("characters"),

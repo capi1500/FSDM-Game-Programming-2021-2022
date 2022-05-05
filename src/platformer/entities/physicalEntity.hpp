@@ -44,16 +44,3 @@ class PhysicalEntity : public Entity{
 		friend void to_json(json& j, const PhysicalEntity& p);
 		friend void from_json(const json& j, PhysicalEntity& p);
 };
-
-void to_json(json& j, const b2BodyDef& b2);
-void from_json(const json& j, b2BodyDef& b2);
-void to_json(json& j, const b2FixtureDef& b2);
-void from_json(const json& j, b2FixtureDef& b2);
-void to_json(json& j, const b2Shape& b2);
-void from_json(const json& j, b2Shape*& b2);
-void to_json(json& j, const b2Vec2& b2);
-void from_json(const json& j, b2Vec2& b2);
-template<class T>
-void to_json(json& j, const sf::Vector2<T>& vec);
-template<class T>
-void from_json(const json& j, sf::Vector2<T>& vec);
