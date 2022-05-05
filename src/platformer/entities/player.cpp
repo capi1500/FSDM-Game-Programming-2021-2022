@@ -1,8 +1,5 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <platformer/framework.hpp>
-#include <platformer/entities/world/tiles.hpp>
-#include <iostream>
-#include <platformer/entities/world/characters.h>
 #include "player.hpp"
 
 void Player::update(const sf::Time& time){
@@ -14,8 +11,8 @@ void Player::update(const sf::Time& time){
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		moveRight();
 }
-
-Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(
+/*
+Player::Player() : PhysicalEntity(
 		world,
 		position,
 		Framework::getAssetStorage().getTextureInfo("characters"),
@@ -44,7 +41,7 @@ Player::Player(b2World& world, const sf::Vector2i& position) : PhysicalEntity(
 	
 	properties.solidFlag = true;
 	properties.type = EntityProperties::Player;
-}
+}*/
 
 void Player::onNotify(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::W){

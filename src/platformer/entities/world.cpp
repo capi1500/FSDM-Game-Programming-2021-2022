@@ -2,36 +2,9 @@
 #include <iostream>
 #include "world.hpp"
 
-WorldBuilder::WorldBuilder(const sf::Vector2u& size) : size(size){
-	solid.resize(size.x, std::vector<bool>(size.y, false));
-	type.resize(size.x, std::vector<sf::Vector2u>(size.y, sf::Vector2u(-1, -1)));
-}
+void World::build(b2World &world) {
+	PhysicalEntity::build(world);
 
-WorldBuilder::WorldBuilder(){}
-
-World WorldBuilder::create(b2World& world){
-	return World(world, *this);
-}
-
-World* WorldBuilder::create_ptr(b2World& world){
-	return new World(world, *this);
-}
-
-void WorldBuilder::setSize(const sf::Vector2u& size){
-	WorldBuilder::size = size;
-}
-
-WorldBuilder& WorldBuilder::setTile(const sf::Vector2u& position, const sf::Vector2u& tile, bool solid){
-	this->solid[position.x][position.y] = solid;
-	type[position.x][position.y] = tile;
-	return *this;
-}
-
-World::World(b2World& world, WorldBuilder& worldBuilder) : PhysicalEntity(world){
-	std::swap(size, worldBuilder.size);
-	std::swap(solid, worldBuilder.solid);
-	std::swap(type, worldBuilder.type);
-	
 	sf::Sprite tmp;
 	tmp.setTexture(Framework::getAssetStorage().getTexture("tiles"));
 	texture.create(18 * size.x, 18 * size.y);
@@ -94,12 +67,4 @@ World::World(b2World& world, WorldBuilder& worldBuilder) : PhysicalEntity(world)
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
 	target.draw(sprite, states);
-}
-
-void to_json(json& j, const World& w){
-
-}
-
-void from_json(const json& j, World& w){
-
 }

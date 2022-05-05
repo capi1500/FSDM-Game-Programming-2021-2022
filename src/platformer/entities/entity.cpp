@@ -17,17 +17,6 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	}
 }
 
-Entity::Entity(const TextureInfo& textureInfo, const sf::Vector2u& textureCoord){
-	sprite.setTexture(Framework::getAssetStorage().getTexture(textureInfo.getName()));
-	sprite.setTextureRect({
-		static_cast<int>(textureCoord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),
-		static_cast<int>(textureCoord.y * (textureInfo.getSize().y + textureInfo.getMargin().y)),
-		textureInfo.getSize().x,
-		textureInfo.getSize().y});
-}
-
-Entity::Entity(){}
-
 void Entity::hide(){
 	visible = false;
 }
