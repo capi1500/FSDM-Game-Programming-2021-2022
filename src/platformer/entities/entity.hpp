@@ -21,9 +21,12 @@ class Entity : public sf::Drawable, public sf::Transformable{
 	public:
 		virtual void update(const sf::Time& time) = 0;
 		
+		void updateTexture(const sf::Vector2u& textureCoord);
+		
 		void hide();
 		void show();
-		
+		const TextureInfo& getTextureInfo() const;
+		void setTextureInfo(const TextureInfo& textureInfo);
 		virtual void activate();
 		virtual void deactivate();
 		

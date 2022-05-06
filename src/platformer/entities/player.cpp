@@ -1,5 +1,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <platformer/framework.hpp>
+#include <platformer/entities/world/characters.h>
 #include "player.hpp"
 
 void Player::update(const sf::Time& time){
@@ -11,37 +12,45 @@ void Player::update(const sf::Time& time){
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		moveRight();
 }
-/*
-Player::Player() : PhysicalEntity(
-		world,
-		position,
-		Framework::getAssetStorage().getTextureInfo("characters"),
-		Characters::ghost_green_down,
-		{0.5, 0.5},
-		{1, 1},
-		EntityPropertiesBuilder()
-				.setJump({5})
-				.setDoubleJump({5})
-				.setMovement({5})
-				.setEntityType(EntityTypeBuilder().player(true).build())
-				.setMask(EntityTypeBuilder()
-						.npc(true)
-						.collectible(true)
-						.ground(true)
-						.build())
-				.build()
-){
+
+Player::Player(){
+	setTextureInfo(Framework::getAssetStorage().getTextureInfo("characters"));
+}
+
+void Player::buildDefault(b2World& world){
+	properties = EntityPropertiesBuilder()
+			.setJump({5})
+			.setDoubleJump({5})
+			.setMovement({5})
+			.setEntityType(EntityTypeBuilder().player(true).build())
+			.setMask(EntityTypeBuilder()
+					         .npc(true)
+					         .collectible(true)
+					         .ground(true)
+					         .build())
+			.build();
+
+	getBodyDef().position = b2Vec2_zero;
+	getBodyDef().type = b2_dynamicBody;
+	getBodyDef().fixedRotation = true;
 	
-	properties.jumpFlag = true;
-	properties.jump.height = 5;
-	properties.doubleJumpFlag = true;
-	properties.doubleJump.height = 5;
-	properties.movementFlag = true;
-	properties.movement.speed = 5;
+	b2Vec2 hitboxCenter = {0.5, 0.5};
+	b2Vec2 hitboxSize = {1, 1};
 	
-	properties.solidFlag = true;
-	properties.type = EntityProperties::Player;
-}*/
+	build(world);
+	
+	b2PolygonShape shape;
+	shape.SetAsBox(hitboxSize.x / 2, hitboxSize.y / 2, hitboxCenter,0);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 1.0;
+	fixtureDef.friction = 0;
+	fixtureDef.filter.categoryBits = properties.type;
+	fixtureDef.filter.maskBits = properties.mask;
+	addFixture(fixtureDef);
+	
+	updateTexture(Characters::ghost_green_down);
+}
 
 void Player::onNotify(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::W){

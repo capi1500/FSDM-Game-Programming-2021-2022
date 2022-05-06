@@ -25,6 +25,13 @@ class PhysicalEntity : public Entity{
 		void setMovingLeft();
 		void setMovingRight();
 		
+		const b2BodyDef& getBodyDef() const;
+		const std::vector<b2FixtureDef>& getFixtureDefs() const;
+		b2BodyDef& getBodyDef();
+		std::vector<b2FixtureDef>& getFixtureDefs();
+		
+		b2Fixture* addFixture(const b2FixtureDef& fixtureDef);
+		
 		const EntityProperties& getProperties() const;
 		EntityProperties& getProperties();
 		

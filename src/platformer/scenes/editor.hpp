@@ -21,6 +21,8 @@ class Editor : public Scene{
 		
 		RadioButtonGroup brushSizeRadioButtonGroup;
 		int brushSize;
+		
+		TileConfig getTileConfig(const sf::Vector2u& coord);
 	public:
 		Level* save();
 		

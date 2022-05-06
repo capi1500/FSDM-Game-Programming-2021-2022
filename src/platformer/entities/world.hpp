@@ -10,18 +10,23 @@ using json = nlohmann::json;
 
 class World : public PhysicalEntity{
 	private:
-		sf::Vector2u size;
-		std::vector<std::vector<TileConfig>> type; // references struct Tiles
+		std::vector<std::vector<TileConfig>> tiles; // references struct Tiles
 		
-		sf::Sprite sprite;
-		sf::RenderTexture texture;
+		std::shared_ptr<sf::Sprite> sprite;
+		std::shared_ptr<sf::RenderTexture> texture;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
+		World();
+	public:
+		void build(b2World &world) override;
+		
+		std::vector<std::vector<TileConfig>>& getTiles();
+		const std::vector<std::vector<TileConfig>>& getTiles() const;
+		void setTiles(const std::vector<std::vector<TileConfig>>& tiles);
+		
 		friend void from_json(const json& j, World& w);
 		friend void to_json(json& j, const World& w);
-
-		void build(b2World &world) override;
 };
 
 

@@ -7,7 +7,7 @@ class Mine : public PhysicalEntity{
 		sf::Time timer;
 		bool facingLeft = false;
 	public:
-		Mine(b2World& world, const sf::Vector2i& position);
+		Mine();
 		void update(const sf::Time& time) override;
 };
 

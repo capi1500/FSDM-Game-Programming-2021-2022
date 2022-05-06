@@ -4,7 +4,6 @@
 #include "mainMenu.hpp"
 #include "../utils/stateMachine.hpp"
 #include "play.hpp"
-#include "pause.h"
 #include "settings.hpp"
 #include "editor.hpp"
 
@@ -21,7 +20,9 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 			{centerX, centerY - 92},
 			"Play",
 			[this]{
-				getStateMachine().add(new Play(getStateMachine(), new Level())); // TODO: fix level
+				Level* l = new Level();
+				l->load("../saves/save.json");
+				getStateMachine().add(new Play(getStateMachine(), l));
 			});
 	LongButton* editorButton = new LongButton(
 			{centerX, centerY},

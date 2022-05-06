@@ -13,6 +13,7 @@ class TextureInfo{
         const sf::Vector2i& getSize() const;
         const sf::Vector2i& getMargin() const;
         TextureInfo(const std::string& name, const sf::Vector2i& size, const sf::Vector2i& margin);
+		TextureInfo() = default;
 };
 
 

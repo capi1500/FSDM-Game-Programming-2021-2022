@@ -1,5 +1,6 @@
 #include "tiles.hpp"
 
+const TileConfig Tiles::empty = {{100, 100}, false};
 const TileConfig Tiles::grass_flat_standalone = {{0, 0}, true};
 const TileConfig Tiles::grass_flat_left = {{1, 0}, true};
 const TileConfig Tiles::grass_flat_middle = {{2, 0}, true};
@@ -102,3 +103,15 @@ const TileConfig Tiles::snowman = {{5, 7}, true};
 const TileConfig Tiles::water_surface1 = {{13, 1}, true};
 const TileConfig Tiles::water_surface2 = {{13, 2}, true};
 const TileConfig Tiles::water = {{13, 2}, true};
+
+const TileConfig Tiles::tilemap[9][20] = {
+		{Tiles::grass_flat_standalone, Tiles::grass_flat_left, Tiles::grass_flat_middle, Tiles::grass_flat_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty}
+};

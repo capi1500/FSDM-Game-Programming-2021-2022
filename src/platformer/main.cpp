@@ -1,6 +1,11 @@
+#include <iostream>
 #include "game.hpp"
 
 int main(){
-	Game game;
-	game.run();
+	try{
+		Game game;
+		game.run();
+	} catch (const std::exception& e){
+		std::cerr << e.what() << "\n";
+	}
 }

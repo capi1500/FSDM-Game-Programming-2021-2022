@@ -24,3 +24,20 @@ void Entity::hide(){
 void Entity::show(){
 	visible = true;
 }
+
+const TextureInfo& Entity::getTextureInfo() const{
+	return textureInfo;
+}
+
+void Entity::setTextureInfo(const TextureInfo& textureInfo){
+	Entity::textureInfo = textureInfo;
+}
+
+void Entity::updateTexture(const sf::Vector2u& textureCoord){
+	sprite.setTexture(Framework::getAssetStorage().getTexture(textureInfo.getName()));
+	sprite.setTextureRect({
+			                      static_cast<int>(textureCoord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),
+			                      static_cast<int>(textureCoord.y * (textureInfo.getSize().y + textureInfo.getMargin().y)),
+			                      textureInfo.getSize().x,
+			                      textureInfo.getSize().y});
+}

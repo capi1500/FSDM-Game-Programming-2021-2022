@@ -1,12 +1,13 @@
+#include <iostream>
 #include "physicalEntity.hpp"
 #include "platformer/framework.hpp"
 
 void PhysicalEntity::build(b2World& world){
     body = world.CreateBody(&bodyDef);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(this);
-
+	
 	for(auto& fixtureDef : fixtureDefs)
-        body->CreateFixture(&fixtureDef);
+		addFixture(fixtureDef);
 }
 
 void PhysicalEntity::update(const sf::Time& time){
@@ -86,4 +87,24 @@ const EntityProperties& PhysicalEntity::getProperties() const{
 
 EntityProperties& PhysicalEntity::getProperties(){
 	return properties;
+}
+
+const b2BodyDef& PhysicalEntity::getBodyDef() const{
+	return bodyDef;
+}
+
+const std::vector<b2FixtureDef>& PhysicalEntity::getFixtureDefs() const{
+	return fixtureDefs;
+}
+
+b2BodyDef& PhysicalEntity::getBodyDef(){
+	return bodyDef;
+}
+
+std::vector<b2FixtureDef>& PhysicalEntity::getFixtureDefs(){
+	return fixtureDefs;
+}
+
+b2Fixture* PhysicalEntity::addFixture(const b2FixtureDef& fixtureDef){
+	return body->CreateFixture(&fixtureDef);
 }

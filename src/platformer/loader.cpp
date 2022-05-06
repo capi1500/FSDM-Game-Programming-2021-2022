@@ -1,6 +1,7 @@
 #include <platformer/entities/physicalEntity.hpp>
 #include <platformer/entities/world.hpp>
 #include <platformer/entities/player.hpp>
+#include <iostream>
 #include "loader.hpp"
 #include "level.hpp"
 #include "framework.hpp"
@@ -8,27 +9,37 @@
 // Level
 
 void to_json(json& j, const Level& l){
-
+	j["world"] = *(l.world);
+	j["player"] = *(l.player);
+	j["entities"] = json::array();
+	for(auto& e : l.entities){
+		j["entities"].emplace_back(*(e));
+	}
 }
 
 void from_json(const json& j, Level& l){
-	WorldBuilder wb = j["world"].get<WorldBuilder>();
-	l.world = std::make_shared<World>(wb.create(l.b2World));
+	l.world = std::make_shared<World>(j.at("world").get<World>());
 	l.player = std::make_shared<Player>(j["player"].get<Player>());
+	json entitiesArray = j["entities"];
+	for(auto& e : entitiesArray){
+		auto pe = std::make_shared<PhysicalEntity>(e.get<PhysicalEntity>());
+		pe->build(l.b2World);
+		l.entities.insert(pe); // TODO: Cannot create sth other than PhysicalEntity
+	}
+	l.world->build(l.b2World);
+	l.player->build(l.b2World);
 }
 
 // Entities
 
 void to_json(json& j, const Entity& e){
 	j = dynamic_cast<const sf::Transformable&>(e);
-	j["textureInfo"] = e.textureInfo.getName();
 	j["textureCoord"] = e.textureCoord;
     j["visible"] = e.visible;
 }
 
 void from_json(const json& j, Entity& e){
     j.get_to(dynamic_cast<sf::Transformable&>(e));
-	e.textureInfo = Framework::getAssetStorage().getTextureInfo(j["textureInfo"].get<std::string>());
 	j["textureCoord"].get_to(e.textureCoord);
 	e.sprite.setTexture(Framework::getAssetStorage().getTexture(e.textureInfo.getName()));
 	e.sprite.setTextureRect({
@@ -43,9 +54,10 @@ void to_json(json& j, const PhysicalEntity& p){
 	j = dynamic_cast<const Entity&>(p);
 	j["body"] = *(p.body);
 
-    std::vector<b2Fixture> fixtures(p.fixtureDefs.size());
-    for(int i = 0; i < fixtures.size(); i++)
-        fixtures[i] = p.body->GetFixtureList()[i];
+    std::vector<std::reference_wrapper<b2Fixture>> fixtures;
+	fixtures.reserve(p.fixtureDefs.size());
+    for(int i = 0; i < p.fixtureDefs.size(); i++)
+        fixtures.emplace_back(p.body->GetFixtureList()[i]);
     j["fixtures"] = fixtures;
 	j["properties"] = p.properties;
 }
@@ -59,12 +71,30 @@ void from_json(const json& j, PhysicalEntity& p){
 
 // World
 
-void to_json(json& j, const World& w){
+void to_json(json& j, const TileConfig& c){
+	j["texture_coord"] = c.texture_coord;
+	j["solid"] = c.solid;
+}
 
+void from_json(const json& j, TileConfig& c){
+	j["texture_coord"].get_to(c.texture_coord);
+	j["solid"].get_to(c.solid);
+}
+
+void to_json(json& j, const World& w){
+	j = dynamic_cast<const PhysicalEntity&>(w);
+	j["tiles"] = w.tiles;
 }
 
 void from_json(const json& j, World& w){
+	j.get_to(dynamic_cast<PhysicalEntity&>(w));
+	j["tiles"].get_to(w.tiles);
+}
 
+World::World(){
+	sprite = std::make_shared<sf::Sprite>();
+	texture = std::make_shared<sf::RenderTexture>();
+	setTextureInfo(Framework::getAssetStorage().getTextureInfo("tiles"));
 }
 
 // Player

@@ -3,6 +3,7 @@
 #include <platformer/scenes/editor.hpp>
 #include <platformer/scenes/settings.hpp>
 #include <platformer/scenes/play.hpp>
+#include <fstream>
 #include "editorPause.hpp"
 
 EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(stateMachine){
@@ -27,14 +28,20 @@ EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(sta
 			[this, &editor]{
 				getStateMachine().replace(new Play(getStateMachine(), editor.save()));
 			});
-	LongButton* settingsButton = new LongButton(
+	LongButton* saveFileButton = new LongButton(
 			{centerX, centerY + 184},
+			"Save",
+			[this, &editor]{
+				editor.save()->save("../saves/save.json");
+			});
+	LongButton* settingsButton = new LongButton(
+			{centerX, centerY + 276},
 			"Settings",
 			[this]{
 				getStateMachine().add(new Settings(getStateMachine()));
 			});
 	LongButton* quitButton = new LongButton(
-			{centerX, centerY + 184 + 92},
+			{centerX, centerY + 368},
 			"Quit",
 			[this]{
 				getStateMachine().pop();
@@ -46,6 +53,7 @@ EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(sta
 	entities.push_back(playButton);
 	entities.push_back(restartButton);
 	entities.push_back(playtestButton);
+	entities.push_back(saveFileButton);
 	entities.push_back(settingsButton);
 	entities.push_back(quitButton);
 }

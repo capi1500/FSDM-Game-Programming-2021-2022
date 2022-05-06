@@ -14,6 +14,9 @@ void from_json(const json& j, EntityProperties& p);
 void to_json(json& j, const EntityProperties::EntityType& p);
 void from_json(const json& j, EntityTypeBuilder& p);
 
+void to_json(json& j, const TileConfig& c);
+void from_json(const json& j, TileConfig& c);
+
 namespace sf{
 	template<typename T>
 	void to_json(json& j, const Vector2<T>& vec);

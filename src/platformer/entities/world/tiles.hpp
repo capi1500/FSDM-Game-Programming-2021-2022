@@ -3,11 +3,12 @@
 #include <SFML/System/Vector2.hpp>
 
 struct TileConfig{
-	const sf::Vector2u texture_coord;
-	const bool solid;
+	sf::Vector2i texture_coord;
+	bool solid;
 };
 
 struct Tiles{
+	static const TileConfig empty;
 	static const TileConfig grass_flat_standalone;
 	static const TileConfig grass_flat_left;
 	static const TileConfig grass_flat_middle;
@@ -110,4 +111,6 @@ struct Tiles{
 	static const TileConfig water_surface1;
 	static const TileConfig water_surface2;
 	static const TileConfig water;
+	
+	static const TileConfig tilemap[9][20];
 };

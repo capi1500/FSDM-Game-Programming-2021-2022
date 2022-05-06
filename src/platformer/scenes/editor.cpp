@@ -44,7 +44,7 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	editor->getView().zoom(0.5);
 	
 	editor->setOnHoverUpdate([this](const sf::Vector2i& coord){
-		if(coord == sf::Vector2i(-1, -1))
+		if(coord == Tiles::empty.texture_coord)
 			editorChosen->hide();
 		else{
 			editorChosen->show();
@@ -54,7 +54,7 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	editor->setOnChosenUpdate([this](const sf::Vector2i& coord){
 		for(int dx = -brushSize / 2; dx <= brushSize / 2; dx++){
 			for(int dy = -brushSize / 2; dy <= brushSize / 2; dy++){
-				editor->updateTile(sf::Vector2u(tileChooser->getChosen().x, tileChooser->getChosen().y), {coord.x + dx, coord.y + dy});
+				editor->updateTile(getTileConfig(sf::Vector2u(tileChooser->getChosen().x, tileChooser->getChosen().y)), {coord.x + dx, coord.y + dy});
 			}
 		}
 		editor->redraw();
@@ -158,16 +158,20 @@ Level* Editor::save(){
 	
 	Level* level = new Level();
 	
-	WorldBuilder builder(world.getSize());
-	
+	level->world = std::make_shared<World>();
+	level->world->getTiles().resize(world.getSize().x, std::vector<TileConfig>(world.getSize().y));
 	for(unsigned x = 0; x < world.getSize().x; x++){
 		for(unsigned y = 0; y < world.getSize().y; y++){
-			builder.setTile({x, y}, world[x][y], world[x][y] != sf::Vector2u(-1, -1)); // TODO: change solid for some kind of a map
+			level->world->getTiles()[x][y] = world[x][y];
 		}
 	}
-	
-	level->world = builder.create_ptr(level->b2World);
-	level->player = new Player(level->b2World, {0, 0});
+	level->world->build(level->b2World);
+	level->player = std::make_shared<Player>();
+	level->player->buildDefault(level->b2World);
 	
 	return level;
+}
+
+TileConfig Editor::getTileConfig(const sf::Vector2u& coord){
+	return Tiles::tilemap[coord.y][coord.x];
 }

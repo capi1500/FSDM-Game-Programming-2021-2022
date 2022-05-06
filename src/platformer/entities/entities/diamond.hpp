@@ -4,7 +4,7 @@
 
 class Diamond : public Collectible{
 	public:
-		Diamond(b2World& world, const sf::Vector2i& position);
+		Diamond();
 		void collect(PhysicalEntity& physicalEntity) override;
 };
 

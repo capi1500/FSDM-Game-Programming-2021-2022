@@ -27,7 +27,7 @@ class Play : public Scene{
 		enum SceneEventID{
 			CollisionEvent
 		};
-		virtual ~Play();
+		~Play() override;
 };
 
 

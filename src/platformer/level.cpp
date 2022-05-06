@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 #include "level.hpp"
 #include "framework.hpp"
 #include "platformer/entities/player.hpp"
@@ -43,19 +42,14 @@ void Level::deactivate(){
 
 void Level::load(const std::string& filename){
 	std::ifstream file(filename);
-	std::stringstream buffer;
-	buffer << file.rdbuf();
+	json j;
+	file >> j;
 	file.close();
-	
-	json j = buffer.str();
-	std::cout << j << "\n";
 	(*this) = j.get<Level>();
 }
 
 void Level::save(const std::string& filename){
 	json j = *this;
-	std::cout << j << "\n";
-	
 	std::ofstream file(filename);
 	file << j << "\n";
 	file.close();
