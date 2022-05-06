@@ -1,4 +1,3 @@
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <platformer/framework.hpp>
 #include <platformer/entities/world/characters.h>
 #include "player.hpp"
@@ -34,10 +33,16 @@ void Player::buildDefault(b2World& world){
 	getBodyDef().type = b2_dynamicBody;
 	getBodyDef().fixedRotation = true;
 	
+	build(world);
+	
+	updateTexture(Characters::ghost_green_down);
+}
+
+void Player::build(b2World& world){
+	PhysicalEntity::build(world);
+	
 	b2Vec2 hitboxCenter = {0.5, 0.5};
 	b2Vec2 hitboxSize = {1, 1};
-	
-	build(world);
 	
 	b2PolygonShape shape;
 	shape.SetAsBox(hitboxSize.x / 2, hitboxSize.y / 2, hitboxCenter,0);
@@ -48,8 +53,6 @@ void Player::buildDefault(b2World& world){
 	fixtureDef.filter.categoryBits = properties.type;
 	fixtureDef.filter.maskBits = properties.mask;
 	addFixture(fixtureDef);
-	
-	updateTexture(Characters::ghost_green_down);
 }
 
 void Player::onNotify(const sf::Event& event){

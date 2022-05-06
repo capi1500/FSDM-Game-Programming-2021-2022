@@ -23,11 +23,11 @@ void from_json(const json& j, Level& l){
 	json entitiesArray = j["entities"];
 	for(auto& e : entitiesArray){
 		auto pe = std::make_shared<PhysicalEntity>(e.get<PhysicalEntity>());
-		pe->build(l.b2World);
+		pe->build(*l.b2World);
 		l.entities.insert(pe); // TODO: Cannot create sth other than PhysicalEntity
 	}
-	l.world->build(l.b2World);
-	l.player->build(l.b2World);
+	l.world->build(*l.b2World);
+	l.player->build(*l.b2World);
 }
 
 // Entities
@@ -53,19 +53,12 @@ void from_json(const json& j, Entity& e){
 void to_json(json& j, const PhysicalEntity& p){
 	j = dynamic_cast<const Entity&>(p);
 	j["body"] = *(p.body);
-
-    std::vector<std::reference_wrapper<b2Fixture>> fixtures;
-	fixtures.reserve(p.fixtureDefs.size());
-    for(int i = 0; i < p.fixtureDefs.size(); i++)
-        fixtures.emplace_back(p.body->GetFixtureList()[i]);
-    j["fixtures"] = fixtures;
 	j["properties"] = p.properties;
 }
 
 void from_json(const json& j, PhysicalEntity& p){
     j.get_to(dynamic_cast<Entity&>(p));
     j["body"].get_to(p.bodyDef);
-    j["fixtures"].get_to(p.fixtureDefs);
 	j["properties"].get_to(p.properties);
 }
 
@@ -89,12 +82,6 @@ void to_json(json& j, const World& w){
 void from_json(const json& j, World& w){
 	j.get_to(dynamic_cast<PhysicalEntity&>(w));
 	j["tiles"].get_to(w.tiles);
-}
-
-World::World(){
-	sprite = std::make_shared<sf::Sprite>();
-	texture = std::make_shared<sf::RenderTexture>();
-	setTextureInfo(Framework::getAssetStorage().getTextureInfo("tiles"));
 }
 
 // Player
@@ -185,7 +172,7 @@ void sf::to_json(json& j, const sf::Vector2<T>& vec){
 template<typename T>
 void sf::from_json(const json& j, sf::Vector2<T>& vec){
 	j["x"].template get_to(vec.x);
-	j["x"].template get_to(vec.y);
+	j["y"].template get_to(vec.y);
 }
 
 void sf::to_json(json& j, const sf::Transformable& t){
@@ -235,24 +222,6 @@ void from_json(const json& j, b2BodyDef& b2){
 	j["gravityScale"].get_to(b2.gravityScale);
 }
 
-void to_json(json& j, const b2Fixture& b2){
-	j["shape"] = *(b2.GetShape());
-	j["friction"] = b2.GetFriction();
-	j["restitution"] = b2.GetRestitution();
-	j["restitutionThreshold"] = b2.GetRestitutionThreshold();
-	j["density"] = b2.GetDensity();
-	j["isSensor"] = b2.IsSensor();
-}
-
-void from_json(const json& j, b2FixtureDef& b2){
-	b2.shape = j["shape"].get<b2Shape*>();
-	j["friction"].get_to(b2.friction);
-	j["restitution"].get_to(b2.restitution);
-	j["restitutionThreshold"].get_to(b2.restitutionThreshold);
-	j["density"].get_to(b2.density);
-	j["isSensor"].get_to(b2.isSensor);
-}
-
 void to_json(json& j, const b2Vec2& b2){
 	j["x"] = b2.x;
 	j["y"] = b2.y;
@@ -263,14 +232,3 @@ void from_json(const json& j, b2Vec2& b2){
 	j["y"].get_to(b2.y);
 }
 
-void to_json(json& j, const b2Shape& b2){
-	j["type"] = b2.m_type;
-	if(b2.m_type == b2Shape::e_circle)
-		j["radius"] = b2.m_radius;
-}
-
-void from_json(const json& j, b2Shape*& b2){
-	j["type"].get_to(b2->m_type);
-	if(j.contains("radius"))
-		j["radius"].get_to(b2->m_radius);
-}

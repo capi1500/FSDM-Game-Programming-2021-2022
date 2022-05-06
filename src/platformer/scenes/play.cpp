@@ -8,7 +8,7 @@
 #include "play.hpp"
 #include "pause.h"
 
-Play::Play(StateMachine& stateMachine, Level* level) : Scene(stateMachine), level(level){
+Play::Play(StateMachine& stateMachine, const std::shared_ptr<Level>& level) : Scene(stateMachine), level(level){
 	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize()));
 }
 
@@ -41,8 +41,4 @@ void Play::deactivate(){
 	unsubscribe(&playerMonsterCollision);
 	unsubscribe(&groundCollision);
 	unsubscribe(&collectibleCollision);
-}
-
-Play::~Play(){
-	delete level;
 }

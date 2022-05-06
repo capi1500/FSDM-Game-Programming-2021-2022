@@ -18,7 +18,6 @@ class World : public PhysicalEntity{
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		World();
-	public:
 		void build(b2World &world) override;
 		
 		std::vector<std::vector<TileConfig>>& getTiles();

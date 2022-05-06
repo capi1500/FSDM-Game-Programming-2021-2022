@@ -14,7 +14,7 @@ class Player : public PhysicalEntity, public Listener<sf::Event>{
 		void update(const sf::Time& time) override;
 		
 		void buildDefault(b2World& world);
-		
+		void build(b2World& world) override;
 		friend void to_json(json& j, const Player& p);
 		friend void from_json(const json& j, Player& p);
 };

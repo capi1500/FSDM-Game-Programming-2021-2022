@@ -13,7 +13,7 @@ using json = nlohmann::json;
 class Level{
 	private:
 		ContactListener contactListener;
-		b2World b2World;
+		b2World* b2World;
 		
 		std::shared_ptr<World> world;
 		std::shared_ptr<Player> player;
@@ -26,6 +26,7 @@ class Level{
 		void draw();
 		
 		Level();
+		virtual ~Level();
 		
 		void activate();
 		void deactivate();

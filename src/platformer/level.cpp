@@ -4,7 +4,7 @@
 #include "platformer/entities/player.hpp"
 
 void Level::update(const sf::Time& time){
-	b2World.Step(time.asSeconds(), Framework::getPhysicConfig().velocityIterations, Framework::getPhysicConfig().positionIterations);
+	b2World->Step(time.asSeconds(), Framework::getPhysicConfig().velocityIterations, Framework::getPhysicConfig().positionIterations);
 	if(world != nullptr)
 		world->update(time);
 	if(player != nullptr)
@@ -22,10 +22,11 @@ void Level::draw(){
 		Framework::getRenderer().draw(*e);
 }
 
-Level::Level() : b2World(Framework::getPhysicConfig().gravity){
+Level::Level(){
+	b2World = new class b2World(Framework::getPhysicConfig().gravity);
 	player = nullptr;
 	world = nullptr;
-	b2World.SetContactListener(&contactListener);
+	b2World->SetContactListener(&contactListener);
 }
 
 void Level::activate(){
@@ -45,7 +46,7 @@ void Level::load(const std::string& filename){
 	json j;
 	file >> j;
 	file.close();
-	(*this) = j.get<Level>();
+	from_json(j, *this);
 }
 
 void Level::save(const std::string& filename){
@@ -53,4 +54,8 @@ void Level::save(const std::string& filename){
 	std::ofstream file(filename);
 	file << j << "\n";
 	file.close();
+}
+
+Level::~Level(){
+	delete b2World;
 }

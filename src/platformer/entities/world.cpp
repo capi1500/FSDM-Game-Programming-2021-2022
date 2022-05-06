@@ -2,8 +2,6 @@
 #include "world.hpp"
 
 void World::build(b2World &world) {
-	getFixtureDefs().clear();
-	
 	sf::Vector2u size = {static_cast<unsigned int>(tiles.size()), static_cast<unsigned int>(tiles.empty() ? 0 : tiles[0].size())};
 	
 	sf::Sprite tmp;
@@ -84,4 +82,10 @@ const std::vector<std::vector<TileConfig>>& World::getTiles() const{
 
 void World::setTiles(const std::vector<std::vector<TileConfig>>& tiles){
 	World::tiles = tiles;
+}
+
+World::World(){
+	sprite = std::make_shared<sf::Sprite>();
+	texture = std::make_shared<sf::RenderTexture>();
+	setTextureInfo(Framework::getAssetStorage().getTextureInfo("tiles"));
 }

@@ -153,10 +153,10 @@ void Editor::draw(){
 	Framework::getRenderer().setView(prev);
 }
 
-Level* Editor::save(){
+std::shared_ptr<Level> Editor::save(){
 	const WorldEditor& world = (*editor);
 	
-	Level* level = new Level();
+	std::shared_ptr<Level> level = std::make_shared<Level>();
 	
 	level->world = std::make_shared<World>();
 	level->world->getTiles().resize(world.getSize().x, std::vector<TileConfig>(world.getSize().y));
@@ -165,9 +165,9 @@ Level* Editor::save(){
 			level->world->getTiles()[x][y] = world[x][y];
 		}
 	}
-	level->world->build(level->b2World);
+	level->world->build(*level->b2World);
 	level->player = std::make_shared<Player>();
-	level->player->buildDefault(level->b2World);
+	level->player->buildDefault(*level->b2World);
 	
 	return level;
 }

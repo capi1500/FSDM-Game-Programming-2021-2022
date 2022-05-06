@@ -19,7 +19,7 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 			"Restart",
 			[this]{
 				getStateMachine().pop();
-				getStateMachine().replace(new Play(getStateMachine(), new Level())); // TODO: fix level
+				getStateMachine().replace(new Play(getStateMachine(), std::make_shared<Level>())); // TODO: fix level
 			});
 	LongButton* settingsButton = new LongButton(
 			{centerX, centerY + 92},

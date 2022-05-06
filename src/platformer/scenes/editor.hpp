@@ -24,7 +24,7 @@ class Editor : public Scene{
 		
 		TileConfig getTileConfig(const sf::Vector2u& coord);
 	public:
-		Level* save();
+		std::shared_ptr<Level> save();
 		
 		Editor(StateMachine& stateMachine);
 		void onNotify(const sf::Event& event) override;

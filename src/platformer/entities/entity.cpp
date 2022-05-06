@@ -34,6 +34,7 @@ void Entity::setTextureInfo(const TextureInfo& textureInfo){
 }
 
 void Entity::updateTexture(const sf::Vector2u& textureCoord){
+	this->textureCoord = textureCoord;
 	sprite.setTexture(Framework::getAssetStorage().getTexture(textureInfo.getName()));
 	sprite.setTextureRect({
 			                      static_cast<int>(textureCoord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),

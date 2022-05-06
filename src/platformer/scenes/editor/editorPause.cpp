@@ -45,9 +45,7 @@ EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(sta
 			"Quit",
 			[this]{
 				getStateMachine().pop();
-				sf::Event event;
-				event.type = sf::Event::Closed;
-				Framework::getInputHandler().send(event);
+				getStateMachine().pop();
 			});
 	
 	entities.push_back(playButton);

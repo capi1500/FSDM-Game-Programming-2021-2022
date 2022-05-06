@@ -5,9 +5,6 @@
 void PhysicalEntity::build(b2World& world){
     body = world.CreateBody(&bodyDef);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(this);
-	
-	for(auto& fixtureDef : fixtureDefs)
-		addFixture(fixtureDef);
 }
 
 void PhysicalEntity::update(const sf::Time& time){
@@ -93,16 +90,8 @@ const b2BodyDef& PhysicalEntity::getBodyDef() const{
 	return bodyDef;
 }
 
-const std::vector<b2FixtureDef>& PhysicalEntity::getFixtureDefs() const{
-	return fixtureDefs;
-}
-
 b2BodyDef& PhysicalEntity::getBodyDef(){
 	return bodyDef;
-}
-
-std::vector<b2FixtureDef>& PhysicalEntity::getFixtureDefs(){
-	return fixtureDefs;
 }
 
 b2Fixture* PhysicalEntity::addFixture(const b2FixtureDef& fixtureDef){

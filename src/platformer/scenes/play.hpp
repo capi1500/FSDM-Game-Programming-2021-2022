@@ -11,7 +11,7 @@
 
 class Play : public Scene{
 	private:
-		Level* level;
+		std::shared_ptr<Level> level;
 		
 		PlayerMonsterCollision playerMonsterCollision;
 		GroundCollision groundCollision;
@@ -20,14 +20,13 @@ class Play : public Scene{
 		void onNotify(const sf::Event &event) override;
 		void update(const sf::Time &time) override;
 		
-		Play(StateMachine& stateMachine, Level* level);
+		Play(StateMachine& stateMachine, const std::shared_ptr<Level>& level);
 		void activate() override;
 		void deactivate() override;
 		void draw() override;
 		enum SceneEventID{
 			CollisionEvent
 		};
-		~Play() override;
 };
 
 

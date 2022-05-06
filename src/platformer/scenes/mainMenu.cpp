@@ -20,7 +20,7 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 			{centerX, centerY - 92},
 			"Play",
 			[this]{
-				Level* l = new Level();
+				std::shared_ptr<Level> l = std::make_shared<Level>();
 				l->load("../saves/save.json");
 				getStateMachine().add(new Play(getStateMachine(), l));
 			});

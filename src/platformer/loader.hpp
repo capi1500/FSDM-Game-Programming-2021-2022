@@ -28,9 +28,5 @@ namespace sf{
 
 void to_json(json& j, const b2Body& b2);
 void from_json(const json& j, b2BodyDef& b2);
-void to_json(json& j, const b2Fixture& b2);
-void from_json(const json& j, b2FixtureDef& b2);
-void to_json(json& j, const b2Shape& b2);
-void from_json(const json& j, b2Shape*& b2);
 void to_json(json& j, const b2Vec2& b2);
 void from_json(const json& j, b2Vec2& b2);
