@@ -4,38 +4,53 @@
 #include "../framework.hpp"
 #include "play.hpp"
 #include "settings.hpp"
+#include "levelChooser.hpp"
 
-Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
+Pause::Pause(StateMachine& stateMachine, Play& play) : Scene(stateMachine){
 	float centerX = Framework::getRenderer().getSize().x / 2, centerY = Framework::getRenderer().getSize().y / 2;
 	
 	LongButton* playButton = new LongButton(
-			{centerX, centerY - 92},
+			{centerX, centerY - 184},
 			"Resume",
 			[this]{
 				getStateMachine().pop();
 			});
 	LongButton* restartButton = new LongButton(
-			{centerX, centerY},
+			{centerX, centerY - 92},
 			"Restart",
-			[this]{
+			[this, &play]{
 				getStateMachine().pop();
-				getStateMachine().replace(new Play(getStateMachine(), std::make_shared<Level>())); // TODO: fix level
+				getStateMachine().replace(new Play(getStateMachine(), play.getLevelBackup()));
+			});
+	LongButton* loadButton = new LongButton(
+			{centerX, centerY},
+			"Load",
+			[this, &play]{
+				getStateMachine().replace(new LevelChooser(getStateMachine(), [&play](const std::string& path){
+					play.getStateMachine().replace(new Play(play.getStateMachine(), path));
+				}));
+			});
+	LongButton* saveButton = new LongButton(
+			{centerX, centerY + 92},
+			"Save",
+			[this, &play]{
+				play.getLevel().save("../saves/last save.json");
 			});
 	LongButton* settingsButton = new LongButton(
-			{centerX, centerY + 92},
+			{centerX, centerY + 184},
 			"Settings",
 			[this]{
 				getStateMachine().add(new Settings(getStateMachine()));
 			});
 	LongButton* returnButton = new LongButton(
-			{centerX, centerY + 184},
+			{centerX, centerY + 184 + 92},
 			"End game",
 			[this]{
 				getStateMachine().pop();
 				getStateMachine().pop();
 			});
 	LongButton* quitButton = new LongButton(
-			{centerX, centerY + 184 + 92},
+			{centerX, centerY + 184 + 184},
 			"Quit",
 			[this]{
 				getStateMachine().pop();
@@ -46,6 +61,8 @@ Pause::Pause(StateMachine& stateMachine) : Scene(stateMachine){
 	
 	entities.push_back(playButton);
 	entities.push_back(restartButton);
+	entities.push_back(loadButton);
+	entities.push_back(saveButton);
 	entities.push_back(settingsButton);
 	entities.push_back(returnButton);
 	entities.push_back(quitButton);

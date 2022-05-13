@@ -20,6 +20,8 @@ class World : public PhysicalEntity{
 		World();
 		void build(b2World &world) override;
 		
+		sf::Vector2u getSize() const;
+		
 		std::vector<std::vector<TileConfig>>& getTiles();
 		const std::vector<std::vector<TileConfig>>& getTiles() const;
 		void setTiles(const std::vector<std::vector<TileConfig>>& tiles);

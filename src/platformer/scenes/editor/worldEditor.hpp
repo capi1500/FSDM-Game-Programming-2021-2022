@@ -20,6 +20,7 @@ class WorldEditor : public Entity, public CoordChooser{
 		void updateTile(const TileConfig& type, const sf::Vector2i& tile);
 		void redraw();
 		
+		void set(const std::vector<std::vector<TileConfig>>& tiles);
 		const sf::Vector2u& getSize() const;
 		const std::vector<TileConfig>& operator [] (std::size_t i) const;
 		std::vector<TileConfig>& operator [] (std::size_t i);

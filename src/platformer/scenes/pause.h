@@ -9,7 +9,7 @@
 
 class Pause : public Scene{
 	public:
-		Pause(StateMachine& stateMachine);
+		Pause(StateMachine& stateMachine, Play& play);
 		
 		void onNotify(const sf::Event& event) override;
 		void update(const sf::Time& time) override;

@@ -113,7 +113,7 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	
 	erase = new CheckboxButton(sf::Vector2f(-static_cast<float>(Framework::getRenderer().getSize().x) / 2 + 52, 36),
 	                           [this]{
-										tileChooser->setChosen({-1, -1});
+										tileChooser->setChosen(Tiles::empty.texture_coord);
 										tileChosen->hide();
 								},
 	                           []{},
@@ -174,4 +174,8 @@ std::shared_ptr<Level> Editor::save(){
 
 TileConfig Editor::getTileConfig(const sf::Vector2u& coord){
 	return Tiles::tilemap[coord.y][coord.x];
+}
+
+void Editor::load(const Level& level){
+	editor->set(level.world->getTiles());
 }

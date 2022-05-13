@@ -89,3 +89,7 @@ World::World(){
 	texture = std::make_shared<sf::RenderTexture>();
 	setTextureInfo(Framework::getAssetStorage().getTextureInfo("tiles"));
 }
+
+sf::Vector2u World::getSize() const{
+	return sf::Vector2u(tiles.size(), tiles.size() == 0 ? 0 : tiles[0].size());
+}

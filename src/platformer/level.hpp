@@ -20,7 +20,7 @@ class Level{
 		std::set<std::shared_ptr<PhysicalEntity>> entities;
 	public:
 		void load(const std::string& filename);
-		void save(const std::string& filename);
+		void save(const std::string& filename) const;
 		
 		void update(const sf::Time& time);
 		void draw();

@@ -55,3 +55,9 @@ std::vector<TileConfig>& WorldEditor::operator [](std::size_t i){
 const std::vector<TileConfig>& WorldEditor::operator [](std::size_t i) const{
 	return tiles[i];
 }
+
+void WorldEditor::set(const std::vector<std::vector<TileConfig>>& tiles){
+	size = sf::Vector2u(tiles.size(), tiles.size() == 0 ? 0 : tiles[0].size());
+	this->tiles = tiles;
+	redraw();
+}

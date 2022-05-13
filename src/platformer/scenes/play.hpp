@@ -11,7 +11,8 @@
 
 class Play : public Scene{
 	private:
-		std::shared_ptr<Level> level;
+		Level level;
+		std::string levelBackup;
 		
 		PlayerMonsterCollision playerMonsterCollision;
 		GroundCollision groundCollision;
@@ -20,7 +21,9 @@ class Play : public Scene{
 		void onNotify(const sf::Event &event) override;
 		void update(const sf::Time &time) override;
 		
-		Play(StateMachine& stateMachine, const std::shared_ptr<Level>& level);
+		const Level& getLevel() const;
+		const std::string& getLevelBackup() const;
+		Play(StateMachine& stateMachine, const std::string& level);
 		void activate() override;
 		void deactivate() override;
 		void draw() override;

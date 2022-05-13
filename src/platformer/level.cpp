@@ -49,7 +49,7 @@ void Level::load(const std::string& filename){
 	from_json(j, *this);
 }
 
-void Level::save(const std::string& filename){
+void Level::save(const std::string& filename) const{
 	json j = *this;
 	std::ofstream file(filename);
 	file << j << "\n";

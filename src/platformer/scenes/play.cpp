@@ -8,28 +8,30 @@
 #include "play.hpp"
 #include "pause.h"
 
-Play::Play(StateMachine& stateMachine, const std::shared_ptr<Level>& level) : Scene(stateMachine), level(level){
+Play::Play(StateMachine& stateMachine, const std::string& level) : Scene(stateMachine){
 	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize()));
+	this->level.load("../saves/" + level + ".json");
+	levelBackup = level;
 }
 
 void Play::onNotify(const sf::Event &event){
 	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-		getStateMachine().add(new Pause(getStateMachine()));
+		getStateMachine().add(new Pause(getStateMachine(), *this));
 }
 
 void Play::update(const sf::Time &time){
     Scene::update(time);
-	level->update(time);
+	level.update(time);
 }
 
 void Play::draw(){
 	Scene::draw();
-	level->draw();
+	level.draw();
 }
 
 void Play::activate(){
 	Scene::activate();
-	level->activate();
+	level.activate();
 	subscribe(&playerMonsterCollision);
 	subscribe(&groundCollision);
 	subscribe(&collectibleCollision);
@@ -37,8 +39,16 @@ void Play::activate(){
 
 void Play::deactivate(){
 	Scene::deactivate();
-	level->deactivate();
+	level.deactivate();
 	unsubscribe(&playerMonsterCollision);
 	unsubscribe(&groundCollision);
 	unsubscribe(&collectibleCollision);
+}
+
+const Level& Play::getLevel() const{
+	return level;
+}
+
+const std::string& Play::getLevelBackup() const{
+	return levelBackup;
 }

@@ -4,29 +4,41 @@
 #include <platformer/scenes/settings.hpp>
 #include <platformer/scenes/play.hpp>
 #include <fstream>
+#include <platformer/scenes/levelChooser.hpp>
 #include "editorPause.hpp"
 
 EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(stateMachine){
 	float centerX = Framework::getRenderer().getSize().x / 2, centerY = Framework::getRenderer().getSize().y / 2;
 	
 	LongButton* playButton = new LongButton(
-			{centerX, centerY - 92},
+			{centerX, centerY - 184},
 			"Resume",
 			[this]{
 				getStateMachine().pop();
 			});
 	LongButton* restartButton = new LongButton(
-			{centerX, centerY},
+			{centerX, centerY - 92},
 			"Restart",
 			[this]{
 				getStateMachine().pop();
 				getStateMachine().replace(new Editor(getStateMachine()));
 			});
 	LongButton* playtestButton = new LongButton(
-			{centerX, centerY + 92},
+			{centerX, centerY},
 			"Test",
 			[this, &editor]{
-				getStateMachine().replace(new Play(getStateMachine(), editor.save()));
+				editor.save()->save("../saves/editor.json");
+				getStateMachine().replace(new Play(getStateMachine(), "editor"));
+			});
+	LongButton* loadFileButton = new LongButton(
+			{centerX, centerY + 92},
+			"Load",
+			[this, &editor]{
+				getStateMachine().replace(new LevelChooser(getStateMachine(), [&editor](const std::string& path){
+					Level l;
+					l.load("../saves/" + path + ".json");
+					editor.load(l);
+				}));
 			});
 	LongButton* saveFileButton = new LongButton(
 			{centerX, centerY + 184},
@@ -51,6 +63,7 @@ EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(sta
 	entities.push_back(playButton);
 	entities.push_back(restartButton);
 	entities.push_back(playtestButton);
+	entities.push_back(loadFileButton);
 	entities.push_back(saveFileButton);
 	entities.push_back(settingsButton);
 	entities.push_back(quitButton);

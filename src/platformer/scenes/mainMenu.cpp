@@ -6,6 +6,7 @@
 #include "play.hpp"
 #include "settings.hpp"
 #include "editor.hpp"
+#include "levelChooser.hpp"
 
 MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 	Framework::getAssetStorage().loadTexture("red", "../assets/textures/rgb/red.png");
@@ -20,9 +21,9 @@ MainMenu::MainMenu(StateMachine& stateMachine) : Scene(stateMachine){
 			{centerX, centerY - 92},
 			"Play",
 			[this]{
-				std::shared_ptr<Level> l = std::make_shared<Level>();
-				l->load("../saves/save.json");
-				getStateMachine().add(new Play(getStateMachine(), l));
+				getStateMachine().add(new LevelChooser(getStateMachine(), [this](const std::string& name){
+					getStateMachine().add(new Play(getStateMachine(), name));
+				}));
 			});
 	LongButton* editorButton = new LongButton(
 			{centerX, centerY},
