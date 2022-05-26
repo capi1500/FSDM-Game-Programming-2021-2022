@@ -15,6 +15,8 @@ class Button : public Widget, public Listener<sf::Event>{
 		bool pressed = false;
 		bool hover = false;
 	public:
+		bool isPressed() const;
+		
 		Button();
 		~Button() override;
 		void setOnHoverStart(const std::function<void()>& onHoverStart);

@@ -1,4 +1,5 @@
 #include <fstream>
+#include <platformer/utils/filepath.hpp>
 #include "level.hpp"
 #include "framework.hpp"
 #include "platformer/entities/player.hpp"

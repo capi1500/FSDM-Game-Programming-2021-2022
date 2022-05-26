@@ -5,6 +5,7 @@
 #include "play.hpp"
 #include "settings.hpp"
 #include "levelChooser.hpp"
+#include "levelSaver.hpp"
 
 Pause::Pause(StateMachine& stateMachine, Play& play) : Scene(stateMachine){
 	float centerX = Framework::getRenderer().getSize().x / 2, centerY = Framework::getRenderer().getSize().y / 2;
@@ -34,7 +35,7 @@ Pause::Pause(StateMachine& stateMachine, Play& play) : Scene(stateMachine){
 			{centerX, centerY + 92},
 			"Save",
 			[this, &play]{
-				play.getLevel().save("../saves/last save.json");
+				getStateMachine().add(new LevelSaver(getStateMachine(), play.getLevel()));
 			});
 	LongButton* settingsButton = new LongButton(
 			{centerX, centerY + 184},

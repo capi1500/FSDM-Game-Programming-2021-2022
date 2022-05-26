@@ -80,3 +80,7 @@ void CheckboxButton::release(){
 	state = false;
 	onButtonReleased();
 }
+
+bool CheckboxButton::isPressed() const{
+	return state;
+}

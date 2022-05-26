@@ -5,6 +5,7 @@
 #include <platformer/scenes/play.hpp>
 #include <fstream>
 #include <platformer/scenes/levelChooser.hpp>
+#include <platformer/scenes/levelSaver.hpp>
 #include "editorPause.hpp"
 
 EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(stateMachine){
@@ -44,7 +45,7 @@ EditorPause::EditorPause(StateMachine& stateMachine, Editor& editor) : Scene(sta
 			{centerX, centerY + 184},
 			"Save",
 			[this, &editor]{
-				editor.save()->save("../saves/save.json");
+				getStateMachine().add(new LevelSaver(getStateMachine(), editor.save()));
 			});
 	LongButton* settingsButton = new LongButton(
 			{centerX, centerY + 276},

@@ -66,6 +66,10 @@ Button::~Button(){
 	deactivate();
 }
 
+bool Button::isPressed() const{
+	return pressed;
+}
+
 ButtonBuilder& ButtonBuilder::setOnHoverStart(const std::function<void()>& onHoverStart){
 	ButtonBuilder::onHoverStart = onHoverStart;
 }
