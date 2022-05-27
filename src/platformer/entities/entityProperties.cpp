@@ -60,3 +60,8 @@ EntityPropertiesBuilder& EntityPropertiesBuilder::setMask(const EntityProperties
 EntityProperties EntityPropertiesBuilder::build(){
 	return properties;
 }
+
+EntityPropertiesBuilder& EntityPropertiesBuilder::setHealth(const EntityProperties::HealthProperty& healthProperty){
+	properties.health = healthProperty;
+	return *this;
+}

@@ -5,11 +5,15 @@
 #include <platformer/entities/world/tiles.hpp>
 #include <platformer/entities/player.hpp>
 #include <platformer/utils/stateMachine.hpp>
+#include <iostream>
 #include "play.hpp"
 #include "pause.h"
 
 Play::Play(StateMachine& stateMachine, const std::string& level) : Scene(stateMachine){
-	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(Framework::getRenderer().getSize()));
+	auto s = Framework::getRenderer().getSize();
+	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(s.x, s.y));
+	view.zoom(0.25);
+	
 	this->level.load("../saves/" + level + ".json");
 	levelBackup = level;
 }
@@ -24,9 +28,17 @@ void Play::update(const sf::Time &time){
 	level.update(time);
 }
 
-void Play::draw(){
+void Play::draw(sf::RenderStates renderStates){
+	view.setCenter(level.getPlayer()->getPosition().x, level.getPlayer()->getPosition().y);
+	Framework::getRenderer().setView(view);
+
 	Scene::draw();
-	level.draw();
+	level.draw(renderStates);
+	
+	sf::View gui_view = Framework::getRenderer().getDefaultView();
+	Framework::getRenderer().setView(gui_view);
+	renderStates.transform.scale(4, 4);
+	Framework::getRenderer().draw(gui, renderStates);
 }
 
 void Play::activate(){

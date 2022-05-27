@@ -13,7 +13,7 @@ void Scene::update(const sf::Time& time){
 	Framework::getEventHandler().processEvents();
 }
 
-void Scene::draw(){
+void Scene::draw(sf::RenderStates renderStates){
 	for(auto& e : entities)
 		Framework::getRenderer().draw(*e);
 }

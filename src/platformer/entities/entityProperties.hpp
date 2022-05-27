@@ -33,6 +33,13 @@ struct EntityProperties{
 	};
 	EntityType type;
 	EntityType mask;
+	
+	struct HealthProperty{
+		int current;
+		int regeneration; // 1 helath point for [regeneration] milliseconds
+	};
+	bool healthFlaf;
+	HealthProperty health;
 };
 
 class EntityTypeBuilder{
@@ -53,6 +60,7 @@ class EntityPropertiesBuilder{
 		EntityPropertiesBuilder& setJump(const EntityProperties::JumpProperty& jumpProperty);
 		EntityPropertiesBuilder& setDoubleJump(const EntityProperties::JumpProperty& jumpProperty);
 		EntityPropertiesBuilder& setMovement(const EntityProperties::MovementProperty& movementProperty);
+		EntityPropertiesBuilder& setHealth(const EntityProperties::HealthProperty& healthProperty);
 		EntityPropertiesBuilder& setSolid();
 		EntityPropertiesBuilder& setEntityType(const EntityProperties::EntityType& entityType);
 		EntityPropertiesBuilder& setMask(const EntityProperties::EntityType& entityType);

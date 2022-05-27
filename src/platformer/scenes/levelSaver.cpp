@@ -2,7 +2,6 @@
 #include <SFML/Window/Event.hpp>
 #include <platformer/framework.hpp>
 #include <platformer/gui/inputButton.hpp>
-#include <iostream>
 #include "../utils/stateMachine.hpp"
 
 LevelSaver::LevelSaver(StateMachine& stateMachine, const Level& level)
@@ -23,7 +22,6 @@ LevelSaver::LevelSaver(StateMachine& stateMachine, const Level& level)
 					name = in->getDefaultText();
 				else
 					name = in->getText().toAnsiString();
-				std::cout << "Saving to: '..\\saves\\" + name + ".json'\n";
 				level.save("..\\saves\\" + name + ".json");
 			}));
 }
@@ -46,7 +44,6 @@ LevelSaver::LevelSaver(StateMachine& stateMachine, const std::shared_ptr<Level>&
 					name = in->getDefaultText();
 				else
 					name = in->getText().toAnsiString();
-				std::cout << "Saving to: '..\\saves\\" + name + ".json'\n";
 				level->save("..\\saves\\" + name + ".json");
 			}));
 }

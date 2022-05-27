@@ -23,13 +23,17 @@ class Level{
 		void save(const std::string& filename) const;
 		
 		void update(const sf::Time& time);
-		void draw();
+		void draw(sf::RenderStates renderStates = sf::RenderStates());
 		
 		Level();
 		virtual ~Level();
 		
 		void activate();
 		void deactivate();
+		
+		const std::shared_ptr<World>& getWorld() const;
+		const std::shared_ptr<Player>& getPlayer() const;
+		const std::set<std::shared_ptr<PhysicalEntity>>& getEntities() const;
 		
 		friend class Editor;
 		friend void to_json(json& j, const Level& l);

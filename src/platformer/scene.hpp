@@ -21,7 +21,7 @@ class Scene : public State, public Listener<sf::Event>, public Listener<std::sha
 		virtual ~Scene();
 
         virtual void update(const sf::Time& time);
-		virtual void draw();
+		virtual void draw(sf::RenderStates renderStates = sf::RenderStates());
 		void onNotify(const std::shared_ptr<SceneEvent>& event) override;
 		
 		void activate() override;

@@ -14,13 +14,13 @@ void Level::update(const sf::Time& time){
 		e->update(time);
 }
 
-void Level::draw(){
+void Level::draw(sf::RenderStates renderStates){
 	if(world != nullptr)
-		Framework::getRenderer().draw(*world);
+		Framework::getRenderer().draw(*world, renderStates);
 	if(player != nullptr)
-		Framework::getRenderer().draw(*player);
+		Framework::getRenderer().draw(*player, renderStates);
 	for(auto& e : entities)
-		Framework::getRenderer().draw(*e);
+		Framework::getRenderer().draw(*e, renderStates);
 }
 
 Level::Level(){
@@ -59,4 +59,16 @@ void Level::save(const std::string& filename) const{
 
 Level::~Level(){
 	delete b2World;
+}
+
+const std::shared_ptr<World>& Level::getWorld() const{
+	return world;
+}
+
+const std::shared_ptr<Player>& Level::getPlayer() const{
+	return player;
+}
+
+const std::set<std::shared_ptr<PhysicalEntity>>& Level::getEntities() const{
+	return entities;
 }

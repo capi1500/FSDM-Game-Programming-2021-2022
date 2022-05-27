@@ -8,11 +8,15 @@
 #include <platformer/scenes/play/playerMonsterCollision.hpp>
 #include <platformer/scenes/play/groundCollision.hpp>
 #include <platformer/scenes/play/collectibleCollision.hpp>
+#include <platformer/gui.hpp>
 
 class Play : public Scene{
 	private:
 		Level level;
+		Gui gui;
 		std::string levelBackup;
+		
+		sf::View gui_view;
 		
 		PlayerMonsterCollision playerMonsterCollision;
 		GroundCollision groundCollision;
@@ -26,7 +30,7 @@ class Play : public Scene{
 		Play(StateMachine& stateMachine, const std::string& level);
 		void activate() override;
 		void deactivate() override;
-		void draw() override;
+		void draw(sf::RenderStates renderStates = sf::RenderStates()) override;
 		enum SceneEventID{
 			CollisionEvent
 		};

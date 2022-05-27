@@ -135,20 +135,20 @@ void Editor::deactivate(){
 	Framework::getInputHandler().unsubscribe(tileChooser);
 }
 
-void Editor::draw(){
+void Editor::draw(sf::RenderStates renderStates){
 	sf::View prev = Framework::getRenderer().getView();
 	
 	Framework::getRenderer().setView(editor->getView());
-	Framework::getRenderer().draw(*editor);
-	Framework::getRenderer().draw(*editorChosen);
+	Framework::getRenderer().draw(*editor, renderStates);
+	Framework::getRenderer().draw(*editorChosen, renderStates);
 	
 	Framework::getRenderer().setView(tileChooser->getView());
-	Framework::getRenderer().draw(*tileChooser);
-	Framework::getRenderer().draw(*tileChosen);
-	Framework::getRenderer().draw(*size1);
-	Framework::getRenderer().draw(*size3);
-	Framework::getRenderer().draw(*size5);
-	Framework::getRenderer().draw(*erase);
+	Framework::getRenderer().draw(*tileChooser, renderStates);
+	Framework::getRenderer().draw(*tileChosen, renderStates);
+	Framework::getRenderer().draw(*size1, renderStates);
+	Framework::getRenderer().draw(*size3, renderStates);
+	Framework::getRenderer().draw(*size5, renderStates);
+	Framework::getRenderer().draw(*erase, renderStates);
 	
 	Framework::getRenderer().setView(prev);
 }
