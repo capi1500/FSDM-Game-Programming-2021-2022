@@ -17,10 +17,10 @@ void Level::update(const sf::Time& time){
 void Level::draw(sf::RenderStates renderStates){
 	if(world != nullptr)
 		Framework::getRenderer().draw(*world, renderStates);
-	if(player != nullptr)
-		Framework::getRenderer().draw(*player, renderStates);
 	for(auto& e : entities)
 		Framework::getRenderer().draw(*e, renderStates);
+	if(player != nullptr)
+		Framework::getRenderer().draw(*player, renderStates);
 }
 
 Level::Level(){

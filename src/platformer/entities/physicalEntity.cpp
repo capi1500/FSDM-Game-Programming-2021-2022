@@ -97,3 +97,7 @@ b2BodyDef& PhysicalEntity::getBodyDef(){
 b2Fixture* PhysicalEntity::addFixture(const b2FixtureDef& fixtureDef){
 	return body->CreateFixture(&fixtureDef);
 }
+
+PhysicalEntity::Type PhysicalEntity::getType() const{
+	return type;
+}

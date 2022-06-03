@@ -2,6 +2,9 @@
 #include <platformer/entities/world.hpp>
 #include <platformer/entities/player.hpp>
 #include <iostream>
+#include <platformer/entities/entities/mine.hpp>
+#include <platformer/entities/entities/coin.hpp>
+#include <platformer/entities/entities/diamond.hpp>
 #include "loader.hpp"
 #include "level.hpp"
 #include "framework.hpp"
@@ -22,9 +25,25 @@ void from_json(const json& j, Level& l){
 	l.player = std::make_shared<Player>(j["player"].get<Player>());
 	json entitiesArray = j["entities"];
 	for(auto& e : entitiesArray){
-		auto pe = std::make_shared<PhysicalEntity>(e.get<PhysicalEntity>());
+		std::shared_ptr<PhysicalEntity> pe;
+		PhysicalEntity::Type t = e["type"];
+		if(t == PhysicalEntity::Mine){
+			pe = std::make_shared<Mine>(e.get<Mine>());
+		}
+		else if(t == PhysicalEntity::Diamond){
+			pe = std::make_shared<Diamond>(e.get<Diamond>());
+		}
+		else if(t == PhysicalEntity::Coin){
+			pe = std::make_shared<Coin>(e.get<Coin>());
+		}
+		else if(t == PhysicalEntity::Player){
+			pe = std::make_shared<Player>(e.get<Player>());
+		}
+		else{
+			pe = std::make_shared<PhysicalEntity>(e.get<PhysicalEntity>());
+		}
 		pe->build(*l.b2World);
-		l.entities.insert(pe); // TODO: Cannot create sth other than PhysicalEntity
+		l.entities.insert(pe);
 	}
 	l.world->build(*l.b2World);
 	l.player->build(*l.b2World);
@@ -54,6 +73,7 @@ void to_json(json& j, const PhysicalEntity& p){
 	j = dynamic_cast<const Entity&>(p);
 	j["body"] = *(p.body);
 	j["properties"] = p.properties;
+	j["type"] = p.getType();
 }
 
 void from_json(const json& j, PhysicalEntity& p){

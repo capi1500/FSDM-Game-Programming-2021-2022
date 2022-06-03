@@ -28,6 +28,8 @@ Pause::Pause(StateMachine& stateMachine, Play& play) : Scene(stateMachine){
 			"Load",
 			[this, &play]{
 				getStateMachine().replace(new LevelChooser(getStateMachine(), [&play](const std::string& path){
+					if(play.getLevelBackup() != path)
+						Framework::getEventHandler().send(std::make_shared<SceneEvent>(Play::LevelStarted));
 					play.getStateMachine().replace(new Play(play.getStateMachine(), path));
 				}));
 			});

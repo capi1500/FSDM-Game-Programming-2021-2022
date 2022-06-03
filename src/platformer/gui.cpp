@@ -1,4 +1,5 @@
 #include <platformer/entities/world/tiles.hpp>
+#include <platformer/scenes/play.hpp>
 #include "gui.hpp"
 #include "framework.hpp"
 
@@ -50,15 +51,6 @@ Gui::Gui(){
 void Gui::updateTexture(){
 	sprite.setTexture(Framework::getAssetStorage().getTexture(textureInfo.getName()));
 	
-	auto updateTextureRect = [this](const TileConfig& t){
-		sprite.setTextureRect({
-			static_cast<int>(t.texture_coord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),
-			static_cast<int>(t.texture_coord.y * (textureInfo.getSize().y + textureInfo.getMargin().y)),
-			textureInfo.getSize().x,
-			textureInfo.getSize().y}
-		);
-	};
-	
 	sf::Vector2u size = Framework::getRenderer().getSize();
 	
 	texture.create(size.x, size.y);
@@ -88,7 +80,58 @@ void Gui::updateTexture(){
 		states.transform.translate(sf::Vector2f(textureInfo.getSize().x, 0));
 	}
 	
+	states.transform = sf::Transform::Identity;
+	states.transform.translate(sf::Vector2f(0, 2 * textureInfo.getSize().y));
+	updateTextureRect(Tiles::coin1);
+	texture.draw(sprite, states);
+	states.transform.translate(sf::Vector2f(textureInfo.getSize().x, 0));
+	drawNumber(states, coins);
+	
+	states.transform = sf::Transform::Identity;
+	states.transform.translate(sf::Vector2f(0, 3 * textureInfo.getSize().y));
+	updateTextureRect(Tiles::diamond);
+	texture.draw(sprite, states);
+	states.transform.translate(sf::Vector2f(textureInfo.getSize().x, 0));
+	drawNumber(states, diamonds);
+	
 	texture.display();
 	
 	sprite.setTexture(texture.getTexture(), true);
+}
+
+void Gui::updateTextureRect(const TileConfig& t){
+	sprite.setTextureRect({
+		static_cast<int>(t.texture_coord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),
+		static_cast<int>(t.texture_coord.y * (textureInfo.getSize().y + textureInfo.getMargin().y)),
+		textureInfo.getSize().x,
+		textureInfo.getSize().y}
+	);
+}
+
+void Gui::drawNumber(sf::RenderStates& states, int value){
+	std::vector<int> digits;
+	int x = value;
+	if(x == 0)
+		digits.push_back(0);
+	while(x > 0){
+		digits.push_back(x % 10);
+		x /= 10;
+	}
+	std::reverse(digits.begin(), digits.end());
+	for(auto d: digits){
+		updateTextureRect(Tiles::number[d]);
+		texture.draw(sprite, states);
+		states.transform.translate(sf::Vector2f(textureInfo.getSize().x, 0));
+	}
+}
+
+void Gui::onNotify(const std::shared_ptr<SceneEvent>& event){
+	if(event->getEventId() == Play::DiamondCollected){
+		diamonds++;
+		updateTexture();
+	}
+	else if(event->getEventId() == Play::CoinCollected){
+		coins++;
+		updateTexture();
+	}
 }

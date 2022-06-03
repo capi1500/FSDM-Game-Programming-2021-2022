@@ -17,4 +17,5 @@ void Mine::update(const sf::Time& time){
 
 Mine::Mine(){
 	setTextureInfo(Framework::getAssetStorage().getTextureInfo("characters"));
+	type = PhysicalEntity::Mine;
 }

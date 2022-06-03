@@ -32,7 +32,10 @@ class Play : public Scene{
 		void deactivate() override;
 		void draw(sf::RenderStates renderStates = sf::RenderStates()) override;
 		enum SceneEventID{
-			CollisionEvent
+			CollisionEvent,
+			CoinCollected,
+			DiamondCollected,
+			LevelStarted
 		};
 };
 

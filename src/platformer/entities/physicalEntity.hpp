@@ -10,12 +10,21 @@
 using json = nlohmann::json;
 
 class PhysicalEntity : public Entity{
+	public:
+		enum Type{
+			Coin,
+			Diamond,
+			Mine,
+			Player
+		};
 	private:
         b2BodyDef bodyDef;
 	protected:
 		b2Body* body;
 		
 		EntityProperties properties;
+		
+		Type type;
 	public:
 		void jump();
 		void stop();
@@ -31,6 +40,7 @@ class PhysicalEntity : public Entity{
 		
 		const EntityProperties& getProperties() const;
 		EntityProperties& getProperties();
+		Type getType() const;
 		
 		void update(const sf::Time& time) override;
 

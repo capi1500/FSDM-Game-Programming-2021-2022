@@ -5,16 +5,14 @@
 #include "editor.hpp"
 #include <platformer/utils/stateMachine.hpp>
 #include <platformer/scenes/editor/editorPause.hpp>
+#include <platformer/entities/entities/coin.hpp>
+#include <platformer/entities/entities/diamond.hpp>
 
 void Editor::onNotify(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed){
 		if(event.key.code == sf::Keyboard::Escape)
 			getStateMachine().add(new EditorPause(getStateMachine(), *this));
 	}
-}
-
-void Editor::onNotify(const std::shared_ptr<SceneEvent>& event){
-
 }
 
 void Editor::update(const sf::Time& time){
@@ -160,9 +158,24 @@ std::shared_ptr<Level> Editor::save(){
 	
 	level->world = std::make_shared<World>();
 	level->world->getTiles().resize(world.getSize().x, std::vector<TileConfig>(world.getSize().y));
+
+	auto textureInfo = Framework::getAssetStorage().getTextureInfo("tiles");
 	for(unsigned x = 0; x < world.getSize().x; x++){
 		for(unsigned y = 0; y < world.getSize().y; y++){
-			level->world->getTiles()[x][y] = world[x][y];
+			level->world->getTiles()[x][y] = Tiles::empty;
+			if(world[x][y] == Tiles::coin1 || world[x][y] == Tiles::coin2){
+				auto coin = std::make_shared<Coin>();
+				coin->buildDefault(*level->b2World, sf::Vector2f(x * textureInfo.getSize().x, y * textureInfo.getSize().y));
+				level->entities.insert(coin);
+			}
+			else if(world[x][y] == Tiles::diamond){
+				auto diamond = std::make_shared<Diamond>();
+				diamond->buildDefault(*level->b2World, sf::Vector2f(x * textureInfo.getSize().x, y * textureInfo.getSize().y));
+				level->entities.insert(diamond);
+			}
+			else{
+				level->world->getTiles()[x][y] = world[x][y];
+			}
 		}
 	}
 	level->world->build(*level->b2World);

@@ -1,11 +1,14 @@
 #pragma once
 
+#include <memory>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <platformer/entities/world/textureInfo.hpp>
+#include <platformer/utils/listener.hpp>
+#include <platformer/scenes/events/sceneEvent.hpp>
 
-class Gui : public sf::Drawable{
+class Gui : public sf::Drawable, Listener<std::shared_ptr<SceneEvent>>{
 	private:
 		int health = 2;
 		int max_health = 6;
@@ -16,6 +19,8 @@ class Gui : public sf::Drawable{
 		sf::Sprite sprite;
 		sf::RenderTexture texture;
 		void updateTexture();
+		void updateTextureRect(const TileConfig& t);
+		void drawNumber(sf::RenderStates& states, int value);
 		
 		TextureInfo textureInfo;
 	protected:
@@ -30,6 +35,8 @@ class Gui : public sf::Drawable{
 		void setCoins(int coins);
 		int getDiamonds() const;
 		void setDiamonds(int diamonds);
+	private:
+		void onNotify(const std::shared_ptr<SceneEvent>& event) override;
 };
 
 
