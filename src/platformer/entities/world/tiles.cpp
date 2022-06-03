@@ -104,14 +104,36 @@ const TileConfig Tiles::water_surface1 = {{13, 1}, true};
 const TileConfig Tiles::water_surface2 = {{13, 2}, true};
 const TileConfig Tiles::water = {{13, 2}, true};
 
+const TileConfig Tiles::number_small_0{{0, 8}, false};
+const TileConfig Tiles::number_small_1{{1, 8}, false};
+const TileConfig Tiles::number_small_2{{2, 8}, false};
+const TileConfig Tiles::number_small_3{{3, 8}, false};
+const TileConfig Tiles::number_small_4{{4, 8}, false};
+const TileConfig Tiles::number_small_5{{5, 8}, false};
+const TileConfig Tiles::number_small_6{{6, 8}, false};
+const TileConfig Tiles::number_small_7{{7, 8}, false};
+const TileConfig Tiles::number_small_8{{8, 8}, false};
+const TileConfig Tiles::number_small_9{{9, 8}, false};
+
+const TileConfig Tiles::number_0{{10, 8}, false};
+const TileConfig Tiles::number_1{{11, 8}, false};
+const TileConfig Tiles::number_2{{12, 8}, false};
+const TileConfig Tiles::number_3{{13, 8}, false};
+const TileConfig Tiles::number_4{{14, 8}, false};
+const TileConfig Tiles::number_5{{15, 8}, false};
+const TileConfig Tiles::number_6{{16, 8}, false};
+const TileConfig Tiles::number_7{{17, 8}, false};
+const TileConfig Tiles::number_8{{18, 8}, false};
+const TileConfig Tiles::number_9{{19, 8}, false};
+
 const TileConfig Tiles::tilemap[9][20] = {
-		{Tiles::grass_flat_standalone, Tiles::grass_flat_left, Tiles::grass_flat_middle, Tiles::grass_flat_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
-		{Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty}
+		{Tiles::grass_flat_standalone,  Tiles::grass_flat_left, Tiles::grass_flat_middle,   Tiles::grass_flat_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::grass_standalone,       Tiles::grass_left,      Tiles::grass_middle,        Tiles::grass_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::sand_flat_standalone,   Tiles::sand_flat_left,  Tiles::sand_flat_middle,    Tiles::sand_flat_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::sand_standalone,        Tiles::sand_left,       Tiles::sand_middle,         Tiles::sand_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::snow_flat_standalone,   Tiles::snow_flat_left,  Tiles::snow_flat_middle,    Tiles::snow_flat_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::snow_standalone,        Tiles::snow_left,       Tiles::snow_middle,         Tiles::snow_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::dirt_middle_standalone, Tiles::dirt_middle_left,Tiles::dirt_middle_middle,  Tiles::dirt_middle_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::platform_standalone,    Tiles::platform_left,   Tiles::platform_middle,     Tiles::platform_right, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty, Tiles::empty},
+		{Tiles::number_small_0, Tiles::number_small_1 , Tiles::number_small_2, Tiles::number_small_3, Tiles::number_small_4, Tiles::number_small_5, Tiles::number_small_6, Tiles::number_small_7, Tiles::number_small_8, Tiles::number_small_9, Tiles::number_0, Tiles::number_1 , Tiles::number_2, Tiles::number_3, Tiles::number_4, Tiles::number_5, Tiles::number_6, Tiles::number_7, Tiles::number_8, Tiles::number_9}
 };

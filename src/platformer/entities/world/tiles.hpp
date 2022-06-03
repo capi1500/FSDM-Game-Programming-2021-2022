@@ -112,5 +112,27 @@ struct Tiles{
 	static const TileConfig water_surface2;
 	static const TileConfig water;
 	
+	static const TileConfig number_small_0;
+	static const TileConfig number_small_1;
+	static const TileConfig number_small_2;
+	static const TileConfig number_small_3;
+	static const TileConfig number_small_4;
+	static const TileConfig number_small_5;
+	static const TileConfig number_small_6;
+	static const TileConfig number_small_7;
+	static const TileConfig number_small_8;
+	static const TileConfig number_small_9;
+	
+	static const TileConfig number_0;
+	static const TileConfig number_1;
+	static const TileConfig number_2;
+	static const TileConfig number_3;
+	static const TileConfig number_4;
+	static const TileConfig number_5;
+	static const TileConfig number_6;
+	static const TileConfig number_7;
+	static const TileConfig number_8;
+	static const TileConfig number_9;
+	
 	static const TileConfig tilemap[9][20];
 };
