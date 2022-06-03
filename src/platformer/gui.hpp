@@ -7,7 +7,7 @@
 
 class Gui : public sf::Drawable{
 	private:
-		int health = 3;
+		int health = 2;
 		int max_health = 6;
 		int keys = 1;
 		int coins = 500;

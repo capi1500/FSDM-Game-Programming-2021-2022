@@ -10,10 +10,6 @@
 #include "pause.h"
 
 Play::Play(StateMachine& stateMachine, const std::string& level) : Scene(stateMachine){
-	auto s = Framework::getRenderer().getSize();
-	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(s.x, s.y));
-	view.zoom(0.25);
-	
 	this->level.load("../saves/" + level + ".json");
 	levelBackup = level;
 }
@@ -47,6 +43,9 @@ void Play::activate(){
 	subscribe(&playerMonsterCollision);
 	subscribe(&groundCollision);
 	subscribe(&collectibleCollision);
+	auto s = Framework::getRenderer().getSize();
+	view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(s.x, s.y));
+	view.zoom(0.25);
 }
 
 void Play::deactivate(){

@@ -75,7 +75,7 @@ void Gui::updateTexture(){
 		states.transform.translate(sf::Vector2f(textureInfo.getSize().x, 0));
 	}
 	updateTextureRect(Tiles::hearth_empty);
-	for(int i = ((health + 1) / 2) * 2; i * 2 <= max_health; i++){
+	for(int i = health; i * 2 <= max_health; i++){
 		texture.draw(sprite, states);
 		states.transform.translate(sf::Vector2f(textureInfo.getSize().x, 0));
 	}
@@ -92,12 +92,3 @@ void Gui::updateTexture(){
 	
 	sprite.setTexture(texture.getTexture(), true);
 }
-
-/*
- * health = 3 ->
- * max_health = 6
- *
- *
- *
- */
-
