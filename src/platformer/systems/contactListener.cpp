@@ -1,6 +1,7 @@
 #include <platformer/entities/physicalEntity.hpp>
 #include <platformer/framework.hpp>
 #include <platformer/scenes/play/collisionEvent.hpp>
+#include <iostream>
 #include "contactListener.hpp"
 
 void ContactListener::BeginContact(b2Contact* contact){

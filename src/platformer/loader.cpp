@@ -77,6 +77,7 @@ void to_json(json& j, const PhysicalEntity& p){
 }
 
 void from_json(const json& j, PhysicalEntity& p){
+	std::cout << "Parsing physical entity of type:" << p.getType() << "\n";
     j.get_to(dynamic_cast<Entity&>(p));
     j["body"].get_to(p.bodyDef);
 	j["properties"].get_to(p.properties);

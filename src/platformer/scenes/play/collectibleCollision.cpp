@@ -1,5 +1,6 @@
 #include <platformer/scenes/play.hpp>
 #include <platformer/entities/entities/collectible.hpp>
+#include <iostream>
 #include "collectibleCollision.hpp"
 
 void CollectibleCollision::onNotifyImpl(const std::shared_ptr<SceneEvent>& e){
@@ -7,7 +8,6 @@ void CollectibleCollision::onNotifyImpl(const std::shared_ptr<SceneEvent>& e){
 	
 	PhysicalEntity* body;
 	Collectible* collectible;
-	
 	if(event.getEntity1()->getProperties().type & EntityProperties::Player && event.getEntity2()->getProperties().type & EntityProperties::Collectible){
 		body = event.getEntity1();
 		collectible = dynamic_cast<Collectible*>(event.getEntity2());
