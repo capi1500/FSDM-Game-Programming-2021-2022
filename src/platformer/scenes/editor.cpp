@@ -7,11 +7,53 @@
 #include <platformer/scenes/editor/editorPause.hpp>
 #include <platformer/entities/entities/coin.hpp>
 #include <platformer/entities/entities/diamond.hpp>
+#include <platformer/entities/world/characters.h>
+#include <platformer/entities/entities/mine.hpp>
 
 void Editor::onNotify(const sf::Event& event){
 	if(event.type == sf::Event::KeyPressed){
 		if(event.key.code == sf::Keyboard::Escape)
 			getStateMachine().add(new EditorPause(getStateMachine(), *this));
+	}
+	else if(!tileMethodActive && event.type == sf::Event::MouseButtonPressed){
+		if(event.mouseButton.button == sf::Mouse::Left){
+			auto pixel = Framework::getRenderer().mapPixelToCoords({event.mouseButton.x, event.mouseButton.y}, editor->getView());
+			if(editor->coordInView(pixel)){
+				auto coord = getHighestSolidBelow(pixel);
+				auto chosen = characterChooser->getChosen();
+				auto where = Framework::getPhysicConfig().pixelToMeters(
+						sf::Vector2f(
+								event.mouseButton.x,
+								coord.y * editor->getTileSize().y - characterChooser->getTileSize().y)
+				);
+				if(chosen == sf::Vector2i(Characters::mine.x, Characters::mine.y)){
+					Mine* p = new Mine();
+					p->getBodyDef().position = where;
+					characters.push_back(p);
+				}
+				else if(chosen == sf::Vector2i(Characters::ghost_green_down.x, Characters::ghost_green_down.y)){
+					delete player;
+					player = new Player();
+					player->getBodyDef().position = where;
+				}
+			}
+		}
+	}
+	else if(event.type == sf::Event::MouseMoved){
+		auto pixel = Framework::getRenderer().mapPixelToCoords({event.mouseMove.x, event.mouseMove.y}, editor->getView());
+		if(editor->coordInView(pixel)){
+			auto coord = getHighestSolidBelow(pixel);
+			if(coord == sf::Vector2i(-1, -1))
+				editorCharacterChosen->hide();
+			else{
+				editorCharacterChosen->setPosition(sf::Vector2f(event.mouseMove.x, coord.y * editor->getTileSize().y));
+				if(tileMethodActive)
+					editorCharacterChosen->show();
+			}
+		}
+		else{
+			editorCharacterChosen->hide();
+		}
 	}
 }
 
@@ -50,12 +92,14 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 		}
 	});
 	editor->setOnChosenUpdate([this](const sf::Vector2i& coord){
-		for(int dx = -brushSize / 2; dx <= brushSize / 2; dx++){
-			for(int dy = -brushSize / 2; dy <= brushSize / 2; dy++){
-				editor->updateTile(getTileConfig(sf::Vector2u(tileChooser->getChosen().x, tileChooser->getChosen().y)), {coord.x + dx, coord.y + dy});
+		if(tileMethodActive){
+			for(int dx = -brushSize / 2; dx <= brushSize / 2; dx++){
+				for(int dy = -brushSize / 2; dy <= brushSize / 2; dy++){
+					editor->updateTile(getTileConfig(sf::Vector2u(tileChooser->getChosen().x, tileChooser->getChosen().y)), {coord.x + dx, coord.y + dy});
+				}
 			}
+			editor->redraw();
 		}
-		editor->redraw();
 	});
 	
 	entities.push_back(editor);
@@ -86,6 +130,34 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	entities.push_back(tileChooser);
 	entities.push_back(tileChosen);
 	
+	characterChooser = new CharacterChooser();
+	
+	characterChooser->setView(tileChooser->getView());
+	
+	characterChosen = new Frame();
+	characterChosen->setBaseSize(characterChooser->getTileSize() * characterChooser->getScaleFactor());
+	characterChosen->setSize({characterChooser->getTileSize().x * characterChooser->getScaleFactor(), characterChooser->getTileSize().y * characterChooser->getScaleFactor()});
+	
+	characterChooser->setOnChosenUpdate([this](const sf::Vector2i& coord){
+		if(coord == sf::Vector2i(-1, -1))
+			characterChosen->hide();
+		else{
+			characterChosen->show();
+			erase->release();
+		}
+		characterChosen->setPosition({characterChooser->getScaleFactor() * coord.x * characterChooser->getTileSize().x - characterChooser->getScaleFactor() * characterChooser->getOrigin().x,
+		                         characterChooser->getScaleFactor() * coord.y * characterChooser->getTileSize().y - characterChooser->getScaleFactor() * characterChooser->getOrigin().y});
+	});
+	
+	editorCharacterChosen = new Frame();
+	editorCharacterChosen->setBaseSize(characterChooser->getTileSize());
+	editorCharacterChosen->setSize(characterChooser->getTileSize());
+	editorCharacterChosen->hide();
+	
+	entities.push_back(characterChooser);
+	entities.push_back(characterChosen);
+	entities.push_back(editorCharacterChosen);
+	
 	size1 = new RadioButton(sf::Vector2f(Framework::getRenderer().getSize().x / 2 - 52, -36),
 	                                     [this]{ brushSize = 1; editorChosen->setSize(editor->getTileSize());},
 	                                     []{},
@@ -109,7 +181,7 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	entities.push_back(size3);
 	entities.push_back(size5);
 	
-	erase = new CheckboxButton(sf::Vector2f(-static_cast<float>(Framework::getRenderer().getSize().x) / 2 + 52, 36),
+	erase = new CheckboxButton(sf::Vector2f(-static_cast<float>(Framework::getRenderer().getSize().x) / 2 + 52, -36),
 	                           [this]{
 										tileChooser->setChosen(Tiles::empty.texture_coord);
 										tileChosen->hide();
@@ -118,19 +190,53 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	                           false);
 	erase->setView(tileChooser->getView());
 	
+	tileMethod = new RadioButton(sf::Vector2f(-static_cast<float>(Framework::getRenderer().getSize().x) / 2 + 52, 0),
+	                        [this]{
+						                        Framework::getInputHandler().unsubscribe(characterChooser);
+						                        Framework::getInputHandler().subscribe(tileChooser);
+						                        tileMethodActive = true;
+												editorChosen->show();
+												editorCharacterChosen->hide();
+											},
+	                        []{},
+	                        true,
+	                        spawnMethodRadioButtonGroup);
+	tileMethod->setView(tileChooser->getView());
+	
+	characterMethod = new RadioButton(sf::Vector2f(-static_cast<float>(Framework::getRenderer().getSize().x) / 2 + 52, 36),
+	                             [this]{
+													 Framework::getInputHandler().unsubscribe(tileChooser);
+						                             Framework::getInputHandler().subscribe(characterChooser);
+						                             tileMethodActive = false;
+													 editorChosen->hide();
+													 editorCharacterChosen->show();
+					                             },
+	                             []{},
+	                             false,
+								 spawnMethodRadioButtonGroup);
+	characterMethod->setView(tileChooser->getView());
+	
 	entities.push_back(erase);
+	entities.push_back(tileMethod);
+	entities.push_back(characterMethod);
 }
 
 void Editor::activate(){
 	Scene::activate();
 	Framework::getInputHandler().subscribe(editor);
-	Framework::getInputHandler().subscribe(tileChooser);
+	if(tileMethodActive)
+		Framework::getInputHandler().subscribe(tileChooser);
+	else
+		Framework::getInputHandler().subscribe(characterChooser);
 }
 
 void Editor::deactivate(){
 	Scene::deactivate();
 	Framework::getInputHandler().unsubscribe(editor);
-	Framework::getInputHandler().unsubscribe(tileChooser);
+	if(tileMethodActive)
+		Framework::getInputHandler().unsubscribe(tileChooser);
+	else
+		Framework::getInputHandler().unsubscribe(characterChooser);
 }
 
 void Editor::draw(sf::RenderStates renderStates){
@@ -138,15 +244,30 @@ void Editor::draw(sf::RenderStates renderStates){
 	
 	Framework::getRenderer().setView(editor->getView());
 	Framework::getRenderer().draw(*editor, renderStates);
-	Framework::getRenderer().draw(*editorChosen, renderStates);
+	if(player != nullptr)
+		Framework::getRenderer().draw(*player, renderStates);
+	for(auto& x : characters)
+		Framework::getRenderer().draw(*x, renderStates);
+	if(tileMethodActive)
+		Framework::getRenderer().draw(*editorChosen, renderStates);
+	else
+		Framework::getRenderer().draw(*editorCharacterChosen, renderStates);
 	
 	Framework::getRenderer().setView(tileChooser->getView());
-	Framework::getRenderer().draw(*tileChooser, renderStates);
-	Framework::getRenderer().draw(*tileChosen, renderStates);
+	if(tileMethodActive){
+		Framework::getRenderer().draw(*tileChooser, renderStates);
+		Framework::getRenderer().draw(*tileChosen, renderStates);
+	}
+	else{
+		Framework::getRenderer().draw(*characterChooser, renderStates);
+		Framework::getRenderer().draw(*characterChosen, renderStates);
+	}
 	Framework::getRenderer().draw(*size1, renderStates);
 	Framework::getRenderer().draw(*size3, renderStates);
 	Framework::getRenderer().draw(*size5, renderStates);
 	Framework::getRenderer().draw(*erase, renderStates);
+	Framework::getRenderer().draw(*tileMethod, renderStates);
+	Framework::getRenderer().draw(*characterMethod, renderStates);
 	
 	Framework::getRenderer().setView(prev);
 }
@@ -191,4 +312,22 @@ TileConfig Editor::getTileConfig(const sf::Vector2u& coord){
 
 void Editor::load(const Level& level){
 	editor->set(level.world->getTiles());
+}
+
+sf::Vector2i Editor::getHighestSolidBelow(const sf::Vector2f& pixel){
+	sf::Vector2i coord = editor->getCoord(pixel);
+	if(coord.x < 0 || editor->getSize().x < coord.x)
+		return {-1, -1};
+	for(int y = coord.y; y < editor->getSize().y; y++){
+		if((*editor)[coord.x][y].solid){
+			return {coord.x, y};
+		}
+	}
+	return {-1, -1};
+}
+
+Editor::~Editor(){
+	delete player;
+	for(auto& x : characters)
+		delete x;
 }

@@ -27,6 +27,7 @@ class Gui : public sf::Drawable, Listener<std::shared_ptr<SceneEvent>>{
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		Gui();
+		virtual ~Gui();
 		int getHealth() const;
 		void setHealth(int health);
 		int getKeys() const;

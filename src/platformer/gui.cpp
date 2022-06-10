@@ -46,6 +46,11 @@ void Gui::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 Gui::Gui(){
 	textureInfo = Framework::getAssetStorage().getTextureInfo("tiles");
 	updateTexture();
+	Framework::getEventHandler().subscribe(this);
+}
+
+Gui::~Gui(){
+	Framework::getEventHandler().unsubscribe(this);
 }
 
 void Gui::updateTexture(){

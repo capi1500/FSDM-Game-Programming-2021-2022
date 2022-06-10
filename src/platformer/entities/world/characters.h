@@ -2,6 +2,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
+// TODO: switch to CharacterConfig, like TileConfig
+
 class Characters{
 	public:
 		static const sf::Vector2u ghost_green_down;

@@ -29,6 +29,8 @@ class CoordChooser : public Listener<sf::Event>{
 		void setView(const sf::View& view);
 		float getScaleFactor() const;
 		void setScaleFactor(float scale);
+		
+		bool coordInView(const sf::Vector2f& coord);
 	private:
 		sf::FloatRect rect;
 		sf::Vector2f tile_size;
@@ -43,8 +45,6 @@ class CoordChooser : public Listener<sf::Event>{
 
 		std::function<void(const sf::Vector2i&)> onChosenUpdate = [](const sf::Vector2i& coord){};
 		std::function<void(const sf::Vector2i&)> onHoverUpdate = [](const sf::Vector2i& coord){};
-		
-		bool coordInView(const sf::Vector2f& coord);
 };
 
 
