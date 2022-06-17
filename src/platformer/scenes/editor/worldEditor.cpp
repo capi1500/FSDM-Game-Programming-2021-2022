@@ -19,16 +19,20 @@ WorldEditor::WorldEditor(const sf::Vector2u& size) : size(size), textureInfo(Fra
 void WorldEditor::redraw(){
 	sf::Sprite tmp;
 	tmp.setTexture(Framework::getAssetStorage().getTexture("tiles"));
-	texture.clear();
+	texture.clear(sf::Color::Transparent);
 	
 	sf::RenderStates states;
 	for(auto& vec : tiles){
 		for(auto& t : vec){
-			tmp.setTextureRect({static_cast<int>(t.texture_coord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),
-								static_cast<int>(t.texture_coord.y * (textureInfo.getSize().y + textureInfo.getMargin().y)),
-								textureInfo.getSize().x,
-								textureInfo.getSize().y});
-			texture.draw(tmp, states);
+			if(t.texture_coord != Tiles::empty.texture_coord){
+				tmp.setTextureRect(
+						{static_cast<int>(t.texture_coord.x * (textureInfo.getSize().x + textureInfo.getMargin().x)),
+						 static_cast<int>(t.texture_coord.y * (textureInfo.getSize().y + textureInfo.getMargin().y)),
+						 textureInfo.getSize().x,
+						 textureInfo.getSize().y}
+				);
+				texture.draw(tmp, states);
+			}
 			states.transform.translate(0, textureInfo.getSize().y);
 		}
 		states.transform.translate(textureInfo.getSize().x, -textureInfo.getSize().y * static_cast<float>(size.y));

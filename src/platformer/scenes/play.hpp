@@ -9,6 +9,7 @@
 #include <platformer/scenes/play/groundCollision.hpp>
 #include <platformer/scenes/play/collectibleCollision.hpp>
 #include <platformer/gui.hpp>
+#include <platformer/entities/background.hpp>
 
 class Play : public Scene{
 	private:
@@ -17,6 +18,8 @@ class Play : public Scene{
 		std::string levelBackup;
 		
 		sf::View gui_view;
+		
+		Background background;
 		
 		PlayerMonsterCollision playerMonsterCollision;
 		GroundCollision groundCollision;

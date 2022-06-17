@@ -14,9 +14,10 @@ void Player::update(const sf::Time& time){
 
 Player::Player(){
 	setTextureInfo(Framework::getAssetStorage().getTextureInfo("characters"));
+	updateTexture(Characters::ghost_green_down);
 }
 
-void Player::buildDefault(b2World& world){
+void Player::buildDefault(b2World& world, const sf::Vector2f& position){
 	properties = EntityPropertiesBuilder()
 			.setJump({5})
 			.setDoubleJump({5})
@@ -28,14 +29,12 @@ void Player::buildDefault(b2World& world){
 					         .ground(true)
 					         .build())
 			.build();
-
-	getBodyDef().position = b2Vec2_zero;
+	
+	getBodyDef().position = Framework::getPhysicConfig().pixelToMeters(position);
 	getBodyDef().type = b2_dynamicBody;
 	getBodyDef().fixedRotation = true;
 	
 	build(world);
-	
-	updateTexture(Characters::ghost_green_down);
 }
 
 void Player::build(b2World& world){

@@ -9,6 +9,8 @@ class Mine : public PhysicalEntity{
 	public:
 		Mine();
 		void update(const sf::Time& time) override;
+		void build(b2World& world) override;
+		void buildDefault(b2World& world, const sf::Vector2f& position) override;
 };
 
 

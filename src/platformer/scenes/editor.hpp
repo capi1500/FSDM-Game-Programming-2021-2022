@@ -5,6 +5,7 @@
 #include <platformer/gui/radioButtonGroup.hpp>
 #include <platformer/scenes/editor/frame.hpp>
 #include <platformer/scenes/editor/characterChooser.hpp>
+#include <platformer/entities/background.hpp>
 #include "editor/worldEditor.hpp"
 
 class Editor : public Scene{
@@ -14,6 +15,7 @@ class Editor : public Scene{
 		std::vector<PhysicalEntity*> characters;
 		TileChooser* tileChooser;
 		CharacterChooser* characterChooser;
+		Background background;
 		bool tileMethodActive = true;
 		
 		RadioButton* size1;

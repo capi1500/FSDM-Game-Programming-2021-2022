@@ -21,20 +21,19 @@ void Editor::onNotify(const sf::Event& event){
 			if(editor->coordInView(pixel)){
 				auto coord = getHighestSolidBelow(pixel);
 				auto chosen = characterChooser->getChosen();
-				auto where = Framework::getPhysicConfig().pixelToMeters(
-						sf::Vector2f(
-								event.mouseButton.x,
-								coord.y * editor->getTileSize().y - characterChooser->getTileSize().y)
-				);
+				auto pixel_where = sf::Vector2f(pixel.x,coord.y * editor->getTileSize().y - characterChooser->getTileSize().y);
+				auto where = Framework::getPhysicConfig().pixelToMeters(pixel_where);
 				if(chosen == sf::Vector2i(Characters::mine.x, Characters::mine.y)){
 					Mine* p = new Mine();
 					p->getBodyDef().position = where;
+					p->setPosition(pixel_where);
 					characters.push_back(p);
 				}
 				else if(chosen == sf::Vector2i(Characters::ghost_green_down.x, Characters::ghost_green_down.y)){
 					delete player;
 					player = new Player();
 					player->getBodyDef().position = where;
+					player->setPosition(pixel_where);
 				}
 			}
 		}
@@ -46,8 +45,13 @@ void Editor::onNotify(const sf::Event& event){
 			if(coord == sf::Vector2i(-1, -1))
 				editorCharacterChosen->hide();
 			else{
-				editorCharacterChosen->setPosition(sf::Vector2f(event.mouseMove.x, coord.y * editor->getTileSize().y));
-				if(tileMethodActive)
+				editorCharacterChosen->setPosition(
+						sf::Vector2f(
+								pixel.x,
+								coord.y * editor->getTileSize().y - characterChooser->getTileSize().y
+						)
+				);
+				if(!tileMethodActive)
 					editorCharacterChosen->show();
 			}
 		}
@@ -219,6 +223,14 @@ Editor::Editor(StateMachine& stateMachine) : Scene(stateMachine){
 	entities.push_back(erase);
 	entities.push_back(tileMethod);
 	entities.push_back(characterMethod);
+	
+	sf::FloatRect display;
+	display.width = editor->getView().getSize().x;
+	display.height = editor->getView().getSize().y;
+//	display.left = -display.width / 2;
+//	display.top = -display.height / 2;
+	background.setDisplay(display);
+	background.setType(Background::Sky);
 }
 
 void Editor::activate(){
@@ -241,6 +253,12 @@ void Editor::deactivate(){
 
 void Editor::draw(sf::RenderStates renderStates){
 	sf::View prev = Framework::getRenderer().getView();
+	
+	
+	Framework::getRenderer().setView(Framework::getRenderer().getDefaultView());
+	renderStates.transform.scale(2, 2);
+	Framework::getRenderer().draw(background, renderStates);
+	renderStates.transform.scale(0.5, 0.5);
 	
 	Framework::getRenderer().setView(editor->getView());
 	Framework::getRenderer().draw(*editor, renderStates);
@@ -299,9 +317,16 @@ std::shared_ptr<Level> Editor::save(){
 			}
 		}
 	}
+	for(auto& e : characters){
+		if(e->getType() == PhysicalEntity::Mine){
+			auto new_entity = std::make_shared<Mine>();
+			new_entity->buildDefault(*level->b2World, e->getPosition());
+			level->entities.insert(new_entity);
+		}
+	}
 	level->world->build(*level->b2World);
 	level->player = std::make_shared<Player>();
-	level->player->buildDefault(*level->b2World);
+	level->player->buildDefault(*level->b2World, player->getPosition());
 	
 	return level;
 }

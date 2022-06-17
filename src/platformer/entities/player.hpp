@@ -13,7 +13,7 @@ class Player : public PhysicalEntity, public Listener<sf::Event>{
 		void onNotify(const sf::Event& event) override;
 		void update(const sf::Time& time) override;
 		
-		void buildDefault(b2World& world);
+		void buildDefault(b2World& world, const sf::Vector2f& position) override;
 		void build(b2World& world) override;
 		friend void to_json(json& j, const Player& p);
 		friend void from_json(const json& j, Player& p);

@@ -16,6 +16,12 @@ Play::Play(StateMachine& stateMachine, const std::string& level) : Scene(stateMa
 	auto s = Framework::getRenderer().getSize();
 	gui_view = sf::View(sf::Vector2f(300, 0), sf::Vector2f(s.x, s.y));
 	gui_view.zoom(0.25);
+	
+	sf::FloatRect display;
+	display.width = gui_view.getSize().x;
+	display.height = gui_view.getSize().y;
+	background.setDisplay(display);
+	background.setType(Background::Sky);
 }
 
 void Play::onNotify(const sf::Event &event){
@@ -29,6 +35,11 @@ void Play::update(const sf::Time &time){
 }
 
 void Play::draw(sf::RenderStates renderStates){
+	Framework::getRenderer().setView(Framework::getRenderer().getDefaultView());
+	renderStates.transform.scale(4, 4);
+	Framework::getRenderer().draw(background, renderStates);
+	renderStates.transform.scale(0.25, 0.25);
+	
 	view.setCenter(level.getPlayer()->getPosition().x, level.getPlayer()->getPosition().y);
 	Framework::getRenderer().setView(view);
 

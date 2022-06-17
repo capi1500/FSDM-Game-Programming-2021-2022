@@ -36,7 +36,7 @@ struct EntityProperties{
 	
 	struct HealthProperty{
 		int current;
-		int regeneration; // 1 helath point for [regeneration] milliseconds
+		int regeneration; // TODO: 1 helath point for [regeneration] milliseconds
 	};
 	bool healthFlaf;
 	HealthProperty health;

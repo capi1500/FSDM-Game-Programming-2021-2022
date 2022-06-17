@@ -39,9 +39,6 @@ void from_json(const json& j, Level& l){
 		else if(t == PhysicalEntity::Player){
 			pe = std::make_shared<Player>(e.get<Player>());
 		}
-		else{
-			pe = std::make_shared<PhysicalEntity>(e.get<PhysicalEntity>());
-		}
 		pe->build(*l.b2World);
 		l.entities.insert(pe);
 	}
@@ -103,6 +100,10 @@ void to_json(json& j, const World& w){
 void from_json(const json& j, World& w){
 	j.get_to(dynamic_cast<PhysicalEntity&>(w));
 	j["tiles"].get_to(w.tiles);
+}
+
+void World::buildDefault(b2World& world, const sf::Vector2f& position){
+	build(world);
 }
 
 // Player

@@ -18,7 +18,7 @@ void Collectible::buildDefault(b2World& world, const sf::Vector2f& position){
 void Collectible::build(b2World& world){
 	PhysicalEntity::build(world);
 	b2Vec2 hitboxCenter = {0.5, 0.5};
-	b2Vec2 hitboxSize = {1, 1};
+	b2Vec2 hitboxSize = {0.5, 0.5};
 	
 	b2PolygonShape shape;
 	shape.SetAsBox(hitboxSize.x / 2, hitboxSize.y / 2, hitboxCenter,0);

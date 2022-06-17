@@ -43,11 +43,12 @@ class PhysicalEntity : public Entity{
 		Type getType() const;
 		
 		void update(const sf::Time& time) override;
-
+		
 		virtual void contactBegin(PhysicalEntity& entity, b2Contact* contact);
 		virtual void contactEnd(PhysicalEntity& entity, b2Contact* contact);
 		
 		virtual void build(b2World& world);
+		virtual void buildDefault(b2World& world, const sf::Vector2f& position) = 0;
 		
 		friend void to_json(json& j, const PhysicalEntity& p);
 		friend void from_json(const json& j, PhysicalEntity& p);
